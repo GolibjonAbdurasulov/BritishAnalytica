@@ -1,3 +1,5 @@
+using Entity.Enums;
+
 namespace DatabaseBroker.Repositories.Common;
 
 public interface IRepositoryBase<T,in TId> : IQueryable<T>
