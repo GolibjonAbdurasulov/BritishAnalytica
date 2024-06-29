@@ -39,6 +39,13 @@ public class UserController : ControllerBase
         return new ResponseModelBase(res);
     }
     
+    [HttpPut]
+    public async Task<ResponseModelBase> ChangeUserRoleAsync( ChangeUserRoleDto dto)
+    {
+        var res =await UserService.ChangeUserRole(dto);
+        return new ResponseModelBase(res);
+    }
+    
     [HttpDelete]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {

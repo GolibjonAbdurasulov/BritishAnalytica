@@ -3,6 +3,8 @@ using System.Reflection;
 using System.Text;
 using Castle.Core.Configuration;
 using DatabaseBroker;
+using DatabaseBroker.Repositories.Common;
+using Entity.Attributes;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,80 +18,32 @@ namespace Web.Extension;
 
 public static class ServiceCollectionExtensions
 {
-
-    public static void AddCustomService(this IServiceCollection services)
+    public static void ConfigureRepositories(this IServiceCollection serviceCollection)
     {
-        //services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
-
-        //Folder Name: IUSerService
-        services.AddScoped<IUserService, UserService>();
+        foreach (Type type in Assembly.GetAssembly(typeof(RepositoryBase<,>))!.GetTypes()
+                     .Where(x => x.BaseType is not null && x.BaseType.IsGenericType &&
+                                 x.BaseType.GetGenericTypeDefinition() == (typeof(RepositoryBase<,>)) &&
+                                 x.GetCustomAttribute<InjectableAttribute>() is not null))
+        {
+            serviceCollection.AddScoped(type.GetInterfaces().LastOrDefault()!, type);
+        }
     }
 
-    public static void AddJwtService(this IServiceCollection services, IConfiguration configuration)
+    public static void ConfigureServicesFromTypeAssembly<T>(this IServiceCollection serviceCollection)
     {
-        services.AddAuthentication(options =>
+        foreach (var type in Assembly.GetAssembly(typeof(T))!.GetTypes()
+                     .Where(x => x.GetCustomAttribute<InjectableAttribute>() != null))
         {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
-        {
-            // options.TokenValidationParameters = new TokenValidationParameters
-            // {
-            //     ValidateIssuer = true,
-            //     ValidateAudience = false,
-            //     ValidateLifetime = true,
-            //     ValidateIssuerSigningKey = true,
-            //     ValidIssuer = configuration["Jwt:Issuer"],
-            //     ValidAudience = configuration["JWT:Audience"],
-            //     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"])),
-            //     ClockSkew = TimeSpan.Zero
-            // };
-        });
+            var attr = type.GetCustomAttribute<InjectableAttribute>()!;
+
+            if (type.GetInterfaces().Length != 0 && !attr.WithoutInterface)
+                serviceCollection.Add(new ServiceDescriptor(type.GetInterfaces().LastOrDefault()!, type,
+                    attr.IsSingleton ? ServiceLifetime.Singleton : ServiceLifetime.Scoped));
+            else
+                serviceCollection.Add(new ServiceDescriptor(type, type,
+                    attr.IsSingleton ? ServiceLifetime.Singleton : ServiceLifetime.Scoped));
+
+        }
     }
-
-    public static void AddSwaggerService(this IServiceCollection services)
-    {
-        services.AddSwaggerGen(c =>
-        {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "Tahseen.Api", Version = "v1" });
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-
-            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-            {
-                Name = "Authorization",
-                Description =
-                    "JWT Authorization header using the Bearer scheme. Example: \"Authorization: Bearer {token}\"",
-                In = ParameterLocation.Header,
-                Type = SecuritySchemeType.ApiKey
-            });
-
-            c.AddSecurityRequirement(new OpenApiSecurityRequirement
-        {
-            {
-                new OpenApiSecurityScheme
-                {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                new string[]{ }
-            }
-        });
-        });
-    }
-    // public  static void ConfigureServices(IServiceCollection services)
-    // {
-    //     services.AddDbContext<DataContext>(options =>
-    //     {
-    //         options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"));
-    //     });
-    //
-    //     // Qolgan xizmatlar
-    //     services.AddControllers();
-    //     services.AddSwaggerGen();
-    // }
-
+    
 }

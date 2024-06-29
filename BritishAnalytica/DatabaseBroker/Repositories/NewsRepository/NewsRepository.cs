@@ -1,12 +1,13 @@
 using DatabaseBroker.Repositories.Common;
+using Entity.Attributes;
 using Entity.Models.News;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseBroker.Repositories.NewsRepository;
-
+[Injectable]
 public class NewsRepository : RepositoryBase<News,long> ,INewsRepository
 {
-    protected NewsRepository(DataContext dbContext) : base(dbContext)
+    public NewsRepository(DataContext dbContext) : base(dbContext)
     {
     }
 }

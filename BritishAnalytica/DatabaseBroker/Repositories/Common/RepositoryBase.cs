@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Entity.Attributes;
 using Entity.Exceptions;
 using Entity.Models.Common;
 using Microsoft.EntityFrameworkCore;

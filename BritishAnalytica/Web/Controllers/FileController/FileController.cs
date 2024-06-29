@@ -1,9 +1,12 @@
+using DatabaseBroker.Extensions;
 using DatabaseBroker.Repositories.FaqQuestionsRepository;
 using DatabaseBroker.Repositories.FileRepository;
+using Entity.Models.Common;
 using Entity.Models.FaqQuestion;
+using Entity.Models.File;
 using Microsoft.AspNetCore.Mvc;
+using Services.Interfaces;
 using Web.Common;
-using Web.Controllers.FaqQuestionController.FaqQuestionDtos;
 
 namespace Web.Controllers.FileController;
 
@@ -11,77 +14,68 @@ namespace Web.Controllers.FileController;
 [Route("[controller]/[action]")]
 public class FileController : ControllerBase
 {
-    private IFileRepository FileRepository { get; set; }
+    
+    private readonly IFileRepository _fileRepository;
+    private readonly IFileService _fileService;
 
-    public FileController(IFileRepository fileRepository)
+    public FileController(IFileRepository fileRepository, IFileService fileService)
     {
-        FileRepository = fileRepository;
+        _fileRepository = fileRepository;
+        _fileService = fileService;
     }
 
+    [HttpGet,
+     ProducesResponseType(typeof(ResponseModelBase<IEnumerable<FileModel>>), 200),
+    ]
+    public async Task<ResponseModelBase> GetAllAsync([FromQuery] TermModelBase q)
+    {
+        return await _fileRepository.GetByTermsAsync(q);
+    }
 
-    // [HttpPost]
-    // public async Task<ResponseModelBase> CreateAsync( FaqQuestionDto dto)
-    // {
-    //     var entity = new FaqQuestions
-    //     {
-    //         CreatedAt = DateTime.Now,
-    //         UpdatedAt = DateTime.Now,
-    //         Title = dto.Title,
-    //         Body = dto.Body
-    //     };
-    //     await FileRepository.AddAsync(entity);
-    //     return new ResponseModelBase(dto);
-    // }
-    //
-    //
-    //
-    // [HttpPut]
-    // public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto,long id)
-    // {
-    //     var res =  await FileRepository.GetByIdAsync(id);
-    //     res.Body = dto.Body;
-    //     res.Title=dto.Title;
-    //     
-    //     await FileRepository.UpdateAsync(res);
-    //     return new ResponseModelBase(dto);
-    // }
-    //
-    //
-    // [HttpDelete]
-    // public async Task<ResponseModelBase> DeleteAsync()
-    // {
-    //     var res =  FileRepository.LastOrDefault();
-    //     await FileRepository.RemoveAsync(res);
-    //     return new ResponseModelBase(res);
-    // }
-    //
-    // [HttpGet]
-    // public async Task<ResponseModelBase> GetByIdAsync(long id)
-    // {
-    //     var res =  await FileRepository.GetByIdAsync(id);
-    //     var dto = new FaqQuestionDto
-    //     {
-    //         Title = res.Title,
-    //         Body = res.Body
-    //     };
-    //     return new ResponseModelBase(dto);
-    // }
-    //
-    // [HttpGet]
-    // public async Task<ResponseModelBase> GetAllAsync()
-    // {
-    //     var res =   FileRepository.GetAllAsQueryable().ToList();
-    //     List<FaqQuestionDto> dtos = new List<FaqQuestionDto>();
-    //     foreach (FaqQuestions question in res)
-    //     {
-    //         dtos.Add(new FaqQuestionDto
-    //         {
-    //             Title = question.Title,
-    //             Body = question.Body
-    //         });
-    //     }
-    //     
-    //     return new ResponseModelBase(dtos);
-    // }
-    //
+    [HttpPost()]
+    public async Task<ResponseModelBase> UploadFileAsync(IFormFile file)
+    {
+        var result = await _fileService.UploadFileAsync(file);
+        return (result, 200);
+    }
+
+    [HttpPut("{id}")]
+    public async ValueTask<ResponseModelBase> ReplaceFileAsync(Guid id, IFormFile file)
+    {
+        var result = await _fileService.UpdateFileAsync(id, file);
+        return (result, 200);
+    }
+
+    [HttpDelete("{id}")]
+    public async ValueTask<ResponseModelBase> DeleteAsync(Guid id)
+    {
+        var result = await _fileService.DeleteAsync(id);
+        return (result, 200);
+    }
+    
+    [HttpGet("download/{id}")]
+    public async Task<IActionResult> DownloadFileAsync(Guid id)
+    {
+        try
+        {
+            var stream = await _fileService.SendFileAsync(id);
+            var file = await _fileRepository.GetByIdAsync(id);
+            var contentType = "application/octet-stream"; // Fayl turi (MIME turi) ni aniqlash kerak
+            var fileName = Path.GetFileName(file.Path);
+
+            // Fayl oqimini qaytarish
+            return File(stream, contentType, fileName);
+        }
+        catch (FileNotFoundException)
+        {
+            return NotFound();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, "Ichki server xatosi: " + ex.Message);
+        }
+    }
+
+   
+    
 }

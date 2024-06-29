@@ -1,10 +1,11 @@
 using DatabaseBroker.Repositories.Common;
+using Entity.Attributes;
 
 namespace DatabaseBroker.Repositories.FaqQuestionsRepository;
-
+[Injectable]
 public class FaqQuestionRepository : RepositoryBase<Entity.Models.FaqQuestion.FaqQuestions,long> ,IFaqQuestionRepository
 {
-    protected FaqQuestionRepository(DataContext dbContext) : base(dbContext)
+    public FaqQuestionRepository(DataContext dbContext) : base(dbContext)
     {
     }
 }

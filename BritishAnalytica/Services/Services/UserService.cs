@@ -1,13 +1,14 @@
 using System;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.UserRepository;
+using Entity.Attributes;
 using Entity.Enums;
 using Entity.Models.Users;
 using Services.Dtos;
 using Services.Interfaces;
 
 namespace Services.Services;
-
+[Injectable]
 public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
@@ -59,7 +60,7 @@ public class UserService : IUserService
             UpdatedAt = DateTime.Now,
             Email = dto.Email,
             Password = dto.Password,
-            Role = Role.Admin
+            Role = Enum.Parse<Role>(dto.Role)
         };
         await _userRepository.AddAsync(user);
         return dto;
@@ -71,6 +72,7 @@ public class UserService : IUserService
         await _userRepository.UpdateAsync(oldUser);
         return dto;
     }
-    
+
+
     
 }
