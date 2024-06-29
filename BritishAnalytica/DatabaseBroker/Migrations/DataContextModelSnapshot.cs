@@ -58,7 +58,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("about_business", "british_analytica");
+                    b.ToTable("about_business");
                 });
 
             modelBuilder.Entity("Entity.Models.Contact.Contact", b =>
@@ -95,7 +95,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasIndex("PhoneNumberId");
 
-                    b.ToTable("contact", "british_analytica");
+                    b.ToTable("contact");
                 });
 
             modelBuilder.Entity("Entity.Models.Contact.Email.Email", b =>

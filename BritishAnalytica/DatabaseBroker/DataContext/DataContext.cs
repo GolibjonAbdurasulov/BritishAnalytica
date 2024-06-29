@@ -21,33 +21,37 @@ namespace DatabaseBroker;
 
 public class DataContext : DbContext
 {
-
-    public DbSet<FileModel> Files { get; set; }
-    public DbSet<AboutBusinessModel> AboutBusinessModels { get; set; }
-    public DbSet<Contact> Contacts { get; set; }
-    public DbSet<FaqQuestions> FaqQuestions { get; set; }
-    public DbSet<HomeModel> HomeModels { get; set; }
-    public DbSet<Motto> Mottoes { get; set; }
-    public DbSet<News> News { get; set; }
-    public DbSet<OurService> OurServices { get; set; }
-    public DbSet<PpsModel> PpsModels { get; set; }
-    public DbSet<ServicePercent> ServicePercents { get; set; }
-    public DbSet<TeamMember> TeamMembers { get; set; }
-    public DbSet<User> Users { get; set; }
-
-  
-   
-
-   
-
-    public DataContext(DbContextOptions<DataContext> options)
-        : base(options)
+    public DataContext(DbContextOptions<DataContext> options): base(options)
     {
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 
+    public DbSet<FileModel> Files { get; set; }
 
-    protected void TrackActionsAt()
+    public DbSet<AboutBusinessModel> AboutBusinessModels { get; set; }
+
+    public DbSet<Contact> Contacts { get; set; }
+
+    public DbSet<FaqQuestions> FaqQuestions { get; set; }
+
+    public DbSet<HomeModel> HomeModels { get; set; }
+
+    public DbSet<Motto> Mottoes { get; set; }
+
+    public DbSet<News> News { get; set; }
+
+    public DbSet<OurService> OurServices { get; set; }
+
+    public DbSet<PpsModel> PpsModels { get; set; }
+
+    public DbSet<ServicePercent> ServicePercents { get; set; }
+
+    public DbSet<TeamMember> TeamMembers { get; set; }
+
+    public DbSet<User> Users { get; set; }
+
+
+    private void TrackActionsAt()
     {
         foreach (var entity in this.ChangeTracker.Entries()
                      .Where(x => x.State == EntityState.Added && x.Entity is AuditableModelBase<int>))

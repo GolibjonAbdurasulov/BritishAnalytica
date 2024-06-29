@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseBroker.Repositories.AboutBusinessModelRepository;
 
-public class AboutBusinessModelRepository : RepositoryBase<AboutBusinessModel,long>
+public class AboutBusinessModelRepository : RepositoryBase<AboutBusinessModel,long> , IAboutBusinessModelRepository
 {
-    protected AboutBusinessModelRepository(DbContext dbContext) : base(dbContext)
+    protected AboutBusinessModelRepository(DataContext dbContext) : base(dbContext)
     {
     }
 }

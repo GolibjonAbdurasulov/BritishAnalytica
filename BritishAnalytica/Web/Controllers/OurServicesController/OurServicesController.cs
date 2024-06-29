@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using DatabaseBroker.Repositories.OurServices;
+using DatabaseBroker.Repositories.OurServicesRepository;
 using Entity.Models.OurServices;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;

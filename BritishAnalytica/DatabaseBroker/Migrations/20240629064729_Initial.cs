@@ -13,12 +13,8 @@ namespace DatabaseBroker.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.EnsureSchema(
-                name: "british_analytica");
-
             migrationBuilder.CreateTable(
                 name: "about_business",
-                schema: "british_analytica",
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
@@ -284,7 +280,6 @@ namespace DatabaseBroker.Migrations
 
             migrationBuilder.CreateTable(
                 name: "contact",
-                schema: "british_analytica",
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
@@ -349,19 +344,16 @@ namespace DatabaseBroker.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_contact_EmailId",
-                schema: "british_analytica",
                 table: "contact",
                 column: "EmailId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_contact_LocationId",
-                schema: "british_analytica",
                 table: "contact",
                 column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_contact_PhoneNumberId",
-                schema: "british_analytica",
                 table: "contact",
                 column: "PhoneNumberId");
 
@@ -385,12 +377,10 @@ namespace DatabaseBroker.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "about_business",
-                schema: "british_analytica");
+                name: "about_business");
 
             migrationBuilder.DropTable(
-                name: "contact",
-                schema: "british_analytica");
+                name: "contact");
 
             migrationBuilder.DropTable(
                 name: "faq_questions");

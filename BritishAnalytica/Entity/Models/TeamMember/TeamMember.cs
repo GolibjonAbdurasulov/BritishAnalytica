@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
 namespace Entity.Models.TeamMember;
-[Table("team_member",Schema = "british_analytica")]
+[Table("team_member")]
 public class TeamMember : AuditableModelBase<long>
 {
     [Column("name")]public string Name { get; set; }

@@ -5,7 +5,7 @@ using Entity.Models.Common;
 
 namespace Entity.Models.AboutBusinessModel;
 
-[Table("about_business",Schema = "british_analytica")]
+[Table("about_business")]
 public class AboutBusinessModel : AuditableModelBase<long>
 {
    [Column("title")] public string Title { get; set; }

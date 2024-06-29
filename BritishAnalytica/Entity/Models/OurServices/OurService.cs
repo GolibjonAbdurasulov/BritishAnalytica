@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
 namespace Entity.Models.OurServices;
-[Table("our_services",Schema = "british_analytica")]
+[Table("our_services")]
 public class OurService : AuditableModelBase<long>
 {
     [Column("service_name")]public string ServiceName { get; set; }

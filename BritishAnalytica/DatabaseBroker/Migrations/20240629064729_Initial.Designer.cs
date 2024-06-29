@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseBroker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240629055103_Initial")]
+    [Migration("20240629064729_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -61,7 +61,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("about_business", "british_analytica");
+                    b.ToTable("about_business");
                 });
 
             modelBuilder.Entity("Entity.Models.Contact.Contact", b =>
@@ -98,7 +98,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasIndex("PhoneNumberId");
 
-                    b.ToTable("contact", "british_analytica");
+                    b.ToTable("contact");
                 });
 
             modelBuilder.Entity("Entity.Models.Contact.Email.Email", b =>

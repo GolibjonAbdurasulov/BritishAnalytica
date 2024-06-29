@@ -7,6 +7,7 @@
         <entry key="Common:d958378c-4eff-4f48-aef1-9686dd8d3468:dbContext" value="DatabaseBroker.DataContext" />
         <entry key="Common:noBuild" value="false" />
         <entry key="Common:outputFolder" value="Migrations" />
+        <entry key="Common:useDefaultConnection" value="true" />
       </map>
     </option>
   </component>

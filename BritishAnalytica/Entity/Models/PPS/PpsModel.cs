@@ -3,7 +3,7 @@ using Entity.Models.Common;
 
 namespace Entity.Models.PPS;
 
-[Table("pps_model",Schema = "british_analytica")]
+[Table("pps_model")]
 public class PpsModel : AuditableModelBase<long>
 {
     [Column("project")] public Project.Project Project { get; set; }

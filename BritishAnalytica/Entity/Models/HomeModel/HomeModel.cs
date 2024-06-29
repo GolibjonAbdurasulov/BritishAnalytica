@@ -5,7 +5,7 @@ using Entity.Models.Common;
 
 namespace Entity.Models.HomeModel;
 
-[Table("home_model",Schema = "british_analytica")]
+[Table("home_model")]
 public class HomeModel : AuditableModelBase<long>
 {
     [Column("text")]public string Title { get; set; }

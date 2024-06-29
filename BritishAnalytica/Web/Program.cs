@@ -1,60 +1,47 @@
 using DatabaseBroker;
-using Microsoft.AspNetCore.Builder;
+using DatabaseBroker.Repositories.AboutBusinessModelRepository;
+using DatabaseBroker.Repositories.Common;
+using DatabaseBroker.Repositories.ContactRepository;
+using DatabaseBroker.Repositories.FaqQuestionsRepository;
+using DatabaseBroker.Repositories.FileRepository;
+using DatabaseBroker.Repositories.HomeModelRepository;
+using DatabaseBroker.Repositories.MottoRepository;
+using DatabaseBroker.Repositories.NewsRepository;
+using DatabaseBroker.Repositories.OurServicesRepository;
+using DatabaseBroker.Repositories.PpsRepository;
+using DatabaseBroker.Repositories.ServicePercentRepository;
+using DatabaseBroker.Repositories.TeamMemberRepository;
+using DatabaseBroker.Repositories.UserRepository;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
-
-     // var builder = WebApplication.CreateBuilder(args);
-     // // Add services to the container.
-     //    builder.Services.AddControllers();
-     //    builder.Services.AddEndpointsApiExplorer();
-     //    builder.Services.AddSwaggerGen();
-     //
-     // var configurationBuilder = new ConfigurationBuilder()
-     //     .SetBasePath(Directory.GetCurrentDirectory())
-     //     .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
-     // var configuration = configurationBuilder.Build();
-     //
-     //    var app = builder.Build();
-     // builder.Services.AddDbContext<DataContext>(options =>
-     // {
-     //     options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-     // });
-     //
-     //
-     //    // Configure the HTTP request pipeline.
-     //    if (app.Environment.IsDevelopment())
-     //    {
-     //        app.UseSwagger();
-     //        app.UseSwaggerUI();
-     //    }
-     //
-     //    app.UseHttpsRedirection();
-     //    app.UseAuthorization();
-     //    app.MapControllers();
-     //
-     //    app.Run();
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
+{
+    optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
+    
+});
+
+
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//
+ //builder.Services.AddScoped<IUserRepository, UserRepository>();
+// builder.Services.AddScoped<IAboutBusinessModelRepository, AboutBusinessModelRepository>();
+// builder.Services.AddScoped<IContactRepository, ContactRepository>();
+// builder.Services.AddScoped<IFaqQuestionRepository, FaqQuestionRepository>();
+// builder.Services.AddScoped<IFileRepository, FileRepository>();
+// builder.Services.AddScoped<IHomeModelRepository, HomeModelRepository>();
+// builder.Services.AddScoped<IMottoRepository, MottoRepository>();
+// builder.Services.AddScoped<INewsRepository, NewsRepository>();
+// builder.Services.AddScoped<IOurServicesRepository, OurServicesRepository>();
+// builder.Services.AddScoped<IPpsRepository, PpsRepository>();
+// builder.Services.AddScoped<IServicePercentRepository, ServicePercentRepository>();
+// builder.Services.AddScoped<ITeamMemberRepository, TeamMemberRepository>();
 
-// Configuration setup
-var configurationBuilder = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true);
-        
-var configuration = configurationBuilder.Build();
-
-// Add DbContext using PostgreSQL
-builder.Services.AddDbContext<DataContext>(options =>
-{
-    options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
-});
+//builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 
