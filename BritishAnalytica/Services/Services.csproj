@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\DatabaseBroker\DatabaseBroker.csproj" />
+      <ProjectReference Include="..\Entity\Entity.csproj" />
     </ItemGroup>
 
     <ItemGroup>

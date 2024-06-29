@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <!-- Services/DatabaseBroker proyekti uchun Microsoft.EntityFrameworkCore versiyasi -->
+        <ProjectReference Include="..\DatabaseBroker\DatabaseBroker.csproj" />
         <ProjectReference Include="..\Services\DatabaseBroker\DatabaseBroker.csproj" />
         <ProjectReference Include="..\Services\Services.csproj" />
     </ItemGroup>
