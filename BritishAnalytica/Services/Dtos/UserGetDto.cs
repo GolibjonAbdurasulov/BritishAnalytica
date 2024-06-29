@@ -1,6 +1,6 @@
-namespace UserService.Dtos;
+namespace Services.Dtos;
 
-public class UserCreationDto
+public class UserGetDto
 {
     public string Email { get; set; }
     public string Password { get; set; }

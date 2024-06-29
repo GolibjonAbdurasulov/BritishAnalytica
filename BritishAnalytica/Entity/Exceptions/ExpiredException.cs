@@ -1,3 +1,4 @@
+using System;
 using Entity.Exceptions.Common;
 
 namespace Entity.Exceptions;

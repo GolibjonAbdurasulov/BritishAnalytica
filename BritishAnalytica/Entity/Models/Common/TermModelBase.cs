@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Entity.Models.Common;
 
 public class TermModelBase

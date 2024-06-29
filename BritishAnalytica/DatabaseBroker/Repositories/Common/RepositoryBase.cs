@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
+using System.Threading.Tasks;
 using Entity.Exceptions;
 using Entity.Models.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseBroker.Repositories.Common;
 
-public class RepositoryBase<T, TId> : IRepositoryBase<T, TId>, IQueryable<T>, IAsyncEnumerable<T>
+public class RepositoryBase<T, TId> : IRepositoryBase<T, TId>,  IAsyncEnumerable<T>
     where T : ModelBase<TId> where TId : struct
 {
     // ReSharper disable once MemberCanBePrivate.Global

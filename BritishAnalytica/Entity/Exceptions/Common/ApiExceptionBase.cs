@@ -1,3 +1,5 @@
+using System;
+
 namespace Entity.Exceptions.Common;
 
 public class ApiExceptionBase : Exception
@@ -6,7 +8,7 @@ public class ApiExceptionBase : Exception
     {
     }
 
-    public ApiExceptionBase(string message, Exception? innerException) : base(message, innerException)
+    public ApiExceptionBase(string message, Exception innerException) : base(message, innerException)
     {
     }
 

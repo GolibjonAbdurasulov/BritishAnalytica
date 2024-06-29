@@ -1,10 +1,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Reflection;
+using Entity.Models.Common;
 
 namespace Entity.Models.Contact.PhoneNumber;
 
 [Table("phone_number")]
-public class PhoneNumber
+public class PhoneNumber : AuditableModelBase<long>
 {
     [Column("number")]public string Number { get; set; }
     [Column("working_time_start")]public string WorkingTimeStart { get; set; }

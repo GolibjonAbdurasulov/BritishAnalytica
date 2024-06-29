@@ -1,4 +1,4 @@
-namespace UserService.Dtos;
+namespace Services.Dtos;
 
 public class ChangeUserRoleDto
 {

@@ -1,6 +1,19 @@
-using System.Net.Mime;
+using System;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using Entity.Models.AboutBusinessModel;
 using Entity.Models.Common;
+using Entity.Models.Contact;
+using Entity.Models.FaqQuestion;
 using Entity.Models.File;
+using Entity.Models.HomeModel;
+using Entity.Models.Motto;
+using Entity.Models.News;
+using Entity.Models.OurServices;
+using Entity.Models.PPS;
+using Entity.Models.ServicePercent;
+using Entity.Models.TeamMember;
 using Entity.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,18 +21,22 @@ namespace DatabaseBroker;
 
 public class DataContext : DbContext
 {
-    #region File
 
     public DbSet<FileModel> Files { get; set; }
-
-    #endregion
-
-    #region Auth
-
+    public DbSet<AboutBusinessModel> AboutBusinessModels { get; set; }
+    public DbSet<Contact> Contacts { get; set; }
+    public DbSet<FaqQuestions> FaqQuestions { get; set; }
+    public DbSet<HomeModel> HomeModels { get; set; }
+    public DbSet<Motto> Mottoes { get; set; }
+    public DbSet<News> News { get; set; }
+    public DbSet<OurService> OurServices { get; set; }
+    public DbSet<PpsModel> PpsModels { get; set; }
+    public DbSet<ServicePercent> ServicePercents { get; set; }
+    public DbSet<TeamMember> TeamMembers { get; set; }
     public DbSet<User> Users { get; set; }
 
-    #endregion
-
+  
+   
 
    
 

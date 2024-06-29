@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Threading.Tasks;
 using Entity.Enums;
 
 namespace DatabaseBroker.Repositories.Common;
@@ -5,7 +7,7 @@ namespace DatabaseBroker.Repositories.Common;
 public interface IRepositoryBase<T,in TId> : IQueryable<T>
 {
     IQueryable<T> GetAllAsQueryable(bool asNoTracking = false);
-    Task<T?> GetByIdAsync(TId id, bool asNoTracking = false);
+    Task<T> GetByIdAsync(TId id, bool asNoTracking = false);
     Task<T> AddAsync(T entity);
     Task AddRangeAsync(params T[] entities);
     Task<T> UpdateAsync(T entity);
