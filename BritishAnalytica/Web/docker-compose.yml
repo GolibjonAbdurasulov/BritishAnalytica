@@ -1,0 +1,10 @@
+version: "3.4"
+
+services:
+  attendance-controller:
+    container_name: british-analytica
+    image: british-analytica
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
