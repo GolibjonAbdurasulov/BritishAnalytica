@@ -130,40 +130,5 @@ public class DataContext : DbContext
         #endregion
         
     }
-    // public class Database
-    // {
-    //     public static List<Region> GetRegionsAndDistricts()
-    //     {
-    //         List<Region> regions = new List<Region>();
-    //
-    //         using (NpgsqlConnection connection=new NpgsqlConnection(connectionString:))
-    //         {
-    //             string query = "SELECT r.name AS region_name, d.name AS district_name " +
-    //                            "FROM region r " +
-    //                            "JOIN district d ON r.id = d.region_id";
-    //             using (NpgsqlCommand command=new NpgsqlCommand(query, connection))
-    //             {
-    //               connection.Open();
-    //               NpgsqlDataReader reader = command.ExecuteReader();
-    //               Region currentRegion = null;
-    //               while (reader.Read())
-    //               {
-    //                   string regionName = reader["region_name"].ToString();
-    //                   string districtName = reader["district_name"].ToString();
-    //                   if (currentRegion == null || currentRegion.Name != regionName)
-    //                   {
-    //                       currentRegion = new Region {Name = regionName, Districts = new List<District>()};
-    //                       regions.Add(currentRegion);
-    //                   }
-    //
-    //                   currentRegion.Districts.Add(new District {Name = districtName});
-    //               }
-    //               reader.Close();
-    //             }
-    //         }
-    //
-    //         return regions;
-    //     }
-
-    //}
+   
 }

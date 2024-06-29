@@ -3,7 +3,7 @@ using Entity.Models.Common;
 using Entity.Models.PPS.Project;
 
 namespace Entity.Models.Contact;
-[Table(("contact"))]
+[Table("contact",Schema = "british_analytica")]
 public class Contact : AuditableModelBase<long>
 {
     [Column("phone_number")] public PhoneNumber.PhoneNumber PhoneNumber { get; set; }

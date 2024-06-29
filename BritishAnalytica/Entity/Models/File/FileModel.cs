@@ -4,7 +4,7 @@ using Entity.Models.Common;
 
 namespace Entity.Models.File;
 
-[Table("file_model")]
+[Table("file_model",Schema = "british_analytica")]
 public class FileModel : AuditableModelBase<Guid>
 {
     [Column("file_name")] public string FileName { get; set; }

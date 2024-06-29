@@ -3,7 +3,7 @@ using Entity.Enums;
 using Entity.Models.Common;
 
 namespace Entity.Models.Users;
-[Table("users")]
+[Table("users",Schema = "british_analytica")]
 public class User : AuditableModelBase<long>
 {
     [Column("email")] public string Email { get; set; }
