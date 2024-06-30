@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseBroker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240629064729_Initial")]
+    [Migration("20240629172929_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -309,6 +309,48 @@ namespace DatabaseBroker.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("home_model");
+                });
+
+            modelBuilder.Entity("Entity.Models.MessageModel.Message", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_read");
+
+                    b.Property<string>("MessageText")
+                        .HasColumnType("text")
+                        .HasColumnName("message_text");
+
+                    b.Property<string>("SenderEmail")
+                        .HasColumnType("text")
+                        .HasColumnName("sender_email");
+
+                    b.Property<string>("SenderName")
+                        .HasColumnType("text")
+                        .HasColumnName("sender_name");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("text")
+                        .HasColumnName("subject");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("messages");
                 });
 
             modelBuilder.Entity("Entity.Models.Motto.Motto", b =>

@@ -116,6 +116,25 @@ namespace DatabaseBroker.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "messages",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    sender_name = table.Column<string>(type: "text", nullable: true),
+                    sender_email = table.Column<string>(type: "text", nullable: true),
+                    subject = table.Column<string>(type: "text", nullable: true),
+                    message_text = table.Column<string>(type: "text", nullable: true),
+                    is_read = table.Column<bool>(type: "boolean", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_messages", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "motto",
                 columns: table => new
                 {
@@ -390,6 +409,9 @@ namespace DatabaseBroker.Migrations
 
             migrationBuilder.DropTable(
                 name: "home_model");
+
+            migrationBuilder.DropTable(
+                name: "messages");
 
             migrationBuilder.DropTable(
                 name: "motto");

@@ -8,6 +8,7 @@ using Entity.Models.Contact;
 using Entity.Models.FaqQuestion;
 using Entity.Models.File;
 using Entity.Models.HomeModel;
+using Entity.Models.MessageModel;
 using Entity.Models.Motto;
 using Entity.Models.News;
 using Entity.Models.OurServices;
@@ -27,6 +28,8 @@ public class DataContext : DbContext
     }
 
     public DbSet<FileModel> Files { get; set; }
+    
+    public DbSet<Message> Messages { get; set; }
 
     public DbSet<AboutBusinessModel> AboutBusinessModels { get; set; }
 
