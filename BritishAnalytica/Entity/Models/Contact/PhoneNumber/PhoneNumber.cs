@@ -7,6 +7,7 @@ namespace Entity.Models.Contact.PhoneNumber;
 [Table("phone_number")]
 public class PhoneNumber : AuditableModelBase<long>
 {
+    [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
     [Column("number")]public string Number { get; set; }
     [Column("working_time_start")]public string WorkingTimeStart { get; set; }
     [Column("working_time_stop")]public string WorkingTimeStop { get; set; }

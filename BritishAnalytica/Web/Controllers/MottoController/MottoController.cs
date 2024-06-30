@@ -28,7 +28,8 @@ public class MottoController : ControllerBase
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             Text = dto.Text,
-            Author = dto.Author
+            Author = dto.Author,
+            Name = dto.Name
         };
         await MottoRepository.AddAsync(entity);
         return new ResponseModelBase(dto);
@@ -40,6 +41,7 @@ public class MottoController : ControllerBase
         var res = await MottoRepository.GetByIdAsync(id);
         res.Text = dto.Text;
         res.Author = dto.Author;
+        res.Name = dto.Name;
 
         await MottoRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -60,7 +62,8 @@ public class MottoController : ControllerBase
         var dto = new MottoDto
         {
             Author = res.Author,
-            Text = res.Text
+            Text = res.Text,
+            Name = res.Name
         };
         return new ResponseModelBase(dto);
     }

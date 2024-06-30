@@ -34,6 +34,7 @@ public class NewsController : ControllerBase
             PostTitle = dto.PostTitle,
             PostBody = dto.PostBody,
             PostedDate = dto.PostedDate,
+            Name = dto.Name
         };
         await NewsRepository.AddAsync(entity);
         return new ResponseModelBase(dto);
@@ -48,6 +49,7 @@ public class NewsController : ControllerBase
         res.PostBody = dto.PostBody;
         res.PostTitle = dto.PostTitle;
         res.UpdatedAt = DateTime.Now;
+        res.Name = dto.Name;
 
         await NewsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -71,7 +73,8 @@ public class NewsController : ControllerBase
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
             PostBody = res.PostBody,
-            PostedDate = res.PostedDate
+            PostedDate = res.PostedDate,
+            Name = res.Name
         };
         
         return new ResponseModelBase(dto);
@@ -86,15 +89,16 @@ public class NewsController : ControllerBase
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
             PostBody = res.PostBody,
-            PostedDate = res.PostedDate
+            PostedDate = res.PostedDate,
+            Name = res.Name
         };
         NewsRepository.Paging(new TermModelBase
         {
             FilteringExpressions = null,
             FilterPropName = null,
             FilterPropValue = null,
-            Skip = 0,
-            Take = 0,
+            Skip = 5,
+            Take = 5,
             SortPropName = null,
             SortDirection = null,
             Total = 0

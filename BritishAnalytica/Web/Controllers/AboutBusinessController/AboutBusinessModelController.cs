@@ -31,7 +31,8 @@ public class AboutBusinessModelController : ControllerBase
             Title = dto.Title,
             Body = dto.Body,
             Futures = dto.Futures,
-            ImageId = dto.ImageId
+            ImageId = dto.ImageId,
+            Name = dto.Name
         };
         var res= await AboutBusinessModelRepository.AddAsync(aboutBusiness);
         return new ResponseModelBase(dto);
@@ -46,6 +47,7 @@ public class AboutBusinessModelController : ControllerBase
         res.Title = dto.Title;
         res.ImageId = dto.ImageId;
         res.UpdatedAt=DateTime.Now;
+        res.Name = dto.Name;
         await AboutBusinessModelRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -66,6 +68,7 @@ public class AboutBusinessModelController : ControllerBase
         {
             Title = res.Title,
             Body = res.Body,
+            Name=res.Name,
             Futures = res.Futures,
             ImageId = res.ImageId
         };

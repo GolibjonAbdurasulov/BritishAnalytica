@@ -5,6 +5,7 @@ namespace Entity.Models.Common
 {
     public class MultiLanguageField
     {
+        //
         protected bool Equals(MultiLanguageField other)
         {
             return uz == other.uz && ru == other.ru && en == other.en;

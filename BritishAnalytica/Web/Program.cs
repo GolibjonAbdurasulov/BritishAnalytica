@@ -1,9 +1,6 @@
 using DatabaseBroker;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using Npgsql;
 using Services.Services;
 using Web.BackgroundServices;
 using Web.Extension;
@@ -40,6 +37,7 @@ builder.Services.ConfigureRepositories();
 builder.Services.ConfigureServicesFromTypeAssembly<UserService>();
 builder.Services.ConfigureServicesFromTypeAssembly<AuthService>();
 builder.Services.ConfigureServicesFromTypeAssembly<FileService>();
+builder.Services.ConfigureServicesFromTypeAssembly<TranslationService>();
 
 var app = builder.Build();
 
@@ -49,6 +47,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//NpgsqlConnection.GlobalTypeMapper.UseJsonNet();
+NpgsqlConnection.GlobalTypeMapper.EnableDynamicJson();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

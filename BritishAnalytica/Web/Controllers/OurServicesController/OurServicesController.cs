@@ -32,6 +32,7 @@ public class OurServicesController : ControllerBase
             ServiceName = dto.ServiceName,
             AboutService = dto.AboutService,
             ServiceIconId = dto.ServiceIconId,
+            Name = dto.Name
         };
         await OurServicesRepository.AddAsync(entity);
         return new ResponseModelBase(dto);
@@ -45,6 +46,7 @@ public class OurServicesController : ControllerBase
         res.ServiceName = dto.ServiceName;
         res.ServiceIconId = dto.ServiceIconId;
         res.UpdatedAt = DateTime.Now;
+        res.Name = dto.Name;
 
         await OurServicesRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -66,7 +68,8 @@ public class OurServicesController : ControllerBase
         {
             ServiceName = res.ServiceName,
             AboutService = res.AboutService,
-            ServiceIconId = res.ServiceIconId
+            ServiceIconId = res.ServiceIconId,
+            Name = res.Name
         };
         
         return new ResponseModelBase(dto);

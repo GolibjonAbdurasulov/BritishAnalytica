@@ -33,20 +33,24 @@ public class PpsController : ControllerBase
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
+            Name = dto.Name,
             Project = new Project
             {
                 Title = dto.ProjectDto.Title,
-                Body = dto.ProjectDto.Title
+                Body = dto.ProjectDto.Title,
+                Name = dto.ProjectDto.Name
             },
             Planing = new Planing
             {
                 Title = dto.PlaningDto.Title,
-                Body = dto.PlaningDto.Body
+                Body = dto.PlaningDto.Body,
+                Name = dto.PlaningDto.Name
             },
             Success = new Success
             {
                 Title = dto.SuccessDto.Title,
-                Body = dto.SuccessDto.Body
+                Body = dto.SuccessDto.Body,
+                Name = dto.SuccessDto.Name
             }
         };
         await PpsRepository.AddAsync(entity);
@@ -60,6 +64,7 @@ public class PpsController : ControllerBase
         res.Project.Title = dto.ProjectDto.Title;
         res.Project.Body = dto.ProjectDto.Body;
         res.UpdatedAt = DateTime.Now;
+        res.Name = dto.Name;
 
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -72,7 +77,7 @@ public class PpsController : ControllerBase
         res.Planing.Title = dto.PlaningDto.Title;
         res.Planing.Body = dto.PlaningDto.Body;
         res.UpdatedAt = DateTime.Now;
-
+        res.Name = dto.Name;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     } 
@@ -84,7 +89,7 @@ public class PpsController : ControllerBase
         res.Success.Title = dto.SuccessDto.Title;
         res.Success.Body = dto.SuccessDto.Body;
         res.UpdatedAt = DateTime.Now;
-
+        res.Name = dto.Name;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -106,18 +111,22 @@ public class PpsController : ControllerBase
             PlaningDto = new PlaningDto
             {
                 Title = res.Planing.Title,
-                Body = res.Planing.Body
+                Body = res.Planing.Body,
+                Name = res.Name
             },
             ProjectDto = new ProjectDto
             {
                 Title = res.Project.Title,
-                Body = res.Project.Body
+                Body = res.Project.Body,
+                Name = res.Name
             },
             SuccessDto = new SuccessDto
             {
                 Title = res.Success.Title,
-                Body = res.Success.Body
-            }
+                Body = res.Success.Body,
+                Name = res.Name
+            },
+            Name = res.Name
         };
         
         return new ResponseModelBase(dto);

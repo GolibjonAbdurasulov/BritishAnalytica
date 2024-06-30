@@ -29,7 +29,8 @@ public class HomeModelController : ControllerBase
             UpdatedAt = DateTime.Now,
             Title = dto.Title,
             Body = dto.Body,
-            ImageIds = dto.ImageIds
+            ImageIds = dto.ImageIds,
+            Name = dto.Name
         };
         await HomeModelRepository.AddAsync(entity);
         return new ResponseModelBase(dto);
@@ -53,7 +54,7 @@ public class HomeModelController : ControllerBase
         res.Title = dto.Title;
         res.Body = dto.Body;
         res.ImageIds = dto.ImageIds;
-
+        res.Name = dto.Name;
         await HomeModelRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -84,7 +85,8 @@ public class HomeModelController : ControllerBase
         {
             Title = res.Title,
             Body = res.Body,
-            ImageIds = res.ImageIds
+            ImageIds = res.ImageIds,
+            Name = res.Name
         };
         return new ResponseModelBase(dto);
     }

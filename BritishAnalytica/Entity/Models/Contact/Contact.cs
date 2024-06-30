@@ -6,6 +6,7 @@ namespace Entity.Models.Contact;
 [Table("contact")]
 public class Contact : AuditableModelBase<long>
 {
+    [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
     [Column("phone_number")] public PhoneNumber.PhoneNumber PhoneNumber { get; set; }
     [Column("email")] public Email.Email Email { get; set; }
     [Column("location")] public Location.Location Location { get; set; }

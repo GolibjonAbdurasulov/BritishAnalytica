@@ -32,6 +32,7 @@ public class TeamMemberController : ControllerBase
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             Name = dto.Name,
+            FullName = dto.FullName,
             Role = dto.Role,
             ImageId = dto.ImageId
         };
@@ -44,6 +45,7 @@ public class TeamMemberController : ControllerBase
     {
         var res = await TeamMemberRepository.GetByIdAsync(id);
         res.Name = dto.Name;
+        res.FullName = dto.FullName;
         res.Role = dto.Role;
         res.ImageId = dto.ImageId;
 
@@ -65,9 +67,10 @@ public class TeamMemberController : ControllerBase
         var res = TeamMemberRepository.LastOrDefault();
         var dto = new TeamMemberDto
         {
-            Name = res.Name,
+            Name = res.FullName,
             Role = res.Role,
-            ImageId = res.ImageId
+            ImageId = res.ImageId,
+            FullName = res.FullName,
         };
         
         return new ResponseModelBase(dto);

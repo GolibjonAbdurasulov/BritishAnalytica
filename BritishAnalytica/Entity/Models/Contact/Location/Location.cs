@@ -6,6 +6,7 @@ namespace Entity.Models.Contact.Location;
 [Table("location")]
 public class Location : AuditableModelBase<long>
 {
+    [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
     [Column("country")]public string Country { get; set; }
     [Column("region")]public string Region { get; set; }
     [Column("district")]public string District { get; set; }

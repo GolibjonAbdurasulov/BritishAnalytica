@@ -6,6 +6,7 @@ namespace Entity.Models.News;
 [Table("news")]
 public class News : AuditableModelBase<long>
 {
+    [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
     [Column("category")] public string Category { get; set; }
     [Column("image_id")] public Guid ImageId { get; set; }
     [Column("post_title")] public string PostTitle { get; set; }

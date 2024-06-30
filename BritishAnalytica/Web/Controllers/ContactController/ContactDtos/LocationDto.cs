@@ -1,7 +1,11 @@
+
+using Entity.Models.Common;
+
 namespace Web.Controllers.ContactController.ContactDtos;
 
 public class LocationDto
 {
+    public MultiLanguageField Name { get; set; }
     public string Country { get; set; }
     public string Region { get; set; }
     public string District { get; set; }

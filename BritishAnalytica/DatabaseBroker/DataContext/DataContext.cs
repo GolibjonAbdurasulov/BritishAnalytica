@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using Entity.Models.AboutBusinessModel;
 using Entity.Models.Common;
 using Entity.Models.Contact;
@@ -16,6 +17,7 @@ using Entity.Models.PPS;
 using Entity.Models.ServicePercent;
 using Entity.Models.TeamMember;
 using Entity.Models.Users;
+using Entity.Models.Translation;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseBroker;
@@ -28,6 +30,7 @@ public class DataContext : DbContext
     }
 
     public DbSet<FileModel> Files { get; set; }
+    public DbSet<Translation> Translations { get; set; }
     
     public DbSet<Message> Messages { get; set; }
 

@@ -30,20 +30,23 @@ public class ContactController : ControllerBase
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
+            Name = dto.Name,
             PhoneNumber = new PhoneNumber
             {
                 Number = dto.PhoneNumberDto.Number,
                 WorkingTimeStart = dto.PhoneNumberDto.WorkingTimeStart,
                 WorkingTimeStop = dto.PhoneNumberDto.WorkingTimeStop,
                 WorkingDayStart = dto.PhoneNumberDto.WorkingDayStart,
-                WorkingDayStop = dto.PhoneNumberDto.WorkingDayStop
+                WorkingDayStop = dto.PhoneNumberDto.WorkingDayStop,
+                Name = dto.PhoneNumberDto.Name
             },
             Email = new Email
             {
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
                 EmailAddress = dto.EmailDto.EmailAddress,
-                Web = dto.EmailDto.Web
+                Web = dto.EmailDto.Web,
+                Name = dto.EmailDto.Name
             },
             Location = new Location
             {
@@ -53,7 +56,8 @@ public class ContactController : ControllerBase
                 Region = dto.LocationDto.Region,
                 District = dto.LocationDto.District,
                 Street = dto.LocationDto.Street,
-                Home = dto.LocationDto.Home
+                Home = dto.LocationDto.Home,
+                Name = dto.LocationDto.Name
             }
         };
         await ContactRepository.AddAsync(entity);

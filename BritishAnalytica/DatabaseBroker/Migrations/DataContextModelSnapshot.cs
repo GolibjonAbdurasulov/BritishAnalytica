@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using DatabaseBroker;
+using Entity.Models.Common;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -48,6 +49,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("imageId");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<string>("Title")
                         .HasColumnType("text")
                         .HasColumnName("title");
@@ -79,6 +84,10 @@ namespace DatabaseBroker.Migrations
 
                     b.Property<long?>("LocationId")
                         .HasColumnType("bigint");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<long?>("PhoneNumberId")
                         .HasColumnType("bigint");
@@ -114,6 +123,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<string>("EmailAddress")
                         .HasColumnType("text")
                         .HasColumnName("email_address");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -153,6 +166,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("text")
                         .HasColumnName("home");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<string>("Region")
                         .HasColumnType("text")
                         .HasColumnName("region");
@@ -182,6 +199,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<string>("Number")
                         .HasColumnType("text")
@@ -228,6 +249,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<string>("Title")
                         .HasColumnType("text")
@@ -294,6 +319,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<List<Guid>>("ImageIds")
                         .HasColumnType("uuid[]")
                         .HasColumnName("image_id");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<string>("Title")
                         .HasColumnType("text")
@@ -367,6 +396,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<string>("Text")
                         .HasColumnType("text")
                         .HasColumnName("text");
@@ -400,6 +433,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uuid")
                         .HasColumnName("image_id");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<string>("PostBody")
                         .HasColumnType("text")
@@ -439,6 +476,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<Guid>("ServiceIconId")
                         .HasColumnType("uuid")
                         .HasColumnName("service_icon_id");
@@ -469,6 +510,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("text")
                         .HasColumnName("body");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<string>("Title")
                         .HasColumnType("text")
                         .HasColumnName("title");
@@ -490,6 +535,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<long?>("PlaningId")
                         .HasColumnType("bigint");
@@ -528,6 +577,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("text")
                         .HasColumnName("body");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<string>("Title")
                         .HasColumnType("text")
                         .HasColumnName("title");
@@ -550,6 +603,10 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("text")
                         .HasColumnName("body");
 
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
+
                     b.Property<string>("Title")
                         .HasColumnType("text")
                         .HasColumnName("title");
@@ -571,6 +628,10 @@ namespace DatabaseBroker.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
+
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("name");
 
                     b.Property<string>("ServiceName")
                         .HasColumnType("text")
@@ -602,12 +663,16 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
+                    b.Property<string>("FullName")
+                        .HasColumnType("text")
+                        .HasColumnName("full_name");
+
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uuid")
                         .HasColumnName("image_id");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Name")
+                        .HasColumnType("jsonb")
                         .HasColumnName("name");
 
                     b.Property<string>("Role")
@@ -620,7 +685,43 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("team_member");
+                    b.ToTable("team_members");
+                });
+
+            modelBuilder.Entity("Entity.Models.Translation.Translation", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Code")
+                        .HasColumnType("text")
+                        .HasColumnName("code");
+
+                    b.Property<string>("En")
+                        .HasColumnType("text")
+                        .HasColumnName("en")
+                        .HasAnnotation("Relational:JsonPropertyName", "en");
+
+                    b.Property<string>("Ru")
+                        .HasColumnType("text")
+                        .HasColumnName("ru")
+                        .HasAnnotation("Relational:JsonPropertyName", "ru");
+
+                    b.Property<string>("Uz")
+                        .HasColumnType("text")
+                        .HasColumnName("uz")
+                        .HasAnnotation("Relational:JsonPropertyName", "uz");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.ToTable("translations");
                 });
 
             modelBuilder.Entity("Entity.Models.Users.User", b =>

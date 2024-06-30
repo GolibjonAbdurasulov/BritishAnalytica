@@ -29,7 +29,8 @@ public class ServicePercentController : ControllerBase
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             ServiceName = dto.ServiceName,
-            ServicePerecnt = dto.ServicePerecnt
+            ServicePerecnt = dto.ServicePerecnt,
+            Name = dto.Name
         };
         await ServicePercentRepository.AddAsync(entity);
         return new ResponseModelBase(dto);
@@ -42,6 +43,7 @@ public class ServicePercentController : ControllerBase
         res.ServiceName = dto.ServiceName;
         res.ServicePerecnt = dto.ServicePerecnt;
         res.UpdatedAt = DateTime.Now;
+        res.Name = dto.Name;
 
         await ServicePercentRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -62,7 +64,8 @@ public class ServicePercentController : ControllerBase
         var dto = new ServicePercentDto()
         {
             ServiceName = res.ServiceName,
-            ServicePerecnt = res.ServicePerecnt
+            ServicePerecnt = res.ServicePerecnt,
+            Name = res.Name
         };
         
         return new ResponseModelBase(dto);
