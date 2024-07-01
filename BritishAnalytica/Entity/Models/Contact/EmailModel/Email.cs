@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
-namespace Entity.Models.Contact.Email;
+namespace Entity.Models.Contact.EmailModel;
 [Table("email")]
 public class Email : AuditableModelBase<long>
 {

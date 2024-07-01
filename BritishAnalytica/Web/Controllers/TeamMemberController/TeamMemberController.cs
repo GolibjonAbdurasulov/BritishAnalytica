@@ -5,6 +5,7 @@ using DatabaseBroker.Repositories.ServicePercentRepository;
 using DatabaseBroker.Repositories.TeamMemberRepository;
 using Entity.Models.ServicePercent;
 using Entity.Models.TeamMember;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;
 using Web.Controllers.ServicePercentController.ServicePercentDtos;
@@ -24,6 +25,7 @@ public class TeamMemberController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync(TeamMemberDto dto)
     {
         var entity = new TeamMember
@@ -41,6 +43,7 @@ public class TeamMemberController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateAsync(TeamMemberDto dto, long id)
     {
         var res = await TeamMemberRepository.GetByIdAsync(id);
@@ -54,9 +57,10 @@ public class TeamMemberController : ControllerBase
     }
     
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {
-        var res = TeamMemberRepository.FirstOrDefault();
+        var res =  await TeamMemberRepository.GetByIdAsync(id);
         await TeamMemberRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
@@ -64,7 +68,7 @@ public class TeamMemberController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetByIdAsync(long id)
     {
-        var res = TeamMemberRepository.LastOrDefault();
+        var res =  await TeamMemberRepository.GetByIdAsync(id);
         var dto = new TeamMemberDto
         {
             Name = res.FullName,
@@ -81,7 +85,18 @@ public class TeamMemberController : ControllerBase
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = TeamMemberRepository.GetAllAsQueryable().ToList();
-        return new ResponseModelBase(res);
+        List<TeamMemberDto> members = new List<TeamMemberDto>();
+        foreach (var teamMember in res)
+        {
+            members.Add(new TeamMemberDto
+            {
+                Name = teamMember.Name,
+                FullName = teamMember.FullName,
+                Role = teamMember.Role,
+                ImageId = teamMember.ImageId
+            });
+        }
+        return new ResponseModelBase(members);
     }
 
 }

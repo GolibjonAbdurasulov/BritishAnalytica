@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
-namespace Entity.Models.Contact.Location;
+namespace Entity.Models.Contact.LocationModel;
 
 [Table("location")]
 public class Location : AuditableModelBase<long>

@@ -25,9 +25,13 @@ public class UserService : IUserService
         var oldUser = await _userRepository.GetByIdAsync(id);
         var dto = new UserGetDto
         {
+            UserName=oldUser.UserName,
             Email = oldUser.Email,
             Password = oldUser.Password,
-            Role = oldUser.Role.ToString()
+            Role = oldUser.Role.ToString(),
+            IsSigned = oldUser.IsSigned
+            
+            
         };
         return dto;
     }
@@ -58,9 +62,11 @@ public class UserService : IUserService
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
+            UserName=dto.UserName,
             Email = dto.Email,
             Password = dto.Password,
-            Role = Enum.Parse<Role>(dto.Role)
+            Role = Enum.Parse<Role>(dto.Role),
+            IsSigned = false
         };
         await _userRepository.AddAsync(user);
         return dto;

@@ -99,15 +99,12 @@ public class DataContext : DbContext
         TrackActionsAt();
         return base.SaveChangesAsync(cancellationToken);
     }
-
-
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        #region Configurations related to MultiLanguageField
-
-        //Configuring all MultiLanguage fields over entities
+       
         var mlfs = this.GetType().GetProperties()
             .Where(x => x.PropertyType.IsGenericType)
             .Where(x => x.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>))
@@ -120,11 +117,7 @@ public class DataContext : DbContext
                 .Entity(multiLanguageField.ReflectedType!)
                 .Property(multiLanguageField.PropertyType, multiLanguageField.Name)
                 .HasColumnType("jsonb");
-
-        #endregion
-
-        #region Helpers Configuration
-
+        
         var helpers = modelBuilder
             .Model
             .GetEntityTypes()
@@ -137,8 +130,6 @@ public class DataContext : DbContext
                 .HasIndex(nameof(HelperModelBase<long>.Code))
                 .IsUnique();
 
-        #endregion
-        
     }
    
 }

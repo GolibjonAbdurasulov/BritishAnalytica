@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
-namespace Entity.Models.PPS.Success;
+namespace Entity.Models.PPS.SuccessModel;
 
 [Table("success")]
 public class Success : ModelBase<long>

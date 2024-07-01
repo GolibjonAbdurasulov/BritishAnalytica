@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.OurServicesRepository;
 using Entity.Models.OurServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;
 using Web.Controllers.OurServicesController.OurServicesDtos;
@@ -23,6 +24,7 @@ public class OurServicesController : ControllerBase
     
     
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync(OurServicesDto dto)
     {
         var entity = new OurService
@@ -39,6 +41,7 @@ public class OurServicesController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateAsync(OurServicesDto dto, long id)
     {
         var res = await OurServicesRepository.GetByIdAsync(id);
@@ -53,9 +56,10 @@ public class OurServicesController : ControllerBase
     }
     
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {
-        var res = OurServicesRepository.FirstOrDefault();
+        var res = await OurServicesRepository.GetByIdAsync(id);
         await OurServicesRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
@@ -63,7 +67,7 @@ public class OurServicesController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetByIdAsync(long id)
     {
-        var res = OurServicesRepository.LastOrDefault();
+        var res =  await OurServicesRepository.GetByIdAsync(id);
         var dto = new OurServicesDto
         {
             ServiceName = res.ServiceName,
@@ -80,6 +84,17 @@ public class OurServicesController : ControllerBase
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = OurServicesRepository.GetAllAsQueryable().ToList();
-        return new ResponseModelBase(res);
+        List<OurService> services = new List<OurService>();
+        foreach (var ourService in res)
+        {
+            services.Add(new OurService
+            {
+                Name = ourService.Name,
+                ServiceName = ourService.ServiceName,
+                AboutService = ourService.AboutService,
+                ServiceIconId = ourService.ServiceIconId
+            });
+        }
+        return new ResponseModelBase(services);
     }
 }

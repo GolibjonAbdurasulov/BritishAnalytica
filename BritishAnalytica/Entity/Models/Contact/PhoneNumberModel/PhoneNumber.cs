@@ -1,8 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Reflection;
 using Entity.Models.Common;
 
-namespace Entity.Models.Contact.PhoneNumber;
+namespace Entity.Models.Contact.PhoneNumberModel;
 
 [Table("phone_number")]
 public class PhoneNumber : AuditableModelBase<long>

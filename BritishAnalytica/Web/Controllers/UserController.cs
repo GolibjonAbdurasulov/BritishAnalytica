@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Dtos;
 using Services.Interfaces;
@@ -19,6 +20,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync( UserCreationDto dto)
     {
        var res= await UserService.CreateAsync(dto);
@@ -26,6 +28,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateEmailAsync( UserEmailUpdateDto dto)
     {
         var user =await UserService.UpdateUserEmail(dto);
@@ -33,6 +36,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdatePasswordAsync( UserPasswordUpdateDto dto)
     {
         var res =await UserService.UpdateUserPassword(dto);
@@ -40,6 +44,7 @@ public class UserController : ControllerBase
     }
     
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> ChangeUserRoleAsync( ChangeUserRoleDto dto)
     {
         var res =await UserService.ChangeUserRole(dto);
@@ -47,12 +52,14 @@ public class UserController : ControllerBase
     }
     
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {
         var res =await UserService.DeleteAsync(id);
         return new ResponseModelBase(res);
     }
     [HttpGet]
+    [Authorize]
     public async Task<ResponseModelBase> GetAsync(long id)
     {
         var res =await UserService.GetByIdAsync(id);

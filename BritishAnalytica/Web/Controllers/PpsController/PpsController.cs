@@ -1,16 +1,12 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using DatabaseBroker.Repositories.OurServicesRepository;
 using DatabaseBroker.Repositories.PpsRepository;
-using Entity.Models.OurServices;
 using Entity.Models.PPS;
-using Entity.Models.PPS.Planing;
-using Entity.Models.PPS.Project;
-using Entity.Models.PPS.Success;
+using Entity.Models.PPS.PlaningModel;
+using Entity.Models.PPS.ProjectModel;
+using Entity.Models.PPS.SuccessModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Common;
-using Web.Controllers.OurServicesController.OurServicesDtos;
 using Web.Controllers.PpsController.PpsDtos;
 
 namespace Web.Controllers.PpsController;
@@ -27,6 +23,7 @@ public class PpsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync(PpsModelDto dto)
     {
         var entity = new PpsModel
@@ -58,6 +55,7 @@ public class PpsController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateProjectAsync(PpsModelDto dto, long id)
     {
         var res = await PpsRepository.GetByIdAsync(id);
@@ -71,6 +69,7 @@ public class PpsController : ControllerBase
     }
     
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdatePalaningAsync(PpsModelDto dto, long id)
     {
         var res = await PpsRepository.GetByIdAsync(id);
@@ -83,6 +82,7 @@ public class PpsController : ControllerBase
     } 
     
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateSuccessAsync(PpsModelDto dto, long id)
     {
         var res = await PpsRepository.GetByIdAsync(id);
@@ -95,9 +95,10 @@ public class PpsController : ControllerBase
     }
 
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {
-        var res = PpsRepository.FirstOrDefault();
+        var res =  await PpsRepository.GetByIdAsync(id);
         await PpsRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
@@ -105,7 +106,7 @@ public class PpsController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetAsync()
     {
-        var res = PpsRepository.LastOrDefault();
+        var res = await PpsRepository.FirstOrDefaultAsync();
         var dto = new PpsModelDto
         {
             PlaningDto = new PlaningDto
@@ -131,7 +132,4 @@ public class PpsController : ControllerBase
         
         return new ResponseModelBase(dto);
     }
-    
-    
-   
 }

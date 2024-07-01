@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.ServicePercentRepository;
 using Entity.Models.ServicePercent;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;
 using Web.Controllers.ServicePercentController.ServicePercentDtos;
@@ -22,6 +23,7 @@ public class ServicePercentController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync(ServicePercentDto dto)
     {
         var entity = new ServicePercent
@@ -37,6 +39,7 @@ public class ServicePercentController : ControllerBase
     }
 
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateAsync(ServicePercentDto dto, long id)
     {
         var res = await ServicePercentRepository.GetByIdAsync(id);
@@ -50,9 +53,10 @@ public class ServicePercentController : ControllerBase
     }
     
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {
-        var res = ServicePercentRepository.FirstOrDefault();
+        var res = await ServicePercentRepository.GetByIdAsync(id);
         await ServicePercentRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
@@ -60,7 +64,7 @@ public class ServicePercentController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetByIdAsync(long id)
     {
-        var res = ServicePercentRepository.LastOrDefault();
+        var res =  await ServicePercentRepository.GetByIdAsync(id);
         var dto = new ServicePercentDto()
         {
             ServiceName = res.ServiceName,
@@ -76,7 +80,17 @@ public class ServicePercentController : ControllerBase
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = ServicePercentRepository.GetAllAsQueryable().ToList();
-        return new ResponseModelBase(res);
+        List<ServicePercentDto> services = new List<ServicePercentDto>();
+        foreach (var servicePercent in res)
+        {
+            services.Add(new ServicePercentDto
+            {
+                Name = servicePercent.Name,
+                ServiceName = servicePercent.ServiceName,
+                ServicePerecnt = servicePercent.ServicePerecnt
+            });
+        }
+        return new ResponseModelBase(services);
     }
 
 }

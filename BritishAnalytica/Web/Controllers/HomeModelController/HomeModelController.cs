@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.HomeModelRepository;
 using Entity.Models.HomeModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Common;
 using Web.Controllers.HomeModelController.HomeModelDtos;
 
@@ -21,6 +23,7 @@ public class HomeModelController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync(HomeModelDto dto)
     {
         var entity = new HomeModel
@@ -37,9 +40,10 @@ public class HomeModelController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> AddImageAsync(Guid id)
     {
-        var res = HomeModelRepository.LastOrDefault();
+        var res =  await HomeModelRepository.FirstOrDefaultAsync();
         res.ImageIds.Add(id);
         await HomeModelRepository.UpdateAsync(res);
         return new ResponseModelBase(id);
@@ -48,6 +52,7 @@ public class HomeModelController : ControllerBase
 
 
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateAsync(HomeModelDto dto, long id)
     {
         var res = await HomeModelRepository.GetByIdAsync(id);
@@ -61,17 +66,19 @@ public class HomeModelController : ControllerBase
 
 
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync()
     {
-        var res = HomeModelRepository.LastOrDefault();
+        var res =  await HomeModelRepository.FirstOrDefaultAsync();
         await HomeModelRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
     
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteImageAsync(Guid id)
     {
-        var res = HomeModelRepository.LastOrDefault();
+        var res = await HomeModelRepository.FirstOrDefaultAsync();
         res.ImageIds.Remove(id);
         await HomeModelRepository.UpdateAsync(res);
         return new ResponseModelBase(res);
@@ -80,12 +87,12 @@ public class HomeModelController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetAsync()
     {
-        var res = HomeModelRepository.LastOrDefault();
+        var res = await HomeModelRepository.FirstOrDefaultAsync();
         var dto = new HomeModelDto()
         {
             Title = res.Title,
             Body = res.Body,
-            ImageIds = res.ImageIds,
+            ImageIds = res.ImageIds.ToList(),
             Name = res.Name
         };
         return new ResponseModelBase(dto);

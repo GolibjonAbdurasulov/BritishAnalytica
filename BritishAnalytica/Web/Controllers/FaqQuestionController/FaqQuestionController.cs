@@ -4,7 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.FaqQuestionsRepository;
 using Entity.Models.FaqQuestion;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Common;
 using Web.Controllers.FaqQuestionController.FaqQuestionDtos;
 
@@ -23,6 +25,7 @@ public class FaqQuestionController : ControllerBase
 
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync( FaqQuestionDto dto)
     {
         var entity = new FaqQuestions
@@ -40,6 +43,7 @@ public class FaqQuestionController : ControllerBase
 
   
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto,long id)
     {
         var res =  await FaqQuestionRepository.GetByIdAsync(id);
@@ -53,9 +57,11 @@ public class FaqQuestionController : ControllerBase
     
     
     [HttpDelete]
-    public async Task<ResponseModelBase> DeleteAsync()
+    [Authorize]
+    public async Task<ResponseModelBase> DeleteAsync(long id)
     {
-        var res =  FaqQuestionRepository.LastOrDefault();
+        
+        var res =  await FaqQuestionRepository.GetByIdAsync(id);
         await FaqQuestionRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }

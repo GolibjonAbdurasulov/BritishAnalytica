@@ -8,11 +8,4 @@
       <ProjectReference Include="..\DatabaseBroker\DatabaseBroker.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.1.0" />
-      <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.1.0" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.6" />
-    </ItemGroup>
-    
-
 </Project>

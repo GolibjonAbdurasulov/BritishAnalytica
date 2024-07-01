@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Entity.Models.Common
 {
@@ -58,7 +58,7 @@ namespace Entity.Models.Common
 
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this);
+            return JsonConvert.SerializeObject(this);
         }
     }
 }

@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.AboutBusinessModelRepository;
 using Entity.Models.AboutBusinessModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Web.Common;
 using Web.Controllers.AboutBusinessController.Dtos;
 
@@ -22,6 +24,7 @@ public class AboutBusinessModelController : ControllerBase
 
 
     [HttpPost]
+    [Authorize]
     public async Task<ResponseModelBase> CreateAsync( AboutBusinessDto dto)
     {
         var aboutBusiness = new AboutBusinessModel
@@ -34,14 +37,15 @@ public class AboutBusinessModelController : ControllerBase
             ImageId = dto.ImageId,
             Name = dto.Name
         };
-        var res= await AboutBusinessModelRepository.AddAsync(aboutBusiness);
+         await AboutBusinessModelRepository.AddAsync(aboutBusiness);
         return new ResponseModelBase(dto);
-    }
+    } 
     
     [HttpPut]
+    [Authorize]
     public async Task<ResponseModelBase> UpdateAsync( AboutBusinessDto dto)
     {
-        var res =  AboutBusinessModelRepository.LastOrDefault();
+        var res = await AboutBusinessModelRepository.FirstOrDefaultAsync();
         res.Body = dto.Body;
         res.Futures = dto.Futures;
         res.Title = dto.Title;
@@ -54,22 +58,24 @@ public class AboutBusinessModelController : ControllerBase
     
     
     [HttpDelete]
+    [Authorize]
     public async Task<ResponseModelBase> DeleteAsync()
     {
-        var res =  AboutBusinessModelRepository.LastOrDefault();
+        var res =  await AboutBusinessModelRepository.FirstOrDefaultAsync();
         await AboutBusinessModelRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
     [HttpGet]
     public async Task<ResponseModelBase> GetAsync()
     {
-        var res =  AboutBusinessModelRepository.LastOrDefault();
+        var res = await AboutBusinessModelRepository.FirstOrDefaultAsync();
+
         var dto = new AboutBusinessDto
         {
             Title = res.Title,
             Body = res.Body,
             Name=res.Name,
-            Futures = res.Futures,
+            Futures = res.Futures.ToList(),
             ImageId = res.ImageId
         };
         return new ResponseModelBase(dto);

@@ -1,10 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
-namespace Entity.Models.PPS.Project;
+namespace Entity.Models.PPS.PlaningModel;
 
-[Table("project")]
-public class Project : ModelBase<long>
+[Table("planing")]
+public class Planing : ModelBase<long>
 {
     [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
     [Column("title")]public string Title { get; set; }
