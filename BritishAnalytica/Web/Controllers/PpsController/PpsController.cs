@@ -1,11 +1,14 @@
 using DatabaseBroker.Repositories.PpsRepository;
+using DatabaseBroker.Repositories.PpsRepository.PlaningRepository;
+using DatabaseBroker.Repositories.PpsRepository.ProjectRepository;
+using DatabaseBroker.Repositories.PpsRepository.SuccessRepository;
 using Entity.Models.PPS;
 using Entity.Models.PPS.PlaningModel;
 using Entity.Models.PPS.ProjectModel;
 using Entity.Models.PPS.SuccessModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore; 
 using Web.Common;
 using Web.Controllers.PpsController.PpsDtos;
 
@@ -16,10 +19,16 @@ namespace Web.Controllers.PpsController;
 public class PpsController : ControllerBase
 {
     private IPpsRepository PpsRepository { get; set; }
+    private IProjectRepository ProjectRepository { get; set; }
+    private IPlaningRepository PlaningRepository { get; set; }
+    private ISuccessRepository SuccessRepository { get; set; }
 
-    public PpsController(IPpsRepository ppsRepository)
+    public PpsController(IPpsRepository ppsRepository, IProjectRepository projectRepository, IPlaningRepository planingRepository, ISuccessRepository successRepository)
     {
         PpsRepository = ppsRepository;
+        ProjectRepository = projectRepository;
+        PlaningRepository = planingRepository;
+        SuccessRepository = successRepository;
     }
 
     [HttpPost]
@@ -98,11 +107,22 @@ public class PpsController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> DeleteAsync(long id)
     {
-        var res =  await PpsRepository.GetByIdAsync(id);
-        await PpsRepository.RemoveAsync(res);
-        return new ResponseModelBase(res);
+        var ppsModel =  await PpsRepository.GetByIdAsync(id);
+        await PpsRepository.RemoveAsync(ppsModel);
+        
+        var planing = await PlaningRepository.GetByIdAsync(ppsModel.PlaningId);
+        await PlaningRepository.RemoveAsync(planing);
+
+        var project = await ProjectRepository.GetByIdAsync(ppsModel.ProjectId);
+        await ProjectRepository.RemoveAsync(project);
+
+        var success = await SuccessRepository.GetByIdAsync(ppsModel.SuccessId);
+        await SuccessRepository.RemoveAsync(success);
+        
+        return new ResponseModelBase(ppsModel);
     }
 
+    
     [HttpGet]
     public async Task<ResponseModelBase> GetAsync()
     {

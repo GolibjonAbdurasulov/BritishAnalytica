@@ -3,9 +3,9 @@ using Entity.Models.Common;
 
 namespace Entity.Models.Contact.EmailModel;
 [Table("email")]
-public class Email : AuditableModelBase<long>
+public class Email : ModelBase<long>
 {
-    [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
-    [Column("email_address")]public string EmailAddress { get; set; }
-    [Column("web")]public string Web { get; set; }
+    [Column("name", TypeName = "jsonb")] public virtual MultiLanguageField Name { get; set; } = default!;
+    [Column("email_address")]public virtual string EmailAddress { get; set; }
+    [Column("web")]public virtual string Web { get; set; }
 }

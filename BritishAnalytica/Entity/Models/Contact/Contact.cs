@@ -16,6 +16,4 @@ public class Contact : AuditableModelBase<long>
 
     [Column("location_id"),ForeignKey(nameof(Location))] public long LocationId { get; set; }
     public virtual Location Location { get; set; }
-
-    
 }

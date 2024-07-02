@@ -20,8 +20,8 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.Environment
 builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
 {
     optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
-    optionsBuilder.UseChangeTrackingProxies(); // ChangeTrackingProxies ni qo'shish
     optionsBuilder.UseLazyLoadingProxies();
+    //optionsBuilder.UseChangeTrackingProxies();
 });
 
 // Telegram bot sozlamalarni konfiguratsiyalash
@@ -65,7 +65,7 @@ builder
 // Swagger UI ni sozlash
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "hytps://britishanalytica", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "https://britishanalytica", Version = "v1" });
 
     // JWT ni Swagger ga integratsiya qilish
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
