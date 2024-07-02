@@ -9,7 +9,8 @@ body{
   "email": "string",
   "password": "string"
 }
-
+--bash
+fvgdbhjbf
 POST /Auth/LogOut | Token  |  LogOut method
 query{}
 body{
