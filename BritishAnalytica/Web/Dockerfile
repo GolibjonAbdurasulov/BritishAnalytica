@@ -7,8 +7,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["Web/Web.csproj", "Web/"]
 COPY ["Services/Services.csproj", "Services/"]
-COPY ["DatabaseBroker/DatabaseBroker.csproj", "DatabaseBroker/"]
 COPY ["Entity/Entity.csproj", "Entity/"]
+COPY ["DatabaseBroker/DatabaseBroker.csproj", "DatabaseBroker/"]
 RUN dotnet restore "Web/Web.csproj"
 COPY . .
 WORKDIR "/src/Web"
