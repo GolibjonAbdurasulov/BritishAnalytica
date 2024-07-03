@@ -11,14 +11,56 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: '8.0.x'
+
       - name: Restore dependencies
         run: |
           dotnet restore BritishAnalytica/BritishAnalytica.sln
+
       - name: Build with Release configuration
         run: |
           dotnet build --configuration Release BritishAnalytica/BritishAnalytica.sln
 
+  dockerize:
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t $DOCKER_USERNAME/british_analytica -f BritishAnalytica/Dockerfile .
+
+      - name: Push Docker image
+        run: |
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push $DOCKER_USERNAME/british_analytica
+
+  deploy: 
+    name: Deploy BritishAnalytica
+    needs: dockerize
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: SSH and deploy with Docker Compose
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.HOST_IP }}
+          key: ${{ secrets.HOST_KEY }}
+          username: ${{ secrets.HOST_USERNAME }}
+          script: |
+            cd ~/app
+            docker-compose up -d --no-deps --build british_analytica
+
+
+ 
+  
