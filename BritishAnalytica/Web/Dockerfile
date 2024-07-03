@@ -1,14 +1,15 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /nuget-packages
+COPY ["nuget-packages/*", "/nuget-packages/"]
 WORKDIR /src
 COPY ["Services/Services.csproj", "Services/"]
 COPY ["Entity/Entity.csproj", "Entity/"]
 COPY ["DatabaseBroker/DatabaseBroker.csproj", "DatabaseBroker/"]
 COPY ["Web/Web.csproj", "Web/"]
+RUN dotnet nuget add source "/nuget-packages"
 RUN dotnet restore "Web/Web.csproj"
 COPY . .
 WORKDIR "/src/Web"
