@@ -16,6 +16,6 @@ jobs:
         with:
           dotnet-version: '8.0.x'
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore BritishAnalytica/BritishAnalytica/BritishAnalytica.sln
       - name: Build with Release configuration
-        run: dotnet build --configuration Release
+        run: dotnet build --configuration Release BritishAnalytica/BritishAnalytica/BritishAnalytica.sln
