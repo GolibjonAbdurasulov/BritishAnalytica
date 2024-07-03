@@ -36,11 +36,11 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t $DOCKER_USERNAME/british_analytica -f BritishAnalytica/Web/Dockerfile BritishAnalytica
+        run: docker build -t $DOCKER_USERNAME/british_analytica -f BritishAnalytica/Web/Dockerfile .
 
       - name: Push Docker image
         run: |
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker push $DOCKER_USERNAME/british_analytica
 
   deploy:
