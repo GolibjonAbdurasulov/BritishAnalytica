@@ -62,12 +62,11 @@ builder
     });
 
 
-// Swagger UI ni sozlash
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "https://britishanalytica", Version = "v1" });
 
-    // JWT ni Swagger ga integratsiya qilish
+  
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
     {
         Description = "JWT Authorization header using the Bearer scheme",
@@ -102,7 +101,7 @@ builder.Services
         // options.
     });
 
-// Dasturning muhiti to'g'risida yangi yechimlar qo'shish
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureRepositories();
