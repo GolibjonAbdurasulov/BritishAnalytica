@@ -65,4 +65,4 @@ jobs:
             echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
             docker-compose down
             docker-compose pull
-            docker-compose up -d --no-deps
+            docker-compose up -d --no-deps --build
