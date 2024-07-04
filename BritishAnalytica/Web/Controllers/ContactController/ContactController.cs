@@ -36,7 +36,7 @@ public class ContactController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync( ContactDto dto)
+    public async Task<ResponseModelBase> CreateAsync( ContactCreationDto dto)
     {
         var email = new Email
         {
@@ -81,7 +81,42 @@ public class ContactController : ControllerBase
             LocationId = resLocation.Id,
             Location = resLocation
         };
-        await ContactRepository.AddAsync(entity);
+        var resEntity=await ContactRepository.AddAsync(entity);
+
+        var contactDto = new ContactDto
+        {
+            Id = resEntity.Id,
+            Name = entity.Name,
+            EmailDto = new EmailDto
+            {
+                Id =email.Id ,
+                Name = dto.Name,
+                EmailAddress = dto.EmailDto.EmailAddress,
+                Web = dto.EmailDto.Web
+            },
+            PhoneNumberDto = new PhoneNumberDto
+            {
+                Id = phoneNumber.Id,
+                Name = phoneNumber.Name,
+                Number = phoneNumber.Number,
+                WorkingTimeStart =phoneNumber.WorkingTimeStart,
+                WorkingTimeStop = phoneNumber.WorkingTimeStop,
+                WorkingDayStart = phoneNumber.WorkingDayStart,
+                WorkingDayStop = phoneNumber.WorkingDayStop
+            },
+            LocationDto = new LocationDto
+            {
+                Id = location.Id,
+                Name = location.Name,
+                Country = location.Country,
+                Region = location.Region,
+                District = location.District,
+                Street = location.Street,
+                Home = location.Home
+            }
+        };
+        
+
         return new ResponseModelBase(dto);
     }
 
@@ -89,7 +124,7 @@ public class ContactController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> UpdateEmailAsync(EmailDto dto)
     {
-        var res =  await ContactRepository.FirstOrDefaultAsync();
+        var res =  await ContactRepository.GetByIdAsync(dto.Id);
         res.Email.EmailAddress = dto.EmailAddress;
         res.Email.Web = dto.Web;
         res.UpdatedAt = DateTime.Now;
@@ -102,7 +137,7 @@ public class ContactController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> UpdatePhoneNumberAsync( PhoneNumberDto dto)
     {
-        var res =   await ContactRepository.FirstOrDefaultAsync();
+        var res =   await ContactRepository.GetByIdAsync(dto.Id);
         res.PhoneNumber.Number = dto.Number;
         res.PhoneNumber.WorkingDayStart = dto.WorkingDayStart;
         res.PhoneNumber.WorkingDayStop = dto.WorkingDayStop;
@@ -118,7 +153,7 @@ public class ContactController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> UpdateLocationAsync( LocationDto dto)
     {
-        var res =  await ContactRepository.FirstOrDefaultAsync();
+        var res =  await ContactRepository.GetByIdAsync(dto.Id);
         res.Location.Country = dto.Country;
         res.Location.District = dto.District;
         res.Location.Street = dto.Street;
@@ -133,9 +168,9 @@ public class ContactController : ControllerBase
     
     [HttpDelete]
     [Authorize]
-    public async Task<ResponseModelBase> DeleteAsync()
+    public async Task<ResponseModelBase> DeleteAsync(long contactId)
     {
-        var contact =  await ContactRepository.FirstOrDefaultAsync();
+        var contact =  await ContactRepository.GetByIdAsync(contactId);
         await ContactRepository.RemoveAsync(contact);
 
         var email = await EmailRepository.GetByIdAsync(contact.EmailId);
@@ -150,11 +185,41 @@ public class ContactController : ControllerBase
         return new ResponseModelBase(contact);
     }
     
+    [HttpDelete]
+    [Authorize]
+    public async Task<ResponseModelBase> DeleteEmailAsync(long id)
+    {
+       var email = await EmailRepository.GetByIdAsync(id); 
+       await EmailRepository.RemoveAsync(email);
+
+        return new ResponseModelBase(email);
+    }
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<ResponseModelBase> DeletePhoneNumberAsync(long id)
+    {
+       var phoneNumber = await PhoneNumberRepository.GetByIdAsync(id); 
+       await PhoneNumberRepository.RemoveAsync(phoneNumber);
+
+        return new ResponseModelBase(phoneNumber);
+    }
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<ResponseModelBase> DeleteLocationAsync(long id)
+    {
+       var location = await LocationRepository.GetByIdAsync(id); 
+       await LocationRepository.RemoveAsync(location);
+
+        return new ResponseModelBase(location);
+    }
+    
     
     [HttpGet]
-    public async Task<ResponseModelBase> GetAsync()
+    public async Task<ResponseModelBase> GetAsync(long contactId)
     {
-        var res =   await ContactRepository.FirstOrDefaultAsync();
+        var res =   await ContactRepository.GetByIdAsync(contactId);
         var dto = new ContactDto
         {
             EmailDto = new EmailDto

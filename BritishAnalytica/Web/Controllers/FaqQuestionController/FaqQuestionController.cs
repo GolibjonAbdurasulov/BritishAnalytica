@@ -26,31 +26,36 @@ public class FaqQuestionController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync( FaqQuestionDto dto)
+    public async Task<ResponseModelBase> CreateAsync( FaqQuestionCreationDto dto)
     {
         var entity = new FaqQuestions
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             Title = dto.Title,
-            Body = dto.Body,
-            Name = dto.Name
+            Body = dto.Body
         };
-        await FaqQuestionRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+        var resEntity=await FaqQuestionRepository.AddAsync(entity);
+        
+        var resDto = new FaqQuestionDto
+        {
+            Id = resEntity.Id, 
+            Title = resEntity.Title,
+            Body = resEntity.Body
+        };
+        return new ResponseModelBase(resDto);
     }
 
 
   
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto,long id)
+    public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto)
     {
-        var res =  await FaqQuestionRepository.GetByIdAsync(id);
+        var res =  await FaqQuestionRepository.GetByIdAsync(dto.Id);
         res.Body = dto.Body;
         res.Title=dto.Title;
-        res.Name = dto.Name;
-        
+      
         await FaqQuestionRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -73,8 +78,7 @@ public class FaqQuestionController : ControllerBase
         var dto = new FaqQuestionDto
         {
             Title = res.Title,
-            Body = res.Body,
-            Name = res.Name
+            Body = res.Body
         };
         return new ResponseModelBase(dto);
     }
@@ -89,8 +93,7 @@ public class FaqQuestionController : ControllerBase
             dtos.Add(new FaqQuestionDto
             {
                 Title = question.Title,
-                Body = question.Body,
-                Name = question.Name
+                Body = question.Body
             });
         }
         

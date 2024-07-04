@@ -33,45 +33,64 @@ public class PpsController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(PpsModelDto dto)
+    public async Task<ResponseModelBase> CreateAsync(PpsModelCreationDto dto)
     {
         var entity = new PpsModel
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Name = dto.Name,
             Project = new Project
             {
                 Title = dto.ProjectDto.Title,
-                Body = dto.ProjectDto.Title,
-                Name = dto.ProjectDto.Name
+                Body = dto.ProjectDto.Title
             },
             Planing = new Planing
             {
                 Title = dto.PlaningDto.Title,
-                Body = dto.PlaningDto.Body,
-                Name = dto.PlaningDto.Name
+                Body = dto.PlaningDto.Body
             },
             Success = new Success
             {
                 Title = dto.SuccessDto.Title,
-                Body = dto.SuccessDto.Body,
-                Name = dto.SuccessDto.Name
+                Body = dto.SuccessDto.Body
             }
         };
-        await PpsRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+       var resEntity= await PpsRepository.AddAsync(entity);
+
+       var ppsDto = new PpsModelDto
+       {
+           Id = resEntity.Id,
+           PlaningDto = new PlaningDto
+           {
+               Id = resEntity.PlaningId,
+               Title = resEntity.Planing.Title,
+               Body = resEntity.Planing.Body
+           },
+           ProjectDto = new ProjectDto
+           {
+               Id = resEntity.ProjectId,
+               Title = resEntity.Project.Title,
+               Body = resEntity.Project.Body
+           },
+           SuccessDto = new SuccessDto
+           {
+               Id = resEntity.SuccessId,
+               Title = resEntity.Success.Title,
+               Body = resEntity.Success.Body
+           }
+       };
+
+       return new ResponseModelBase(ppsDto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateProjectAsync(PpsModelDto dto, long id)
+    public async Task<ResponseModelBase> UpdateProjectAsync(PpsModelDto dto)
     {
-        var res = await PpsRepository.GetByIdAsync(id);
+        var res = await PpsRepository.GetByIdAsync(dto.Id);
         res.Project.Title = dto.ProjectDto.Title;
         res.Project.Body = dto.ProjectDto.Body;
         res.UpdatedAt = DateTime.Now;
-        res.Name = dto.Name;
 
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -79,26 +98,24 @@ public class PpsController : ControllerBase
     
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdatePalaningAsync(PpsModelDto dto, long id)
+    public async Task<ResponseModelBase> UpdatePalaningAsync(PpsModelDto dto)
     {
-        var res = await PpsRepository.GetByIdAsync(id);
+        var res = await PpsRepository.GetByIdAsync(dto.Id);
         res.Planing.Title = dto.PlaningDto.Title;
         res.Planing.Body = dto.PlaningDto.Body;
         res.UpdatedAt = DateTime.Now;
-        res.Name = dto.Name;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     } 
     
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateSuccessAsync(PpsModelDto dto, long id)
+    public async Task<ResponseModelBase> UpdateSuccessAsync(PpsModelDto dto)
     {
-        var res = await PpsRepository.GetByIdAsync(id);
+        var res = await PpsRepository.GetByIdAsync(dto.Id);
         res.Success.Title = dto.SuccessDto.Title;
         res.Success.Body = dto.SuccessDto.Body;
         res.UpdatedAt = DateTime.Now;
-        res.Name = dto.Name;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -132,22 +149,18 @@ public class PpsController : ControllerBase
             PlaningDto = new PlaningDto
             {
                 Title = res.Planing.Title,
-                Body = res.Planing.Body,
-                Name = res.Name
+                Body = res.Planing.Body
             },
             ProjectDto = new ProjectDto
             {
                 Title = res.Project.Title,
-                Body = res.Project.Body,
-                Name = res.Name
+                Body = res.Project.Body
             },
             SuccessDto = new SuccessDto
             {
                 Title = res.Success.Title,
-                Body = res.Success.Body,
-                Name = res.Name
-            },
-            Name = res.Name
+                Body = res.Success.Body
+            }
         };
         
         return new ResponseModelBase(dto);

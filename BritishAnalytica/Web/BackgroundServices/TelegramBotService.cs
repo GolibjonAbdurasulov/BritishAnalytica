@@ -17,6 +17,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
+using Web.Controllers.MessageController.MessageDtos;
 
 public class TelegramBotService : BackgroundService
 {
@@ -29,6 +30,7 @@ public class TelegramBotService : BackgroundService
         _logger = logger;
         _botSettings = botSettings.Value;
         _botClient = new TelegramBotClient(_botSettings.Token);
+        
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -49,8 +51,12 @@ public class TelegramBotService : BackgroundService
         _logger.LogInformation("Telegram Bot Service is stopped.");
     }
     
-    public async Task SendMessageToAdminGroupAsync(string message)
+    public async Task SendMessageToAdminGroupAsync(MessageDto dto)
     {
+        string message = @$"User: {dto.SenderName}
+Email: {dto.SenderEmail}
+Subject: {dto.Subject}
+Message text: {dto.MessageText}";
         try
         {
             var chatId = long.Parse(_botSettings.AdminGroupChatId);

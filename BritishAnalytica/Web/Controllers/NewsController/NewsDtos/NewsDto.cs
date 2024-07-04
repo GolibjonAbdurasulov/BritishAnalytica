@@ -5,10 +5,10 @@ namespace Web.Controllers.NewsController.NewsDtos;
 
 public class NewsDto
 {
-    public MultiLanguageField Name { get; set; }
-    public string Category { get; set; }
+    public long Id { get; set; }
+    public MultiLanguageField Category { get; set; }
     public Guid ImageId { get; set; }
-    public string PostTitle { get; set; }
-    public string PostBody { get; set; }
+    public MultiLanguageField PostTitle { get; set; }
+    public MultiLanguageField PostBody { get; set; }
     public DateTime PostedDate { get; set; }
 }

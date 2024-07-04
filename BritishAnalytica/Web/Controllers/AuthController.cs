@@ -30,9 +30,9 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ResponseModelBase> LogOut(LogOutDto dto)
+    public async Task<ResponseModelBase> LogOut(long id)
     {
-        var res =await _authService.LogOut(dto);
+        var res =await _authService.LogOut(id);
         
         return new ResponseModelBase(res);
     }

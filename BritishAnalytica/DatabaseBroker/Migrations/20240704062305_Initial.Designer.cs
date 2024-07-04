@@ -14,7 +14,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseBroker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240701053339_Initial")]
+    [Migration("20240704062305_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -39,28 +39,20 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Body")
+                        .HasColumnType("jsonb")
                         .HasColumnName("body");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<List<string>>("Futures")
-                        .HasColumnType("text[]")
-                        .HasColumnName("futures");
-
                     b.Property<Guid>("ImageId")
                         .HasColumnType("uuid")
                         .HasColumnName("imageId");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Title")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -227,20 +219,16 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Body")
+                        .HasColumnType("jsonb")
                         .HasColumnName("body");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Title")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -284,6 +272,29 @@ namespace DatabaseBroker.Migrations
                     b.ToTable("file_model");
                 });
 
+            modelBuilder.Entity("Entity.Models.FutureModel.Future", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<long?>("AboutBusinessModelId")
+                        .HasColumnType("bigint");
+
+                    b.Property<MultiLanguageField>("Text")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AboutBusinessModelId");
+
+                    b.ToTable("futures");
+                });
+
             modelBuilder.Entity("Entity.Models.HomeModel.HomeModel", b =>
                 {
                     b.Property<long>("Id")
@@ -293,24 +304,20 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Body")
+                        .HasColumnType("jsonb")
                         .HasColumnName("body");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid[]>("ImageIds")
+                    b.Property<List<Guid>>("ImageIds")
                         .HasColumnType("uuid[]")
                         .HasColumnName("image_id");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Title")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
                         .HasColumnName("text");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -381,12 +388,8 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Text")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("text")
                         .HasColumnName("text");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -407,8 +410,8 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Category")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Category")
+                        .HasColumnType("jsonb")
                         .HasColumnName("category");
 
                     b.Property<DateTime>("CreatedAt")
@@ -419,16 +422,12 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("image_id");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("PostBody")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("PostBody")
-                        .HasColumnType("text")
                         .HasColumnName("post_body");
 
-                    b.Property<string>("PostTitle")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("PostTitle")
+                        .HasColumnType("jsonb")
                         .HasColumnName("post_title");
 
                     b.Property<DateTime>("PostedDate")
@@ -453,24 +452,20 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("AboutService")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("AboutService")
+                        .HasColumnType("jsonb")
                         .HasColumnName("about_service");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<MultiLanguageField>("Name")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
                     b.Property<Guid>("ServiceIconId")
                         .HasColumnType("uuid")
                         .HasColumnName("service_icon_id");
 
-                    b.Property<string>("ServiceName")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("ServiceName")
+                        .HasColumnType("jsonb")
                         .HasColumnName("service_name");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -491,16 +486,12 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Body")
+                        .HasColumnType("jsonb")
                         .HasColumnName("body");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Title")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("Id");
@@ -520,10 +511,6 @@ namespace DatabaseBroker.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<MultiLanguageField>("Name")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("name");
 
                     b.Property<long>("PlaningId")
                         .HasColumnType("bigint")
@@ -561,16 +548,12 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Body")
+                        .HasColumnType("jsonb")
                         .HasColumnName("body");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Title")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("Id");
@@ -587,16 +570,12 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Body")
-                        .HasColumnType("text")
+                    b.Property<MultiLanguageField>("Body")
+                        .HasColumnType("jsonb")
                         .HasColumnName("body");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Title")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("text")
                         .HasColumnName("title");
 
                     b.HasKey("Id");
@@ -617,16 +596,12 @@ namespace DatabaseBroker.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("ServiceName")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("ServiceName")
-                        .HasColumnType("text")
                         .HasColumnName("service_name");
 
-                    b.Property<string>("ServicePerecnt")
-                        .HasColumnType("text")
+                    b.Property<float>("ServicePerecnt")
+                        .HasColumnType("real")
                         .HasColumnName("service_percent_name");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -652,19 +627,15 @@ namespace DatabaseBroker.Migrations
                         .HasColumnName("created_at");
 
                     b.Property<string>("FullName")
-                        .HasColumnType("text")
+                        .HasColumnType("jsonb")
                         .HasColumnName("full_name");
 
                     b.Property<Guid>("ImageId")
-                        .HasColumnType("uuid")
+                        .HasColumnType("jsonb")
                         .HasColumnName("image_id");
 
-                    b.Property<MultiLanguageField>("Name")
+                    b.Property<MultiLanguageField>("Role")
                         .HasColumnType("jsonb")
-                        .HasColumnName("name");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("text")
                         .HasColumnName("role");
 
                     b.Property<DateTime>("UpdatedAt")
@@ -751,6 +722,9 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.ToTable("users");
                 });
 
@@ -781,6 +755,13 @@ namespace DatabaseBroker.Migrations
                     b.Navigation("PhoneNumber");
                 });
 
+            modelBuilder.Entity("Entity.Models.FutureModel.Future", b =>
+                {
+                    b.HasOne("Entity.Models.AboutBusinessModel.AboutBusinessModel", null)
+                        .WithMany("Futures")
+                        .HasForeignKey("AboutBusinessModelId");
+                });
+
             modelBuilder.Entity("Entity.Models.PPS.PpsModel", b =>
                 {
                     b.HasOne("Entity.Models.PPS.PlaningModel.Planing", "Planing")
@@ -806,6 +787,11 @@ namespace DatabaseBroker.Migrations
                     b.Navigation("Project");
 
                     b.Navigation("Success");
+                });
+
+            modelBuilder.Entity("Entity.Models.AboutBusinessModel.AboutBusinessModel", b =>
+                {
+                    b.Navigation("Futures");
                 });
 #pragma warning restore 612, 618
         }

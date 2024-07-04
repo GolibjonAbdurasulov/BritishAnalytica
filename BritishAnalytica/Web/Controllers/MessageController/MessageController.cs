@@ -22,7 +22,7 @@ public class MessageController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ResponseModelBase> CreateAsync(MessageDto dto)
+    public async Task<ResponseModelBase> CreateAsync(MessageCreationDto dto)
     {
         var entity = new Message
         {
@@ -34,17 +34,27 @@ public class MessageController : ControllerBase
             MessageText = dto.MessageText,
             IsRead = dto.IsRead
         };
-        await _botService.SendMessageToAdminGroupAsync( "yangi user bor");
-        await _messageRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+        var resEntity=await _messageRepository.AddAsync(entity);
+        var messageDto = new MessageDto
+        {
+            Id = resEntity.Id,
+            SenderName = dto.SenderName,
+            SenderEmail = dto.SenderEmail,
+            Subject = dto.Subject,
+            MessageText = dto.MessageText,
+            IsRead = false
+        };
+
+        await _botService.SendMessageToAdminGroupAsync( messageDto);
+        return new ResponseModelBase(messageDto);
     }
 
     
     
     [HttpPut]
-    public async Task<ResponseModelBase> UpdateAsync(MessageDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(MessageDto dto)
     {
-        var res = await _messageRepository.GetByIdAsync(id);
+        var res = await _messageRepository.GetByIdAsync(dto.Id);
         res.SenderEmail = dto.SenderEmail;
         res.SenderName = dto.SenderEmail;
         res.Subject = dto.Subject;
@@ -70,7 +80,7 @@ public class MessageController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetAllNotReadMessagesAsync()
     {
-        var res =  _messageRepository.GetAllAsQueryable().ToList().FindAll(message=>!message.IsRead);
+        var res =  _messageRepository.GetAllAsQueryable().ToList().FindAll(message=>message.IsRead==false);
       
         return new ResponseModelBase(res);
     }
@@ -88,7 +98,7 @@ public class MessageController : ControllerBase
     [HttpGet]
     public async Task<ResponseModelBase> GetAllAsync()
     {
-        var res = _messageRepository.GetAllAsQueryable();
+        var res = _messageRepository.GetAllAsQueryable().ToList();
 
         return new ResponseModelBase(res);
     }

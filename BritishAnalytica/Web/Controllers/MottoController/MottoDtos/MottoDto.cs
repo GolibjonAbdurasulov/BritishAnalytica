@@ -5,8 +5,8 @@ namespace Web.Controllers.MottoController.MottoDtos;
 
 public class MottoDto
 {
-   public MultiLanguageField Name { get; set; }
+   public long Id { get; set; }
    public string Author { get; set; }
-   public string Text { get; set; }
+   public MultiLanguageField Text { get; set; }
 
 }
