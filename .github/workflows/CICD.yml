@@ -7,7 +7,6 @@ on:
 
 jobs:
   Publish:
-    needs: build
     runs-on: ubuntu-latest
     env:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -24,9 +23,9 @@ jobs:
           echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker compose push
 
-  deploy:
+  Deploy:
     name: Deploy
-    needs: dockerize
+    needs: Publish
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
