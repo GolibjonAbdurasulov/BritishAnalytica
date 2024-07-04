@@ -27,6 +27,9 @@ jobs:
     name: Deploy
     needs: Publish
     runs-on: contabo-srv
+    env:
+      DOCKER_USERNAME: golibjonabdurasulov
+      DOCKER_PASSWORD: dckr_pat_h45zNBIQWRW1tTM7CDESY0Q7-dU
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -37,6 +40,7 @@ jobs:
             echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
             echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
             echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
             docker-compose pull
             docker-compose down
             docker-compose --env-file .env up -d --no-deps --build
