@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Publish and Deploy
 
 on:
   push:
@@ -9,8 +9,8 @@ jobs:
   Publish:
     runs-on: ubuntu-latest
     env:
-      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: golibjonabdurasulov
+      DOCKER_PASSWORD: dckr_pat_h45zNBIQWRW1tTM7CDESY0Q7-dU
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -20,8 +20,6 @@ jobs:
 
       - name: Push Docker image
         run: |
-          echo $DOCKER_USERNAME
-          echo $DOCKER_PASSWORD
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker compose push
 
