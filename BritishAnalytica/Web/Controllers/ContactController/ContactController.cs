@@ -122,9 +122,9 @@ public class ContactController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateEmailAsync(EmailDto dto,long contactId)
+    public async Task<ResponseModelBase> UpdateEmailAsync(EmailDto dto)
     {
-        var res =  await ContactRepository.GetByIdAsync(contactId);
+        var res =  await ContactRepository.GetByIdAsync(dto.Id);
         res.Email.EmailAddress = dto.EmailAddress;
         res.Email.Web = dto.Web;
         res.UpdatedAt = DateTime.Now;
@@ -135,9 +135,9 @@ public class ContactController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdatePhoneNumberAsync( PhoneNumberDto dto,long contactId)
+    public async Task<ResponseModelBase> UpdatePhoneNumberAsync( PhoneNumberDto dto)
     {
-        var res =   await ContactRepository.GetByIdAsync(contactId);
+        var res =   await ContactRepository.GetByIdAsync(dto.Id);
         res.PhoneNumber.Number = dto.Number;
         res.PhoneNumber.WorkingDayStart = dto.WorkingDayStart;
         res.PhoneNumber.WorkingDayStop = dto.WorkingDayStop;
@@ -151,9 +151,9 @@ public class ContactController : ControllerBase
   
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateLocationAsync( LocationDto dto,long contactId)
+    public async Task<ResponseModelBase> UpdateLocationAsync( LocationDto dto)
     {
-        var res =  await ContactRepository.GetByIdAsync(contactId);
+        var res =  await ContactRepository.GetByIdAsync(dto.Id);
         res.Location.Country = dto.Country;
         res.Location.District = dto.District;
         res.Location.Street = dto.Street;
@@ -183,6 +183,36 @@ public class ContactController : ControllerBase
         await PhoneNumberRepository.RemoveAsync(phoneNumber);
         
         return new ResponseModelBase(contact);
+    }
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<ResponseModelBase> DeleteEmailAsync(long id)
+    {
+       var email = await EmailRepository.GetByIdAsync(id); 
+       await EmailRepository.RemoveAsync(email);
+
+        return new ResponseModelBase(email);
+    }
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<ResponseModelBase> DeletePhoneNumberAsync(long id)
+    {
+       var phoneNumber = await PhoneNumberRepository.GetByIdAsync(id); 
+       await PhoneNumberRepository.RemoveAsync(phoneNumber);
+
+        return new ResponseModelBase(phoneNumber);
+    }
+    
+    [HttpDelete]
+    [Authorize]
+    public async Task<ResponseModelBase> DeleteLocationAsync(long id)
+    {
+       var location = await LocationRepository.GetByIdAsync(id); 
+       await LocationRepository.RemoveAsync(location);
+
+        return new ResponseModelBase(location);
     }
     
     

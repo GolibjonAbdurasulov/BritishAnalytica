@@ -34,7 +34,8 @@ public class AuthService : IAuthService
             UserName = user.UserName,
             Email = user.Email,
             Password = user.Password,
-            Role = user.Role.ToString()
+            Role = user.Role.ToString(),
+            IsSigned = true
         };
 
         user.IsSigned = true;

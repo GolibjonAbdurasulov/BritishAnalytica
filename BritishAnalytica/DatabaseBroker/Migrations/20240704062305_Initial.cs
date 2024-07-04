@@ -20,10 +20,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    body = table.Column<string>(type: "text", nullable: true),
-                    futures = table.Column<List<string>>(type: "text[]", nullable: true),
+                    title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     imageId = table.Column<Guid>(type: "uuid", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
@@ -54,9 +52,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    body = table.Column<string>(type: "text", nullable: true),
+                    title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -87,10 +84,9 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    text = table.Column<string>(type: "text", nullable: true),
-                    body = table.Column<string>(type: "text", nullable: true),
-                    image_id = table.Column<Guid[]>(type: "uuid[]", nullable: true),
+                    text = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    image_id = table.Column<List<Guid>>(type: "uuid[]", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -142,9 +138,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     author = table.Column<string>(type: "text", nullable: true),
-                    text = table.Column<string>(type: "text", nullable: true),
+                    text = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -159,11 +154,10 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    category = table.Column<string>(type: "text", nullable: true),
+                    category = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     image_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    post_title = table.Column<string>(type: "text", nullable: true),
-                    post_body = table.Column<string>(type: "text", nullable: true),
+                    post_title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    post_body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     posted_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
@@ -179,9 +173,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    service_name = table.Column<string>(type: "text", nullable: true),
-                    about_service = table.Column<string>(type: "text", nullable: true),
+                    service_name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    about_service = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     service_icon_id = table.Column<Guid>(type: "uuid", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
@@ -215,9 +208,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    body = table.Column<string>(type: "text", nullable: true)
+                    title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -230,9 +222,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    body = table.Column<string>(type: "text", nullable: true)
+                    title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -245,9 +236,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    service_name = table.Column<string>(type: "text", nullable: true),
-                    service_percent_name = table.Column<string>(type: "text", nullable: true),
+                    service_name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    service_percent_name = table.Column<float>(type: "real", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -262,9 +252,8 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    title = table.Column<string>(type: "text", nullable: true),
-                    body = table.Column<string>(type: "text", nullable: true)
+                    title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -277,10 +266,9 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    full_name = table.Column<string>(type: "text", nullable: true),
-                    role = table.Column<string>(type: "text", nullable: true),
-                    image_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    full_name = table.Column<string>(type: "jsonb", nullable: true),
+                    role = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    image_id = table.Column<Guid>(type: "jsonb", nullable: false),
                     created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
@@ -325,6 +313,25 @@ namespace DatabaseBroker.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "futures",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    AboutBusinessModelId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_futures", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_futures_about_business_AboutBusinessModelId",
+                        column: x => x.AboutBusinessModelId,
+                        principalTable: "about_business",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "contact",
                 columns: table => new
                 {
@@ -366,7 +373,6 @@ namespace DatabaseBroker.Migrations
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
                     project_id = table.Column<long>(type: "bigint", nullable: false),
                     planing_id = table.Column<long>(type: "bigint", nullable: false),
                     success_id = table.Column<long>(type: "bigint", nullable: false),
@@ -412,6 +418,11 @@ namespace DatabaseBroker.Migrations
                 column: "phone_number_id");
 
             migrationBuilder.CreateIndex(
+                name: "IX_futures_AboutBusinessModelId",
+                table: "futures",
+                column: "AboutBusinessModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_pps_model_planing_id",
                 table: "pps_model",
                 column: "planing_id");
@@ -431,14 +442,17 @@ namespace DatabaseBroker.Migrations
                 table: "translations",
                 column: "code",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_users_email",
+                table: "users",
+                column: "email",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "about_business");
-
             migrationBuilder.DropTable(
                 name: "contact");
 
@@ -447,6 +461,9 @@ namespace DatabaseBroker.Migrations
 
             migrationBuilder.DropTable(
                 name: "file_model");
+
+            migrationBuilder.DropTable(
+                name: "futures");
 
             migrationBuilder.DropTable(
                 name: "home_model");
@@ -486,6 +503,9 @@ namespace DatabaseBroker.Migrations
 
             migrationBuilder.DropTable(
                 name: "phone_number");
+
+            migrationBuilder.DropTable(
+                name: "about_business");
 
             migrationBuilder.DropTable(
                 name: "planing");

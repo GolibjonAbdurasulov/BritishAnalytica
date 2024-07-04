@@ -50,9 +50,9 @@ public class FaqQuestionController : ControllerBase
   
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto,long id)
+    public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto)
     {
-        var res =  await FaqQuestionRepository.GetByIdAsync(id);
+        var res =  await FaqQuestionRepository.GetByIdAsync(dto.Id);
         res.Body = dto.Body;
         res.Title=dto.Title;
       

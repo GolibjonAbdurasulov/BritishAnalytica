@@ -61,9 +61,9 @@ public class HomeModelController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync(HomeModelDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(HomeModelDto dto)
     {
-        var res = await HomeModelRepository.GetByIdAsync(id);
+        var res = await HomeModelRepository.GetByIdAsync(dto.Id);
         res.Title = dto.Title;
         res.Body = dto.Body;
         res.ImageIds = dto.ImageIds;
@@ -92,9 +92,9 @@ public class HomeModelController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ResponseModelBase> GetAsync()
+    public async Task<ResponseModelBase> GetAsync(long id)
     {
-        var res = await HomeModelRepository.FirstOrDefaultAsync();
+        var res = await HomeModelRepository.GetByIdAsync(id);
         var dto = new HomeModelDto()
         {
             Title = res.Title,

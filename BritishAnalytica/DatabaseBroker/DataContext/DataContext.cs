@@ -179,7 +179,9 @@ public class DataContext : DbContext
              .HasForeignKey(p => p.SuccessId)
              .OnDelete(DeleteBehavior.Cascade);
    
-        
+         modelBuilder.Entity<User>()
+             .HasIndex(u => u.Email)
+             .IsUnique();
    
         
        
