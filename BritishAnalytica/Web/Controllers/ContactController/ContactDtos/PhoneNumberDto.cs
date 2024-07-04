@@ -5,6 +5,7 @@ namespace Web.Controllers.ContactController.ContactDtos;
 
 public class PhoneNumberDto
 {
+   public long Id { get; set; }
    public MultiLanguageField Name { get; set; }
    public string Number { get; set; }
    public string WorkingTimeStart { get; set; }

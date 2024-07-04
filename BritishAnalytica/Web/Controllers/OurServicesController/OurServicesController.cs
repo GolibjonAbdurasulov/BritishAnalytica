@@ -25,7 +25,7 @@ public class OurServicesController : ControllerBase
     
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(OurServicesDto dto)
+    public async Task<ResponseModelBase> CreateAsync(OurServicesCreationDto dto)
     {
         var entity = new OurService
         {
@@ -33,23 +33,30 @@ public class OurServicesController : ControllerBase
             UpdatedAt = DateTime.Now,
             ServiceName = dto.ServiceName,
             AboutService = dto.AboutService,
-            ServiceIconId = dto.ServiceIconId,
-            Name = dto.Name
+            ServiceIconId = dto.ServiceIconId
         };
-        await OurServicesRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+        
+        var service = await OurServicesRepository.AddAsync(entity);
+
+        var ourServicesDto = new OurServicesDto
+        {
+            Id = service.Id,
+            ServiceName = service.ServiceName,
+            AboutService = service.AboutService,
+            ServiceIconId = service.ServiceIconId
+        };
+        return new ResponseModelBase(ourServicesDto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync(OurServicesDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(OurServicesDto dto)
     {
-        var res = await OurServicesRepository.GetByIdAsync(id);
+        var res = await OurServicesRepository.GetByIdAsync(dto.Id);
         res.AboutService = dto.AboutService;
         res.ServiceName = dto.ServiceName;
         res.ServiceIconId = dto.ServiceIconId;
         res.UpdatedAt = DateTime.Now;
-        res.Name = dto.Name;
 
         await OurServicesRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -73,7 +80,6 @@ public class OurServicesController : ControllerBase
             ServiceName = res.ServiceName,
             AboutService = res.AboutService,
             ServiceIconId = res.ServiceIconId,
-            Name = res.Name
         };
         
         return new ResponseModelBase(dto);
@@ -89,7 +95,6 @@ public class OurServicesController : ControllerBase
         {
             services.Add(new OurService
             {
-                Name = ourService.Name,
                 ServiceName = ourService.ServiceName,
                 AboutService = ourService.AboutService,
                 ServiceIconId = ourService.ServiceIconId

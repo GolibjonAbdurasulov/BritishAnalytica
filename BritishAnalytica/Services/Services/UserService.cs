@@ -56,7 +56,7 @@ public class UserService : IUserService
         await _userRepository.UpdateAsync(oldUser);
         return dto;
     }
-    public async Task<UserCreationDto> CreateAsync(UserCreationDto dto)
+    public async Task<UserDto> CreateAsync(UserCreationDto dto)
     {
         var user = new User
         {
@@ -68,8 +68,17 @@ public class UserService : IUserService
             Role = Enum.Parse<Role>(dto.Role),
             IsSigned = false
         };
+        var resDto = new UserDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            Email = user.Email,
+            Password = user.Password,
+            Role = user.Role.ToString(),
+            IsSigned = user.IsSigned
+        };
         await _userRepository.AddAsync(user);
-        return dto;
+        return resDto;
     }
     public async Task<UserPasswordUpdateDto> UpdateUserPassword(UserPasswordUpdateDto dto)
     {

@@ -5,6 +5,7 @@ namespace Web.Controllers.ContactController.ContactDtos;
 
 public class LocationDto
 {
+    public long Id { get; set; }
     public MultiLanguageField Name { get; set; }
     public string Country { get; set; }
     public string Region { get; set; }

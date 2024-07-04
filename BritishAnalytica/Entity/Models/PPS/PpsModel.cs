@@ -9,7 +9,6 @@ namespace Entity.Models.PPS;
 [Table("pps_model")]
 public class PpsModel : AuditableModelBase<long>
 {
-    [Column("name", TypeName = "jsonb")] public MultiLanguageField Name { get; set; } = default!;
     [Column("project_id"),ForeignKey(nameof(Project))] public long ProjectId { get; set; }
     public virtual Project Project { get; set; }
 

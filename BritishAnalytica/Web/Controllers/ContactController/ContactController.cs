@@ -36,7 +36,7 @@ public class ContactController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync( ContactDto dto)
+    public async Task<ResponseModelBase> CreateAsync( ContactCreationDto dto)
     {
         var email = new Email
         {
@@ -81,15 +81,50 @@ public class ContactController : ControllerBase
             LocationId = resLocation.Id,
             Location = resLocation
         };
-        await ContactRepository.AddAsync(entity);
+        var resEntity=await ContactRepository.AddAsync(entity);
+
+        var contactDto = new ContactDto
+        {
+            Id = resEntity.Id,
+            Name = entity.Name,
+            EmailDto = new EmailDto
+            {
+                Id =email.Id ,
+                Name = dto.Name,
+                EmailAddress = dto.EmailDto.EmailAddress,
+                Web = dto.EmailDto.Web
+            },
+            PhoneNumberDto = new PhoneNumberDto
+            {
+                Id = phoneNumber.Id,
+                Name = phoneNumber.Name,
+                Number = phoneNumber.Number,
+                WorkingTimeStart =phoneNumber.WorkingTimeStart,
+                WorkingTimeStop = phoneNumber.WorkingTimeStop,
+                WorkingDayStart = phoneNumber.WorkingDayStart,
+                WorkingDayStop = phoneNumber.WorkingDayStop
+            },
+            LocationDto = new LocationDto
+            {
+                Id = location.Id,
+                Name = location.Name,
+                Country = location.Country,
+                Region = location.Region,
+                District = location.District,
+                Street = location.Street,
+                Home = location.Home
+            }
+        };
+        
+
         return new ResponseModelBase(dto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateEmailAsync(EmailDto dto)
+    public async Task<ResponseModelBase> UpdateEmailAsync(EmailDto dto,long contactId)
     {
-        var res =  await ContactRepository.FirstOrDefaultAsync();
+        var res =  await ContactRepository.GetByIdAsync(contactId);
         res.Email.EmailAddress = dto.EmailAddress;
         res.Email.Web = dto.Web;
         res.UpdatedAt = DateTime.Now;
@@ -100,9 +135,9 @@ public class ContactController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdatePhoneNumberAsync( PhoneNumberDto dto)
+    public async Task<ResponseModelBase> UpdatePhoneNumberAsync( PhoneNumberDto dto,long contactId)
     {
-        var res =   await ContactRepository.FirstOrDefaultAsync();
+        var res =   await ContactRepository.GetByIdAsync(contactId);
         res.PhoneNumber.Number = dto.Number;
         res.PhoneNumber.WorkingDayStart = dto.WorkingDayStart;
         res.PhoneNumber.WorkingDayStop = dto.WorkingDayStop;
@@ -116,9 +151,9 @@ public class ContactController : ControllerBase
   
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateLocationAsync( LocationDto dto)
+    public async Task<ResponseModelBase> UpdateLocationAsync( LocationDto dto,long contactId)
     {
-        var res =  await ContactRepository.FirstOrDefaultAsync();
+        var res =  await ContactRepository.GetByIdAsync(contactId);
         res.Location.Country = dto.Country;
         res.Location.District = dto.District;
         res.Location.Street = dto.Street;
@@ -133,9 +168,9 @@ public class ContactController : ControllerBase
     
     [HttpDelete]
     [Authorize]
-    public async Task<ResponseModelBase> DeleteAsync()
+    public async Task<ResponseModelBase> DeleteAsync(long contactId)
     {
-        var contact =  await ContactRepository.FirstOrDefaultAsync();
+        var contact =  await ContactRepository.GetByIdAsync(contactId);
         await ContactRepository.RemoveAsync(contact);
 
         var email = await EmailRepository.GetByIdAsync(contact.EmailId);
@@ -152,9 +187,9 @@ public class ContactController : ControllerBase
     
     
     [HttpGet]
-    public async Task<ResponseModelBase> GetAsync()
+    public async Task<ResponseModelBase> GetAsync(long contactId)
     {
-        var res =   await ContactRepository.FirstOrDefaultAsync();
+        var res =   await ContactRepository.GetByIdAsync(contactId);
         var dto = new ContactDto
         {
             EmailDto = new EmailDto

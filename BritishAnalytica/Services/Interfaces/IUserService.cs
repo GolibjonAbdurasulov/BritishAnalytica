@@ -10,5 +10,5 @@ public interface IUserService
     public Task<UserPasswordUpdateDto> UpdateUserPassword(UserPasswordUpdateDto dto);
     public  Task<long> DeleteAsync(long id);
     public Task<UserGetDto> GetByIdAsync(long id);
-    public  Task<UserCreationDto> CreateAsync(UserCreationDto dto);
+    public  Task<UserDto> CreateAsync(UserCreationDto dto);
 }

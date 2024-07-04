@@ -4,7 +4,7 @@ namespace Web.Controllers.MessageController.MessageDtos;
 
 public class MessageDto
 {
-   public MultiLanguageField Name { get; set; }
+   public long Id { get; set; }
    public string SenderName { get; set; } 
    public string SenderEmail { get; set; } 
    public string Subject { get; set; } 

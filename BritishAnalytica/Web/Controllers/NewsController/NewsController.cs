@@ -25,7 +25,7 @@ public class NewsController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(NewsDto dto)
+    public async Task<ResponseModelBase> CreateAsync(NewsCreationDto dto)
     {
         var entity = new News
         {
@@ -35,24 +35,31 @@ public class NewsController : ControllerBase
             ImageId = dto.ImageId,
             PostTitle = dto.PostTitle,
             PostBody = dto.PostBody,
-            PostedDate = dto.PostedDate,
-            Name = dto.Name
+            PostedDate = dto.PostedDate
         };
-        await NewsRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+        var resEntity=await NewsRepository.AddAsync(entity);
+        var newsDto = new NewsDto
+        {
+            Id = resEntity.Id,
+            Category = resEntity.Category,
+            ImageId = resEntity.ImageId,
+            PostTitle = resEntity.PostTitle,
+            PostBody = resEntity.PostBody,
+            PostedDate = resEntity.PostedDate
+        };
+        return new ResponseModelBase(newsDto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync(NewsDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(NewsDto dto)
     {
-        var res = await NewsRepository.GetByIdAsync(id);
+        var res = await NewsRepository.GetByIdAsync(dto.Id);
         res.Category = dto.Category;
         res.ImageId = dto.ImageId;
         res.PostBody = dto.PostBody;
         res.PostTitle = dto.PostTitle;
         res.UpdatedAt = DateTime.Now;
-        res.Name = dto.Name;
 
         await NewsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -77,8 +84,7 @@ public class NewsController : ControllerBase
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
             PostBody = res.PostBody,
-            PostedDate = res.PostedDate,
-            Name = res.Name
+            PostedDate = res.PostedDate
         };
         
         return new ResponseModelBase(dto);
@@ -98,8 +104,7 @@ public class NewsController : ControllerBase
                 ImageId = newsDto.ImageId,
                 PostTitle = newsDto.PostTitle,
                 PostBody = newsDto.PostBody,
-                PostedDate = newsDto.PostedDate,
-                Name = newsDto.Name
+                PostedDate = newsDto.PostedDate
             };
             news.Add(dto);
         }
@@ -126,8 +131,7 @@ public class NewsController : ControllerBase
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
             PostBody = res.PostBody,
-            PostedDate = res.PostedDate,
-            Name = res.Name
+            PostedDate = res.PostedDate
         }).ToList();
 
         // Umumiy yangiliklar soni

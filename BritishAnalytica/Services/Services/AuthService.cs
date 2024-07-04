@@ -22,14 +22,15 @@ public class AuthService : IAuthService
     }
 
 
-    public async Task<UserLoginedDto> Login(UserLoginDto dto)
+    public async Task<UserDto> Login(UserLoginDto dto)
     {
         var user = await Repository.FirstOrDefaultAsync(user => user.Email == dto.Email && user.Password == dto.Password);
         if (user is  null)
             throw new NullReferenceException();
        
-        var resUser = new UserLoginedDto()
+        var resUser = new UserDto()
         {
+            Id=user.Id,
             UserName = user.UserName,
             Email = user.Email,
             Password = user.Password,
@@ -41,9 +42,9 @@ public class AuthService : IAuthService
         return resUser;
     }
    
-    public async Task<bool> LogOut(LogOutDto dto)
+    public async Task<bool> LogOut(long id)
     {
-        var user =await GetUserId(dto.Email, dto.Username);
+        var user =await Repository.GetByIdAsync(id);
         if (user is  null)
             throw new NullReferenceException();
         
@@ -63,17 +64,4 @@ public class AuthService : IAuthService
             Role = user.Role.ToString()
         };
     }
-
-
-    private async Task<User> GetUserId(string email, string username)
-    {
-        var user = await Repository.GetAllAsQueryable()
-            .FirstOrDefaultAsync(user => user.UserName == username && user.Email == email);
-        if (user is null)
-            throw new NullReferenceException("User topilmadi");
-
-        return user;
-    }
-
-
 }

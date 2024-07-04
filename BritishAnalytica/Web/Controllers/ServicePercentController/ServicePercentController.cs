@@ -24,29 +24,34 @@ public class ServicePercentController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(ServicePercentDto dto)
+    public async Task<ResponseModelBase> CreateAsync(ServicePercentCreationDto dto)
     {
         var entity = new ServicePercent
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             ServiceName = dto.ServiceName,
-            ServicePerecnt = dto.ServicePerecnt,
-            Name = dto.Name
+            ServicePerecnt = dto.ServicePerecnt
         };
-        await ServicePercentRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+       var resEntity =await ServicePercentRepository.AddAsync(entity);
+       var servicePercentDto = new ServicePercentDto
+       {
+           Id=resEntity.Id,
+           ServiceName = dto.ServiceName,
+           ServicePerecnt = dto.ServicePerecnt
+       };
+       
+       return new ResponseModelBase(dto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync(ServicePercentDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(ServicePercentDto dto)
     {
-        var res = await ServicePercentRepository.GetByIdAsync(id);
+        var res = await ServicePercentRepository.GetByIdAsync(dto.Id);
         res.ServiceName = dto.ServiceName;
         res.ServicePerecnt = dto.ServicePerecnt;
         res.UpdatedAt = DateTime.Now;
-        res.Name = dto.Name;
 
         await ServicePercentRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -68,8 +73,7 @@ public class ServicePercentController : ControllerBase
         var dto = new ServicePercentDto()
         {
             ServiceName = res.ServiceName,
-            ServicePerecnt = res.ServicePerecnt,
-            Name = res.Name
+            ServicePerecnt = res.ServicePerecnt
         };
         
         return new ResponseModelBase(dto);
@@ -85,7 +89,6 @@ public class ServicePercentController : ControllerBase
         {
             services.Add(new ServicePercentDto
             {
-                Name = servicePercent.Name,
                 ServiceName = servicePercent.ServiceName,
                 ServicePerecnt = servicePercent.ServicePerecnt
             });

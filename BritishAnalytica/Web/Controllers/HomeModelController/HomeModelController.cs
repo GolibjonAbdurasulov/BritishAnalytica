@@ -24,7 +24,7 @@ public class HomeModelController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(HomeModelDto dto)
+    public async Task<ResponseModelBase> CreateAsync(HomeModelCreationDto dto)
     {
         var entity = new HomeModel
         {
@@ -32,11 +32,19 @@ public class HomeModelController : ControllerBase
             UpdatedAt = DateTime.Now,
             Title = dto.Title,
             Body = dto.Body,
-            ImageIds = dto.ImageIds,
-            Name = dto.Name
+            ImageIds = dto.ImageIds
         };
-        await HomeModelRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+        var resEntity=await HomeModelRepository.AddAsync(entity);
+
+        var homeModelDto = new HomeModelDto
+        {
+            Id = resEntity.Id,
+            Title = resEntity.Title,
+            Body = resEntity.Body,
+            ImageIds = resEntity.ImageIds
+        };
+        
+        return new ResponseModelBase(homeModelDto);
     }
 
     [HttpPost]
@@ -59,7 +67,6 @@ public class HomeModelController : ControllerBase
         res.Title = dto.Title;
         res.Body = dto.Body;
         res.ImageIds = dto.ImageIds;
-        res.Name = dto.Name;
         await HomeModelRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -92,8 +99,7 @@ public class HomeModelController : ControllerBase
         {
             Title = res.Title,
             Body = res.Body,
-            ImageIds = res.ImageIds.ToList(),
-            Name = res.Name
+            ImageIds = res.ImageIds.ToList()
         };
         return new ResponseModelBase(dto);
     }

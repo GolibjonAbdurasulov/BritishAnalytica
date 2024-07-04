@@ -23,28 +23,33 @@ public class MottoController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(MottoDto dto)
+    public async Task<ResponseModelBase> CreateAsync(MottoCreationDto dto)
     {
         var entity = new Motto()
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             Text = dto.Text,
-            Author = dto.Author,
-            Name = dto.Name
+            Author = dto.Author
         };
-        await MottoRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+       var resEntity= await MottoRepository.AddAsync(entity);
+       var mottoDto = new MottoDto
+       {
+           Id = resEntity.Id,
+           Author = dto.Author,
+           Text = dto.Text
+       };
+
+       return new ResponseModelBase(mottoDto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync(MottoDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(MottoDto dto)
     {
-        var res = await MottoRepository.GetByIdAsync(id);
+        var res = await MottoRepository.GetByIdAsync(dto.Id);
         res.Text = dto.Text;
         res.Author = dto.Author;
-        res.Name = dto.Name;
 
         await MottoRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
@@ -66,8 +71,7 @@ public class MottoController : ControllerBase
         var dto = new MottoDto
         {
             Author = res.Author,
-            Text = res.Text,
-            Name = res.Name
+            Text = res.Text
         };
         return new ResponseModelBase(dto);
     }
@@ -82,8 +86,7 @@ public class MottoController : ControllerBase
             var dto = new MottoDto
             {
                 Author = motto.Author,
-                Text = motto.Text,
-                Name = motto.Name
+                Text = motto.Text
             };
             dtos.Add(dto);
         }

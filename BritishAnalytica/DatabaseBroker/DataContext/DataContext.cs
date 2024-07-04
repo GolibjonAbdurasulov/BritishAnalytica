@@ -11,6 +11,7 @@ using Entity.Models.Contact.LocationModel;
 using Entity.Models.Contact.PhoneNumberModel;
 using Entity.Models.FaqQuestion;
 using Entity.Models.File;
+using Entity.Models.FutureModel;
 using Entity.Models.HomeModel;
 using Entity.Models.MessageModel;
 using Entity.Models.Motto;
@@ -36,6 +37,7 @@ public class DataContext : DbContext
     }
 
     public  DbSet<FileModel> Files { get; set; }
+    public  DbSet<Future> Futures { get; set; }
     
     public  DbSet<Translation> Translations { get; set; }
     

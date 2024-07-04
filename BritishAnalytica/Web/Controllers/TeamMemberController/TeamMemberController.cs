@@ -26,28 +26,34 @@ public class TeamMemberController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public async Task<ResponseModelBase> CreateAsync(TeamMemberDto dto)
+    public async Task<ResponseModelBase> CreateAsync(TeamMemberCreationDto dto)
     {
         var entity = new TeamMember
         {
             Id = 0,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Name = dto.Name,
             FullName = dto.FullName,
             Role = dto.Role,
             ImageId = dto.ImageId
         };
-        await TeamMemberRepository.AddAsync(entity);
-        return new ResponseModelBase(dto);
+        var resEntity=await TeamMemberRepository.AddAsync(entity);
+        var teamMemberDto = new TeamMemberDto
+        {
+            Id = resEntity.Id,
+            FullName = resEntity.FullName,
+            Role = resEntity.Role,
+            ImageId = resEntity.ImageId
+        };
+
+        return new ResponseModelBase(teamMemberDto);
     }
 
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateAsync(TeamMemberDto dto, long id)
+    public async Task<ResponseModelBase> UpdateAsync(TeamMemberDto dto)
     {
-        var res = await TeamMemberRepository.GetByIdAsync(id);
-        res.Name = dto.Name;
+        var res = await TeamMemberRepository.GetByIdAsync(dto.Id); 
         res.FullName = dto.FullName;
         res.Role = dto.Role;
         res.ImageId = dto.ImageId;
@@ -71,7 +77,6 @@ public class TeamMemberController : ControllerBase
         var res =  await TeamMemberRepository.GetByIdAsync(id);
         var dto = new TeamMemberDto
         {
-            Name = res.FullName,
             Role = res.Role,
             ImageId = res.ImageId,
             FullName = res.FullName,
@@ -90,7 +95,6 @@ public class TeamMemberController : ControllerBase
         {
             members.Add(new TeamMemberDto
             {
-                Name = teamMember.Name,
                 FullName = teamMember.FullName,
                 Role = teamMember.Role,
                 ImageId = teamMember.ImageId
