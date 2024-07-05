@@ -117,7 +117,7 @@ public class ContactController : ControllerBase
         };
         
 
-        return new ResponseModelBase(dto);
+        return new ResponseModelBase(contactDto);
     }
 
     [HttpPut]

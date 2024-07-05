@@ -77,7 +77,7 @@ public class MottoController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ResponseModelBase> GetAllAsync(long id)
+    public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = MottoRepository.GetAllAsQueryable().ToList();
         List<MottoDto> dtos = new List<MottoDto>();
