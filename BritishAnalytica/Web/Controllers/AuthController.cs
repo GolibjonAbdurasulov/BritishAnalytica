@@ -23,7 +23,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ResponseModelBase> Login(UserLoginDto dto)
+    public async Task<ResponseModelBase> Login([FromBody]UserLoginDto dto)
     {
         var res = await _authService.Login(dto);
         return new ResponseModelBase(res);
