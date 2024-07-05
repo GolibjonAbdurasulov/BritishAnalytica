@@ -91,7 +91,7 @@ public class NewsController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ResponseModelBase> GetAllAsync(long id)
+    public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = NewsRepository.GetAllAsQueryable().ToList();
         List<NewsDto> news = new List<NewsDto>();

@@ -92,9 +92,9 @@ public class HomeModelController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ResponseModelBase> GetAsync(long id)
+    public async Task<ResponseModelBase> GetAsync()
     {
-        var res = await HomeModelRepository.GetByIdAsync(id);
+        var res = await HomeModelRepository.FirstOrDefaultAsync();
         var dto = new HomeModelDto()
         {
             Title = res.Title,
