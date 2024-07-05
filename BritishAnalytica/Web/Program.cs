@@ -152,6 +152,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseCors("AllowAllOrigins");
+
 // Endpoint-larni tayyorlash
 app.UseEndpoints(endpoints =>
 {
