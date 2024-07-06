@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using DatabaseBroker.Repositories.ContactRepository;
 using DatabaseBroker.Repositories.ContactRepository.EmailRepository;
 using DatabaseBroker.Repositories.ContactRepository.LocationRepository;
@@ -11,7 +8,6 @@ using Entity.Models.Contact.LocationModel;
 using Entity.Models.Contact.PhoneNumberModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Web.Common;
 using Web.Controllers.ContactController.ContactDtos;
 

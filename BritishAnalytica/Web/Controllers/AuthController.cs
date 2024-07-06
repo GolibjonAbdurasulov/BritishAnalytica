@@ -15,11 +15,9 @@ namespace Web.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;
-    private readonly ITokenService _tokenService;
-    public AuthController(IAuthService authService, ITokenService tokenService)
+    public AuthController(IAuthService authService)
     {
         _authService = authService;
-        _tokenService = tokenService;
     }
 
     [HttpPost]
@@ -36,14 +34,4 @@ public class AuthController : ControllerBase
         
         return new ResponseModelBase(res);
     }
-    
-    
-    
-    [HttpGet, AllowAnonymous]
-    public async Task<string> GetToken()
-    {
-        return _tokenService.GetToken();
-    }
-
-
 }

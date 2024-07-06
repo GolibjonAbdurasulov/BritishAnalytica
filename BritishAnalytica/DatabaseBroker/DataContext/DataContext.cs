@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using Entity.Models.AboutBusinessModel;
+using Entity.Models.CategoryModel;
 using Entity.Models.Common;
 using Entity.Models.Contact;
 using Entity.Models.Contact.EmailModel;
@@ -37,6 +38,7 @@ public class DataContext : DbContext
     }
 
     public  DbSet<FileModel> Files { get; set; }
+    public  DbSet<Category> Categories { get; set; }
     public  DbSet<Future> Futures { get; set; }
     
     public  DbSet<Translation> Translations { get; set; }
@@ -156,11 +158,6 @@ public class DataContext : DbContext
             .HasForeignKey(c => c.LocationId)
             .OnDelete(DeleteBehavior.Cascade);
         
-        
-        
-    
-         base.OnModelCreating(modelBuilder);
-
          modelBuilder.Entity<PpsModel>()
              .HasOne(p => p.Project)
              .WithMany()

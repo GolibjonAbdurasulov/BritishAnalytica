@@ -31,7 +31,7 @@ builder.Services.Configure<TelegramBotSetting>(builder.Configuration.GetSection(
 builder.Services.AddSingleton<TelegramBotService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<TelegramBotService>());
 
-builder.WebHost.ConfigureKestrel(x => x.ListenAnyIP(80));
+// builder.WebHost.ConfigureKestrel(x => x.ListenAnyIP(80));
 
 
 // JWT autentifikatsiyani sozlash

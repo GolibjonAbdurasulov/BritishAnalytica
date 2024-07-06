@@ -32,6 +32,19 @@ namespace DatabaseBroker.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "categories",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    category = table.Column<MultiLanguageField>(type: "jsonb", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_categories", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "email",
                 columns: table => new
                 {
@@ -146,25 +159,6 @@ namespace DatabaseBroker.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_motto", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "news",
-                columns: table => new
-                {
-                    id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    category = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    image_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    post_title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    post_body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
-                    posted_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_news", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -332,6 +326,31 @@ namespace DatabaseBroker.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "news",
+                columns: table => new
+                {
+                    id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    image_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    post_title = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    post_body = table.Column<MultiLanguageField>(type: "jsonb", nullable: true),
+                    posted_date = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    category_id = table.Column<long>(type: "bigint", nullable: false),
+                    created_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    updated_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_news", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_news_categories_category_id",
+                        column: x => x.category_id,
+                        principalTable: "categories",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "contact",
                 columns: table => new
                 {
@@ -423,6 +442,11 @@ namespace DatabaseBroker.Migrations
                 column: "AboutBusinessModelId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_news_category_id",
+                table: "news",
+                column: "category_id");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_pps_model_planing_id",
                 table: "pps_model",
                 column: "planing_id");
@@ -506,6 +530,9 @@ namespace DatabaseBroker.Migrations
 
             migrationBuilder.DropTable(
                 name: "about_business");
+
+            migrationBuilder.DropTable(
+                name: "categories");
 
             migrationBuilder.DropTable(
                 name: "planing");

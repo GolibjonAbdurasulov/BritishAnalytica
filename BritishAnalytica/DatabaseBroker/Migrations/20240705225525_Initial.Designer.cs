@@ -14,7 +14,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace DatabaseBroker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20240704062305_Initial")]
+    [Migration("20240705225525_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -62,6 +62,24 @@ namespace DatabaseBroker.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("about_business");
+                });
+
+            modelBuilder.Entity("Entity.Models.CategoryModel.Category", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
+
+                    b.Property<MultiLanguageField>("CategoryName")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("category");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("categories");
                 });
 
             modelBuilder.Entity("Entity.Models.Contact.Contact", b =>
@@ -410,9 +428,9 @@ namespace DatabaseBroker.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<MultiLanguageField>("Category")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("category");
+                    b.Property<long>("CategoryId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("category_id");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
@@ -439,6 +457,8 @@ namespace DatabaseBroker.Migrations
                         .HasColumnName("updated_at");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("news");
                 });
@@ -760,6 +780,17 @@ namespace DatabaseBroker.Migrations
                     b.HasOne("Entity.Models.AboutBusinessModel.AboutBusinessModel", null)
                         .WithMany("Futures")
                         .HasForeignKey("AboutBusinessModelId");
+                });
+
+            modelBuilder.Entity("Entity.Models.News.News", b =>
+                {
+                    b.HasOne("Entity.Models.CategoryModel.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Entity.Models.PPS.PpsModel", b =>

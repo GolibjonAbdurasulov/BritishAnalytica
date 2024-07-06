@@ -31,7 +31,7 @@ public class NewsController : ControllerBase
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Category = dto.Category,
+            CategoryId = dto.Category,
             ImageId = dto.ImageId,
             PostTitle = dto.PostTitle,
             PostBody = dto.PostBody,
@@ -41,7 +41,7 @@ public class NewsController : ControllerBase
         var newsDto = new NewsDto
         {
             Id = resEntity.Id,
-            Category = resEntity.Category,
+            CategoryId = resEntity.CategoryId,
             ImageId = resEntity.ImageId,
             PostTitle = resEntity.PostTitle,
             PostBody = resEntity.PostBody,
@@ -55,7 +55,7 @@ public class NewsController : ControllerBase
     public async Task<ResponseModelBase> UpdateAsync(NewsDto dto)
     {
         var res = await NewsRepository.GetByIdAsync(dto.Id);
-        res.Category = dto.Category;
+        res.Category.Id = dto.CategoryId;
         res.ImageId = dto.ImageId;
         res.PostBody = dto.PostBody;
         res.PostTitle = dto.PostTitle;
@@ -80,7 +80,7 @@ public class NewsController : ControllerBase
         var res =await NewsRepository.GetByIdAsync(id);
         var dto = new NewsDto
         {
-            Category = res.Category,
+            CategoryId = res.CategoryId,
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
             PostBody = res.PostBody,
@@ -100,7 +100,7 @@ public class NewsController : ControllerBase
         {
             var dto = new NewsDto
             {
-                Category = newsDto.Category,
+                CategoryId = newsDto.CategoryId,
                 ImageId = newsDto.ImageId,
                 PostTitle = newsDto.PostTitle,
                 PostBody = newsDto.PostBody,
@@ -127,7 +127,7 @@ public class NewsController : ControllerBase
         // DTO yaratish
         var dtoList = pagedNews.Select(res => new NewsDto
         {
-            Category = res.Category,
+            CategoryId = res.CategoryId,
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
             PostBody = res.PostBody,

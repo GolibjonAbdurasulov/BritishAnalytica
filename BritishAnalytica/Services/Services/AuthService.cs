@@ -13,12 +13,11 @@ namespace Services.Services;
 public class AuthService : IAuthService
 {
     private  IUserRepository Repository { get; set; }
-    private readonly IConfiguration _configuration;
-
-    public AuthService(IUserRepository repository, IConfiguration configuration)
+    private readonly ITokenService _tokenService;
+    public AuthService(IUserRepository repository, ITokenService tokenService)
     {
         Repository = repository;
-        _configuration = configuration;
+        _tokenService = tokenService;
     }
 
 
@@ -27,7 +26,7 @@ public class AuthService : IAuthService
         var user = await Repository.FirstOrDefaultAsync(user => user.Email == dto.Email && user.Password == dto.Password);
         if (user is  null)
             throw new NullReferenceException();
-       
+        string token =  _tokenService.GetToken();
         var resUser = new UserDto()
         {
             Id=user.Id,
@@ -35,7 +34,8 @@ public class AuthService : IAuthService
             Email = user.Email,
             Password = user.Password,
             Role = user.Role.ToString(),
-            IsSigned = true
+            IsSigned = true,
+            Token = token
         };
 
         user.IsSigned = true;
