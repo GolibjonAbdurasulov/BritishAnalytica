@@ -8,9 +8,6 @@ on:
 jobs:
   Publish:
     runs-on: ubuntu-latest
-    env:
-      DOCKER_USERNAME: golibjonabdurasulov
-      DOCKER_PASSWORD: dckr_pat_h45zNBIQWRW1tTM7CDESY0Q7-dU
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,28 +16,33 @@ jobs:
         run: docker compose build
 
       - name: Push Docker image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
           docker compose push
 
   Deploy:
-    name: Deploy
     needs: Publish
-    runs-on: contabo-srv
-    env:
-      DOCKER_USERNAME: golibjonabdurasulov
-      DOCKER_PASSWORD: dckr_pat_h45zNBIQWRW1tTM7CDESY0Q7-dU
+    runs-on: self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Deploy
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: |
-            echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > .env
-            echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
-            echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
-            echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-            docker-compose pull
-            docker-compose down
-            docker-compose --env-file .env up -d
+          echo "DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }}" > .env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
+          echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+          docker-compose pull
+          docker-compose down
+          docker-compose --env-file .env up -d
