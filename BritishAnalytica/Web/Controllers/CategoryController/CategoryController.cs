@@ -69,8 +69,21 @@ public class CategoryController : ControllerBase
     }
     
     
-    [HttpDelete]
+    [HttpGet]
     [Authorize]
+    public async Task<ResponseModelBase> GetAsync(long id)
+    {
+        var res = await Repository.GetByIdAsync(id);
+        var resDto = new CategoryDto
+        {
+            Id = res.Id,
+            CategoryName = res.CategoryName
+        };
+        return new ResponseModelBase(resDto);
+    }
+    
+    
+    [HttpGet]
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res =  Repository.GetAllAsQueryable().ToList();
