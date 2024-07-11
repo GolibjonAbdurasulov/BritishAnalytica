@@ -80,6 +80,7 @@ public class NewsController : ControllerBase
         var res =await NewsRepository.GetByIdAsync(id);
         var dto = new NewsDto
         {
+             Id=newsDto.Id,
             CategoryId = res.CategoryId,
             ImageId = res.ImageId,
             PostTitle = res.PostTitle,
@@ -100,6 +101,7 @@ public class NewsController : ControllerBase
         {
             var dto = new NewsDto
             {
+                Id=newsDto.Id,
                 CategoryId = newsDto.CategoryId,
                 ImageId = newsDto.ImageId,
                 PostTitle = newsDto.PostTitle,
