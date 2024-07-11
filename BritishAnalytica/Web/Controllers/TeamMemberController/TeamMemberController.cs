@@ -95,6 +95,7 @@ public class TeamMemberController : ControllerBase
         {
             members.Add(new TeamMemberDto
             {
+                Id = teamMember.Id,
                 FullName = teamMember.FullName,
                 Role = teamMember.Role,
                 ImageId = teamMember.ImageId

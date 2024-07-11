@@ -70,7 +70,7 @@ public class MottoController : ControllerBase
         var res =await MottoRepository.GetByIdAsync(id);
         var dto = new MottoDto
         {
-            Id=motto.Id,
+            Id=res.Id,
             Author = res.Author,
             Text = res.Text
         };

@@ -109,6 +109,7 @@ public class AboutBusinessModelController : ControllerBase
         List<FutureDto> futures = await ModelToDto(res.Futures);
         var dto = new AboutBusinessDto
         {
+            Id = res.Id,
             Title = res.Title,
             Body = res.Body,
             Futures = futures,

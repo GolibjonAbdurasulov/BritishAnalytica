@@ -72,6 +72,7 @@ public class ServicePercentController : ControllerBase
         var res =  await ServicePercentRepository.GetByIdAsync(id);
         var dto = new ServicePercentDto()
         {
+            Id=res.Id,
             ServiceName = res.ServiceName,
             ServicePerecnt = res.ServicePerecnt
         };
@@ -89,6 +90,7 @@ public class ServicePercentController : ControllerBase
         {
             services.Add(new ServicePercentDto
             {
+                Id = servicePercent.Id,
                 ServiceName = servicePercent.ServiceName,
                 ServicePerecnt = servicePercent.ServicePerecnt
             });

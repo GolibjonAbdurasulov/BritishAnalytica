@@ -77,6 +77,7 @@ public class FaqQuestionController : ControllerBase
         var res =  await FaqQuestionRepository.GetByIdAsync(id);
         var dto = new FaqQuestionDto
         {
+            Id = res.Id,
             Title = res.Title,
             Body = res.Body
         };
@@ -92,6 +93,7 @@ public class FaqQuestionController : ControllerBase
         {
             dtos.Add(new FaqQuestionDto
             {
+                Id = question.Id,
                 Title = question.Title,
                 Body = question.Body
             });

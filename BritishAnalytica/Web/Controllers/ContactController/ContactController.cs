@@ -220,11 +220,13 @@ public class ContactController : ControllerBase
         {
             EmailDto = new EmailDto
             {
+                Id=res.EmailId,
                 EmailAddress = res.Email.EmailAddress,
                 Web = res.Email.Web
             },
             PhoneNumberDto = new PhoneNumberDto
             {
+                Id=res.PhoneNumberId,
                 Number = res.PhoneNumber.Number,
                 WorkingTimeStart = res.PhoneNumber.WorkingTimeStart,
                 WorkingTimeStop = res.PhoneNumber.WorkingTimeStop,
@@ -233,6 +235,7 @@ public class ContactController : ControllerBase
             },
             LocationDto = new LocationDto
             {
+                Id = res.LocationId,
                 Country = res.Location.Country,
                 Region =  res.Location.Region,
                 District =  res.Location.District,

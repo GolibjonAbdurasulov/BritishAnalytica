@@ -87,8 +87,17 @@ public class CategoryController : ControllerBase
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res =  Repository.GetAllAsQueryable().ToList();
+        List<CategoryDto> categoryDtos = new List<CategoryDto>();
         
-        return new ResponseModelBase(res);
+        foreach (Category category in res)
+        {
+            categoryDtos.Add(new CategoryDto
+            {
+                Id = category.Id,
+                CategoryName = category.CategoryName
+            });
+        }
+        return new ResponseModelBase(categoryDtos);
     }
     
     

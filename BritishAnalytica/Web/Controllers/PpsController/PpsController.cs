@@ -98,7 +98,7 @@ public class PpsController : ControllerBase
     
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdatePalaningAsync(PpsModelDto dto)
+    public async Task<ResponseModelBase> UpdatePlaningAsync(PpsModelDto dto)
     {
         var res = await PpsRepository.GetByIdAsync(dto.Id);
         res.Planing.Title = dto.PlaningDto.Title;
@@ -146,18 +146,22 @@ public class PpsController : ControllerBase
         var res = await PpsRepository.FirstOrDefaultAsync();
         var dto = new PpsModelDto
         {
+            Id = res.Id,
             PlaningDto = new PlaningDto
             {
+                Id = res.PlaningId,
                 Title = res.Planing.Title,
                 Body = res.Planing.Body
             },
             ProjectDto = new ProjectDto
             {
+                Id=res.ProjectId,
                 Title = res.Project.Title,
                 Body = res.Project.Body
             },
             SuccessDto = new SuccessDto
             {
+                Id = res.SuccessId,
                 Title = res.Success.Title,
                 Body = res.Success.Body
             }

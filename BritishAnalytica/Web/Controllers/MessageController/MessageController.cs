@@ -93,13 +93,41 @@ public class MessageController : ControllerBase
         await _messageRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
+    
+    [HttpGet]
+    public async Task<ResponseModelBase> GetByAsync(long id)
+    {
+        var res =await _messageRepository.GetByIdAsync(id);
+        MessageDto resDto = new MessageDto
+        {
+            Id = res.Id,
+            SenderName = res.SenderName,
+            SenderEmail = res.SenderEmail,
+            Subject = res.Subject,
+            MessageText = res.MessageText,
+            IsRead = res.IsRead
+        };
+        return new ResponseModelBase(res);
+    }
 
 
     [HttpGet]
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = _messageRepository.GetAllAsQueryable().ToList();
-
-        return new ResponseModelBase(res);
+        List<MessageDto> messageDtos = new List<MessageDto>();
+        foreach (Message message in res)
+        {
+            messageDtos.Add(new MessageDto
+            {
+                Id = message.Id,
+                SenderName = message.SenderName,
+                SenderEmail = message.SenderEmail,
+                Subject = message.Subject,
+                MessageText = message.MessageText,
+                IsRead = message.IsRead
+            });
+        }
+        return new ResponseModelBase(messageDtos);
     }
 }

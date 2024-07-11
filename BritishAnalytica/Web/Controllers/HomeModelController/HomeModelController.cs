@@ -97,6 +97,7 @@ public class HomeModelController : ControllerBase
         var res = await HomeModelRepository.FirstOrDefaultAsync();
         var dto = new HomeModelDto()
         {
+            Id = res.Id,
             Title = res.Title,
             Body = res.Body,
             ImageIds = res.ImageIds.ToList()

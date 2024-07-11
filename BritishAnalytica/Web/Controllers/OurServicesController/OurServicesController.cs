@@ -77,6 +77,7 @@ public class OurServicesController : ControllerBase
         var res =  await OurServicesRepository.GetByIdAsync(id);
         var dto = new OurServicesDto
         {
+            Id=res.Id,
             ServiceName = res.ServiceName,
             AboutService = res.AboutService,
             ServiceIconId = res.ServiceIconId,
@@ -95,6 +96,7 @@ public class OurServicesController : ControllerBase
         {
             services.Add(new OurService
             {
+                Id=ourService.Id,
                 ServiceName = ourService.ServiceName,
                 AboutService = ourService.AboutService,
                 ServiceIconId = ourService.ServiceIconId
