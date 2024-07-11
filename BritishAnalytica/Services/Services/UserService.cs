@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DatabaseBroker.Repositories.UserRepository;
 using Entity.Attributes;
@@ -89,5 +91,24 @@ public class UserService : IUserService
     }
 
 
-    
+    public async Task<List<UserDto>> GetAllUsers()
+    {
+        List<UserDto> userDtos = new List<UserDto>();
+        List<User> users = _userRepository.GetAllAsQueryable().ToList();
+        foreach (User user in users)
+        {
+            userDtos.Add(new UserDto
+            {
+                Id = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Password = user.Password,
+                Role = user.Role.ToString(),
+                IsSigned = user.IsSigned,
+                Token = "null"
+            });
+        }
+
+        return userDtos;
+    }
 }

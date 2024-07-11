@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Services.Dtos;
 
@@ -11,4 +12,5 @@ public interface IUserService
     public  Task<long> DeleteAsync(long id);
     public Task<UserGetDto> GetByIdAsync(long id);
     public  Task<UserDto> CreateAsync(UserCreationDto dto);
+    public  Task<List<UserDto>> GetAllUsers();
 }
