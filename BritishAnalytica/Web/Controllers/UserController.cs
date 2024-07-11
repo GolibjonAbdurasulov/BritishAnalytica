@@ -69,7 +69,6 @@ public class UserController : ControllerBase
     
     
     [HttpGet]
-    [Authorize]
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res =await UserService.GetAllUsers();
