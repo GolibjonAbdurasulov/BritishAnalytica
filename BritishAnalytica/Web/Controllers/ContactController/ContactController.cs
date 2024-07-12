@@ -251,4 +251,49 @@ public class ContactController : ControllerBase
     }
 
     
+    
+    
+    
+    [HttpGet]
+    public async Task<ResponseModelBase> GetAllAsync()
+    {
+        var res =    ContactRepository.GetAllAsQueryable().ToList();
+
+        List<ContactDto> contactDtos = new List<ContactDto>();
+        foreach (Contact contact in res)
+        {
+            contactDtos.Add(new ContactDto
+            {
+                Id = contact.Id,
+                Name = contact.Name,
+                EmailDto = new EmailDto
+                {
+                    Id=contact.EmailId,
+                    EmailAddress = contact.Email.EmailAddress,
+                    Web = contact.Email.Web
+                },
+                PhoneNumberDto = new PhoneNumberDto
+                {
+                    Id=contact.PhoneNumberId,
+                    Number = contact.PhoneNumber.Number,
+                    WorkingTimeStart = contact.PhoneNumber.WorkingTimeStart,
+                    WorkingTimeStop = contact.PhoneNumber.WorkingTimeStop,
+                    WorkingDayStart = contact.PhoneNumber.WorkingDayStart,
+                    WorkingDayStop = contact.PhoneNumber.WorkingDayStop
+                },
+                LocationDto = new LocationDto
+                {
+                    Id = contact.LocationId,
+                    Country = contact.Location.Country,
+                    Region =  contact.Location.Region,
+                    District =  contact.Location.District,
+                    Street =  contact.Location.Street,
+                    Home =  contact.Location.Home
+                }
+            });
+        }
+        return new ResponseModelBase(contactDtos);
+    }
+
+    
 }
