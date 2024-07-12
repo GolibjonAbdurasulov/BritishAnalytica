@@ -92,6 +92,7 @@ public class PpsController : ControllerBase
         res.Project.Body = dto.ProjectDto.Body;
         res.UpdatedAt = DateTime.Now;
 
+        res.UpdatedAt=DateTime.Now;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -104,6 +105,7 @@ public class PpsController : ControllerBase
         res.Planing.Title = dto.PlaningDto.Title;
         res.Planing.Body = dto.PlaningDto.Body;
         res.UpdatedAt = DateTime.Now;
+        res.UpdatedAt=DateTime.Now;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     } 
@@ -116,6 +118,7 @@ public class PpsController : ControllerBase
         res.Success.Title = dto.SuccessDto.Title;
         res.Success.Body = dto.SuccessDto.Body;
         res.UpdatedAt = DateTime.Now;
+        res.UpdatedAt=DateTime.Now;
         await PpsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

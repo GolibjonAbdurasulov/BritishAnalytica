@@ -53,6 +53,7 @@ public class ServicePercentController : ControllerBase
         res.ServicePerecnt = dto.ServicePerecnt;
         res.UpdatedAt = DateTime.Now;
 
+        res.UpdatedAt=DateTime.Now;
         await ServicePercentRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

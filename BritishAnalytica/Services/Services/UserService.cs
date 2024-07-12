@@ -22,11 +22,12 @@ public class UserService : IUserService
 
     
     
-    public async Task<UserGetDto> GetByIdAsync(long id)
+    public async Task<UserDto> GetByIdAsync(long id)
     {
         var oldUser = await _userRepository.GetByIdAsync(id);
-        var dto = new UserGetDto
+        var dto = new UserDto
         {
+            Id = oldUser.Id,
             UserName=oldUser.UserName,
             Email = oldUser.Email,
             Password = oldUser.Password,
@@ -43,21 +44,26 @@ public class UserService : IUserService
         await _userRepository.RemoveAsync(oldUser);
         return id;
     }
-    public async Task<ChangeUserRoleDto> ChangeUserRole(ChangeUserRoleDto dto)
-    {
-        var oldUser = await _userRepository.GetByIdAsync(dto.UserId);
-        oldUser.Role = Enum.Parse<Role>(dto.Role);
-        await _userRepository.UpdateAsync(oldUser);
-        return dto;
-    }
+   
 
-    public async Task<UserEmailUpdateDto> UpdateUserEmail(UserEmailUpdateDto dto)
+    public async Task<UserDto> UpdateAsync(UserDto dto)
     {
         var oldUser = await _userRepository.GetByIdAsync(dto.Id);
-        oldUser.Email = dto.Email;
+        if (dto.Email is not null&&dto.Email!="string")
+            oldUser.Email = dto.Email;
+        
+        if (dto.Password is not null&&dto.Password!="string")
+            oldUser.Password = dto.Password; 
+        
+        if (dto.UserName is not null&&dto.UserName!="string")
+            oldUser.UserName = dto.UserName; 
+     
+        oldUser.UpdatedAt=DateTime.Now;
         await _userRepository.UpdateAsync(oldUser);
         return dto;
     }
+    
+    
     public async Task<UserDto> CreateAsync(UserCreationDto dto)
     {
         var user = new User
@@ -82,14 +88,6 @@ public class UserService : IUserService
         await _userRepository.AddAsync(user);
         return resDto;
     }
-    public async Task<UserPasswordUpdateDto> UpdateUserPassword(UserPasswordUpdateDto dto)
-    {
-        var oldUser = await _userRepository.GetByIdAsync(dto.Id);
-        oldUser.Password = dto.Password;
-        await _userRepository.UpdateAsync(oldUser);
-        return dto;
-    }
-
 
     public async Task<List<UserDto>> GetAllUsers()
     {

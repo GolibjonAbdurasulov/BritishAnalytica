@@ -67,6 +67,7 @@ public class HomeModelController : ControllerBase
         res.Title = dto.Title;
         res.Body = dto.Body;
         res.ImageIds = dto.ImageIds;
+        res.UpdatedAt=DateTime.Now;
         await HomeModelRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

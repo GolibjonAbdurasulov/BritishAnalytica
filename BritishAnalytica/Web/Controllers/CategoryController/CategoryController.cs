@@ -50,6 +50,7 @@ public class CategoryController : ControllerBase
             Id = res.Id,
             CategoryName = res.CategoryName
         };
+        
         return new ResponseModelBase(resDto);
     }
     

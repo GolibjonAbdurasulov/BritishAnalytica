@@ -61,6 +61,7 @@ public class MessageController : ControllerBase
         res.IsRead = dto.IsRead;
         res.MessageText = dto.MessageText;
 
+        res.UpdatedAt=DateTime.Now;
         await _messageRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -73,6 +74,7 @@ public class MessageController : ControllerBase
         
         res.IsRead =true;
 
+        res.UpdatedAt=DateTime.Now;
         await _messageRepository.UpdateAsync(res);
         return new ResponseModelBase(id);
     }

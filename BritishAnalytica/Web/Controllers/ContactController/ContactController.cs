@@ -125,6 +125,7 @@ public class ContactController : ControllerBase
         res.Email.Web = dto.Web;
         res.UpdatedAt = DateTime.Now;
         res.Email.Name = dto.Name;
+        res.UpdatedAt=DateTime.Now;
         await ContactRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -141,6 +142,7 @@ public class ContactController : ControllerBase
         res.PhoneNumber.WorkingTimeStop = dto.WorkingTimeStop;
         res.UpdatedAt=DateTime.Now;
         res.PhoneNumber.Name = dto.Name;
+        res.UpdatedAt=DateTime.Now;
         await ContactRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
@@ -157,6 +159,8 @@ public class ContactController : ControllerBase
         res.Location.Region = dto.Region;
         res.UpdatedAt=DateTime.Now;
         res.Location.Name = dto.Name;
+        
+        res.UpdatedAt=DateTime.Now;
         await ContactRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

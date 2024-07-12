@@ -66,6 +66,7 @@ public class AboutBusinessModelController : ControllerBase
         res.Title = dto.Title;
         res.ImageId = dto.ImageId;
         res.UpdatedAt=DateTime.Now;
+        res.UpdatedAt=DateTime.Now;
         await AboutBusinessModelRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

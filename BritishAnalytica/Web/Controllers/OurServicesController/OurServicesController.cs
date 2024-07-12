@@ -58,6 +58,7 @@ public class OurServicesController : ControllerBase
         res.ServiceIconId = dto.ServiceIconId;
         res.UpdatedAt = DateTime.Now;
 
+        res.UpdatedAt=DateTime.Now;
         await OurServicesRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

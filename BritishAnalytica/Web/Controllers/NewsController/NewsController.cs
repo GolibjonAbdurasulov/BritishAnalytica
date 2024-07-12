@@ -61,6 +61,7 @@ public class NewsController : ControllerBase
         res.PostTitle = dto.PostTitle;
         res.UpdatedAt = DateTime.Now;
 
+        res.UpdatedAt=DateTime.Now;
         await NewsRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

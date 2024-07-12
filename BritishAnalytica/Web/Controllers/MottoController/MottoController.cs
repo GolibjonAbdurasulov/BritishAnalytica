@@ -51,6 +51,7 @@ public class MottoController : ControllerBase
         res.Text = dto.Text;
         res.Author = dto.Author;
 
+        res.UpdatedAt=DateTime.Now;
         await MottoRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

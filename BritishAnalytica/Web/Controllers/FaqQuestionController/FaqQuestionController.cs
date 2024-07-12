@@ -56,6 +56,7 @@ public class FaqQuestionController : ControllerBase
         res.Body = dto.Body;
         res.Title=dto.Title;
       
+        res.UpdatedAt=DateTime.Now;
         await FaqQuestionRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

@@ -58,6 +58,7 @@ public class TeamMemberController : ControllerBase
         res.Role = dto.Role;
         res.ImageId = dto.ImageId;
 
+        res.UpdatedAt=DateTime.Now;
         await TeamMemberRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }

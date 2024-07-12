@@ -30,27 +30,12 @@ public class UserController : ControllerBase
     
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateEmailAsync( UserEmailUpdateDto dto)
+    public async Task<ResponseModelBase> UpdateAsync( UserDto dto)
     {
-        var user =await UserService.UpdateUserEmail(dto);
+        var user =await UserService.UpdateAsync(dto);
         return new ResponseModelBase(dto);
     }
     
-    [HttpPut]
-    [Authorize]
-    public async Task<ResponseModelBase> UpdatePasswordAsync( UserPasswordUpdateDto dto)
-    {
-        var res =await UserService.UpdateUserPassword(dto);
-        return new ResponseModelBase(res);
-    }
-    
-    [HttpPut]
-    [Authorize]
-    public async Task<ResponseModelBase> ChangeUserRoleAsync( ChangeUserRoleDto dto)
-    {
-        var res =await UserService.ChangeUserRole(dto);
-        return new ResponseModelBase(res);
-    }
     
     [HttpDelete]
     [Authorize]
