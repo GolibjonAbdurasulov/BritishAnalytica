@@ -12,11 +12,11 @@ using Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Konfiguratsiyani o'qish
+
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-// DB konteksti konfiguratsiyasi
+
 builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
 {
     optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
@@ -24,17 +24,17 @@ builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
     //optionsBuilder.UseChangeTrackingProxies();
 });
 
-// Telegram bot sozlamalarni konfiguratsiyalash
+
 builder.Services.Configure<TelegramBotSetting>(builder.Configuration.GetSection("TelegramBotSetting"));
 
-// TelegramBotService ni qo'shish
+
 builder.Services.AddSingleton<TelegramBotService>();
 builder.Services.AddHostedService(sp => sp.GetRequiredService<TelegramBotService>());
 
 builder.WebHost.ConfigureKestrel(x => x.ListenAnyIP(80));
 
 
-// JWT autentifikatsiyani sozlash
+
 builder
     .Services
     .AddAuthentication(options =>
@@ -154,7 +154,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAllOrigins");
 
-// Endpoint-larni tayyorlash
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapControllers();
