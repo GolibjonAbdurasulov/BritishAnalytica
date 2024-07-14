@@ -171,7 +171,6 @@ public class ContactController : ControllerBase
     public async Task<ResponseModelBase> DeleteAsync(long contactId)
     {
         var contact =  await ContactRepository.GetByIdAsync(contactId);
-        await ContactRepository.RemoveAsync(contact);
 
         var email = await EmailRepository.GetByIdAsync(contact.EmailId);
         await EmailRepository.RemoveAsync(email);
@@ -181,6 +180,8 @@ public class ContactController : ControllerBase
 
         var phoneNumber = await PhoneNumberRepository.GetByIdAsync(contact.PhoneNumberId);
         await PhoneNumberRepository.RemoveAsync(phoneNumber);
+
+        await ContactRepository.RemoveAsync(contact);
         
         return new ResponseModelBase(contact);
     }
