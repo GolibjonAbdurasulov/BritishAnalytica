@@ -1,23 +1,9 @@
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using System;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Telegram.Bot;
-using Telegram.Bot.Exceptions;
-using Telegram.Bot.Types.Enums;
-using Web.BackgroundServices;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 using Web.Controllers.MessageController.MessageDtos;
+
+namespace Web.BackgroundServices;
 
 public class TelegramBotService : BackgroundService
 {
@@ -55,7 +41,7 @@ public class TelegramBotService : BackgroundService
     {
         string message = @$"User: {dto.SenderName}
 Email: {dto.SenderEmail}
-Subject: {dto.Subject}
+Phone number: {dto.Subject}
 Message text: {dto.MessageText}";
         try
         {

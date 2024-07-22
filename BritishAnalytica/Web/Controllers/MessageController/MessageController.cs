@@ -28,7 +28,7 @@ public class MessageController : ControllerBase
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            SenderName = dto.SenderName,
+            SenderName =  dto.FirstName+" "+dto.LastName,
             SenderEmail = dto.SenderEmail,
             Subject = dto.Subject,
             MessageText = dto.MessageText,
@@ -38,7 +38,7 @@ public class MessageController : ControllerBase
         var messageDto = new MessageDto
         {
             Id = resEntity.Id,
-            SenderName = dto.SenderName,
+            SenderName = dto.FirstName+" "+dto.LastName,
             SenderEmail = dto.SenderEmail,
             Subject = dto.Subject,
             MessageText = dto.MessageText,

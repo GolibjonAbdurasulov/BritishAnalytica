@@ -2,7 +2,8 @@ namespace Web.Controllers.MessageController.MessageDtos;
 
 public class MessageCreationDto
 {
-    public string SenderName { get; set; } 
+    public string FirstName { get; set; } 
+    public string LastName { get; set; } 
     public string SenderEmail { get; set; } 
     public string Subject { get; set; } 
     public string MessageText { get; set; } 
