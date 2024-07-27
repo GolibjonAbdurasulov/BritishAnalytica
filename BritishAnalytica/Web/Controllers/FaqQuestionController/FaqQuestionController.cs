@@ -32,16 +32,16 @@ public class FaqQuestionController : ControllerBase
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            Title = dto.Title,
-            Body = dto.Body
+            Answer = dto.Answer,
+            Question = dto.Question
         };
         var resEntity=await FaqQuestionRepository.AddAsync(entity);
         
         var resDto = new FaqQuestionDto
         {
             Id = resEntity.Id, 
-            Title = resEntity.Title,
-            Body = resEntity.Body
+            Answer = dto.Answer,
+            Question = dto.Question
         };
         return new ResponseModelBase(resDto);
     }
@@ -53,8 +53,8 @@ public class FaqQuestionController : ControllerBase
     public async Task<ResponseModelBase> UpdateAsync( FaqQuestionDto dto)
     {
         var res =  await FaqQuestionRepository.GetByIdAsync(dto.Id);
-        res.Body = dto.Body;
-        res.Title=dto.Title;
+        res.Answer = dto.Answer;
+        res.Question=dto.Question;
       
         res.UpdatedAt=DateTime.Now;
         await FaqQuestionRepository.UpdateAsync(res);
@@ -79,8 +79,8 @@ public class FaqQuestionController : ControllerBase
         var dto = new FaqQuestionDto
         {
             Id = res.Id,
-            Title = res.Title,
-            Body = res.Body
+            Answer = res.Answer,
+            Question = res.Question
         };
         return new ResponseModelBase(dto);
     }
@@ -95,8 +95,8 @@ public class FaqQuestionController : ControllerBase
             dtos.Add(new FaqQuestionDto
             {
                 Id = question.Id,
-                Title = question.Title,
-                Body = question.Body
+                Answer = question.Answer,
+                Question = question.Question
             });
         }
         

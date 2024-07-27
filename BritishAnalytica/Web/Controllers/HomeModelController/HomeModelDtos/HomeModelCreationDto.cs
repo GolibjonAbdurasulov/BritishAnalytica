@@ -4,7 +4,6 @@ namespace Web.Controllers.HomeModelController.HomeModelDtos;
 
 public class HomeModelCreationDto
 {
-    public MultiLanguageField Title { get; set; }
-    public MultiLanguageField Body { get; set; }
-    public List<Guid> ImageIds { get; set; }
+    public MultiLanguageField Text { get; set; }
+    public Guid ImageId { get; set; }
 }

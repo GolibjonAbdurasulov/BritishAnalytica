@@ -1,5 +1,5 @@
 using DatabaseBroker.Repositories.Common;
-using Entity.Models.OurServices;
+using Entity.Models.OurService;
 
 namespace DatabaseBroker.Repositories.OurServicesRepository;
 

@@ -1,14 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using DatabaseBroker.Repositories.ServicePercentRepository;
 using DatabaseBroker.Repositories.TeamMemberRepository;
-using Entity.Models.ServicePercent;
+using Entity.Models.Skill;
 using Entity.Models.TeamMember;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;
-using Web.Controllers.ServicePercentController.ServicePercentDtos;
 using Web.Controllers.TeamMemberController.TeamMemberDtos;
 
 namespace Web.Controllers.TeamMemberController;
@@ -30,11 +25,11 @@ public class TeamMemberController : ControllerBase
     {
         var entity = new TeamMember
         {
-            Id = 0,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             FullName = dto.FullName,
             Role = dto.Role,
+            Skills = dto.Skills,
             ImageId = dto.ImageId
         };
         var resEntity=await TeamMemberRepository.AddAsync(entity);
@@ -43,6 +38,7 @@ public class TeamMemberController : ControllerBase
             Id = resEntity.Id,
             FullName = resEntity.FullName,
             Role = resEntity.Role,
+            Skills = resEntity.Skills,
             ImageId = resEntity.ImageId
         };
 
@@ -99,10 +95,10 @@ public class TeamMemberController : ControllerBase
                 Id = teamMember.Id,
                 FullName = teamMember.FullName,
                 Role = teamMember.Role,
+                Skills = teamMember.Skills,
                 ImageId = teamMember.ImageId
             });
         }
         return new ResponseModelBase(members);
     }
-
 }

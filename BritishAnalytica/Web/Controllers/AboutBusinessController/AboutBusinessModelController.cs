@@ -1,13 +1,9 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using DatabaseBroker.Repositories.AboutBusinessModelRepository;
-using DatabaseBroker.Repositories.FutureRepository;
+using DatabaseBroker.Repositories.ReasonRepositories;
 using Entity.Models.AboutBusinessModel;
 using Entity.Models.FutureModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Web.Common;
 using Web.Controllers.AboutBusinessController.Dtos;
 
@@ -18,12 +14,11 @@ namespace Web.Controllers.AboutBusinessController;
 public class AboutBusinessModelController : ControllerBase
 {
     private IAboutBusinessModelRepository AboutBusinessModelRepository { get; set; }
-    private IFutureRepository FutureRepository { get; set; }
-
-    public AboutBusinessModelController(IAboutBusinessModelRepository aboutBusinessModelRepository, IFutureRepository futureRepository)
+private IReasonRepository ReasonRepository { get; set; }
+    public AboutBusinessModelController(IAboutBusinessModelRepository aboutBusinessModelRepository, IReasonRepository reasonRepository)
     {
         AboutBusinessModelRepository = aboutBusinessModelRepository;
-        FutureRepository = futureRepository;
+        ReasonRepository = reasonRepository;
     }
 
 
@@ -31,26 +26,28 @@ public class AboutBusinessModelController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> CreateAsync(AboutBusinessCreationDto dto)
     {
-        List<Future> futures = await DtoToModel(dto.Futures);
+        List<Reason> reasons = await DtoToModel(dto.ReasonDtos);
         var aboutBusiness = new AboutBusinessModel
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             Title = dto.Title,
-            Body = dto.Body,
-            Futures = futures,
-            ImageId = dto.ImageId
+            About = dto.About,
+            Reasons = reasons,
+            ImageId = dto.ImageId,
+            MiniTitle = dto.MiniTitle
         };
         await AboutBusinessModelRepository.AddAsync(aboutBusiness);
 
-        List<FutureDto> futureDtos = await DtoToDto(dto.Futures);
+        List<ReasonDto> reasonDtos = await DtoToDto(dto.ReasonDtos);
         
         var resDto = new AboutBusinessDto
         {
             Id = aboutBusiness.Id,
             Title = aboutBusiness.Title,
-            Body = aboutBusiness.Body,
-            Futures = futureDtos,
+            MiniTitle = aboutBusiness.MiniTitle,
+            ReasonDtos = reasonDtos,
+            About = aboutBusiness.About,
             ImageId = default
         };
         
@@ -62,7 +59,8 @@ public class AboutBusinessModelController : ControllerBase
     public async Task<ResponseModelBase> UpdateAsync( AboutBusinessDto dto)
     {
         var res = await AboutBusinessModelRepository.GetByIdAsync(dto.Id);
-        res.Body = dto.Body;
+        res.MiniTitle = dto.MiniTitle;
+        res.About = dto.About;
         res.Title = dto.Title;
         res.ImageId = dto.ImageId;
         res.UpdatedAt=DateTime.Now;
@@ -73,12 +71,12 @@ public class AboutBusinessModelController : ControllerBase
     
     [HttpPut]
     [Authorize]
-    public async Task<ResponseModelBase> UpdateFuturesAsync(FutureDto dto)
+    public async Task<ResponseModelBase> UpdateReasonAsync(ReasonDto dto)
     {
-        var res = await FutureRepository.GetByIdAsync(dto.Id);
+        var res = await ReasonRepository.GetByIdAsync(dto.Id);
 
         res.Text = dto.Text;
-        await FutureRepository.UpdateAsync(res);
+        await ReasonRepository.UpdateAsync(res);
         return new ResponseModelBase(dto);
     }
     
@@ -98,8 +96,8 @@ public class AboutBusinessModelController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> DeleteFutureAsync(long id)
     {
-        var res =  await FutureRepository.GetByIdAsync(id);
-        await FutureRepository.RemoveAsync(res);
+        var res =  await ReasonRepository.GetByIdAsync(id);
+        await ReasonRepository.RemoveAsync(res);
         return new ResponseModelBase(res);
     }
     
@@ -107,60 +105,62 @@ public class AboutBusinessModelController : ControllerBase
     public async Task<ResponseModelBase> GetAsync(long id)
     {
         var res = await AboutBusinessModelRepository.GetByIdAsync(id);
-        List<FutureDto> futures = await ModelToDto(res.Futures);
+        List<ReasonDto> reasonDtos = await ModelToDto(res.Reasons);
         var dto = new AboutBusinessDto
         {
             Id = res.Id,
             Title = res.Title,
-            Body = res.Body,
-            Futures = futures,
+            About = res.About,
+            MiniTitle = res.MiniTitle,
+            ReasonDtos = reasonDtos,
             ImageId = res.ImageId
         };
         return new ResponseModelBase(dto);
     }
 
 
-    private async Task<List<Future>> DtoToModel(List<FutureCreationDto> dtos)
+    private async Task<List<Reason>> DtoToModel(List<ReasonCreationDto> dtos)
     {
-        List<Future> futures = new List<Future>();
-        foreach (FutureCreationDto dto in dtos)
+        List<Reason> reasons = new List<Reason>();
+        foreach (ReasonCreationDto dto in dtos)
         {
-            var future = new Future
+            var future = new Reason()
             {
                 Text = dto.Text
             };
-            futures.Add(future);
+            reasons.Add(future);
         }
 
-        return futures;
+        return reasons;
     }
-    private async Task<List<FutureDto>> ModelToDto(List<Future> models)
+    private async Task<List<ReasonDto>> ModelToDto(List<Reason> models)
     {
-        List<FutureDto> futures = new List<FutureDto>();
-        foreach (Future model in models)
+        List<ReasonDto> reasonDtos = new List<ReasonDto>();
+        foreach (Reason model in models)
         {
-            var future = new FutureDto
+            var future = new ReasonDto()
             {
+                Id = model.Id,
                 Text = model.Text
             };
-            futures.Add(future);
+            reasonDtos.Add(future);
         }
 
-        return futures;
+        return reasonDtos;
     }
     
-    private async Task<List<FutureDto>> DtoToDto(List<FutureCreationDto> creationDtos)
+    private async Task<List<ReasonDto>> DtoToDto(List<ReasonCreationDto> creationDtos)
     {
-        List<FutureDto> futures = new List<FutureDto>();
-        foreach (FutureCreationDto model in creationDtos)
+        List<ReasonDto> reasonDtos = new List<ReasonDto>();
+        foreach (ReasonCreationDto model in creationDtos)
         {
-            var future = new FutureDto
+            var future = new ReasonDto()
             {
                 Text = model.Text
             };
-            futures.Add(future);
+            reasonDtos.Add(future);
         }
 
-        return futures;
+        return reasonDtos;
     }
 }

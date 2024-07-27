@@ -1,8 +1,5 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using DatabaseBroker.Repositories.OurServicesRepository;
-using Entity.Models.OurServices;
+using Entity.Models.OurService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;
@@ -32,8 +29,7 @@ public class OurServicesController : ControllerBase
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             ServiceName = dto.ServiceName,
-            AboutService = dto.AboutService,
-            ServiceIconId = dto.ServiceIconId
+            AboutService = dto.AboutService
         };
         
         var service = await OurServicesRepository.AddAsync(entity);
@@ -42,8 +38,7 @@ public class OurServicesController : ControllerBase
         {
             Id = service.Id,
             ServiceName = service.ServiceName,
-            AboutService = service.AboutService,
-            ServiceIconId = service.ServiceIconId
+            AboutService = service.AboutService
         };
         return new ResponseModelBase(ourServicesDto);
     }
@@ -55,7 +50,6 @@ public class OurServicesController : ControllerBase
         var res = await OurServicesRepository.GetByIdAsync(dto.Id);
         res.AboutService = dto.AboutService;
         res.ServiceName = dto.ServiceName;
-        res.ServiceIconId = dto.ServiceIconId;
         res.UpdatedAt = DateTime.Now;
 
         res.UpdatedAt=DateTime.Now;
@@ -80,8 +74,7 @@ public class OurServicesController : ControllerBase
         {
             Id=res.Id,
             ServiceName = res.ServiceName,
-            AboutService = res.AboutService,
-            ServiceIconId = res.ServiceIconId,
+            AboutService = res.AboutService
         };
         
         return new ResponseModelBase(dto);
@@ -99,8 +92,7 @@ public class OurServicesController : ControllerBase
             {
                 Id=ourService.Id,
                 ServiceName = ourService.ServiceName,
-                AboutService = ourService.AboutService,
-                ServiceIconId = ourService.ServiceIconId
+                AboutService = ourService.AboutService
             });
         }
         return new ResponseModelBase(services);

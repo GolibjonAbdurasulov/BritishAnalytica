@@ -8,7 +8,6 @@ namespace Entity.Models.HomeModel;
 [Table("home_model")]
 public class HomeModel : AuditableModelBase<long>
 {
-    [Column("text", TypeName = "jsonb")]public MultiLanguageField Title { get; set; }
-    [Column("body", TypeName = "jsonb")]public MultiLanguageField Body { get; set; }
-    [Column("image_id")]public List<Guid> ImageIds { get; set; }
+    [Column("body", TypeName = "jsonb")]public MultiLanguageField Text { get; set; }
+    [Column("image_id")]public Guid ImageId { get; set; }
 }

@@ -4,6 +4,6 @@ namespace Web.Controllers.FaqQuestionController.FaqQuestionDtos;
 
 public class FaqQuestionCreationDto
 {
-    public MultiLanguageField Title { get; set; }
-    public MultiLanguageField Body { get; set; }
+    public MultiLanguageField Answer { get; set; }
+    public MultiLanguageField Question { get; set; }
 }

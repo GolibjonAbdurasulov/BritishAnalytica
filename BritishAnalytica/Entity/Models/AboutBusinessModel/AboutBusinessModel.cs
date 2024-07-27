@@ -8,16 +8,13 @@ namespace Entity.Models.AboutBusinessModel;
 [Table("about_business")]
 public class AboutBusinessModel : AuditableModelBase<long>
 {
+   [Column("title", TypeName = "jsonb")] public MultiLanguageField Title { get; set; }
 
-   [Column("title", TypeName = "jsonb")]
-   public MultiLanguageField Title { get; set; }
+   [Column("about", TypeName = "jsonb")] public MultiLanguageField About { get; set; }
 
-   [Column("body", TypeName = "jsonb")]
-   public MultiLanguageField Body { get; set; }
+   [Column("mini_title", TypeName = "jsonb")] public MultiLanguageField MiniTitle { get; set; }
+   
+   [Column("reason")] public virtual List<Reason> Reasons { get; set; } = new List<Reason>();
 
-   [Column("futures")]
-   public virtual List<Future> Futures { get; set; } = new List<Future>();
-
-   [Column("imageId")]
-   public Guid ImageId { get; set; }
+   [Column("imageId")] public Guid ImageId { get; set; }
 }

@@ -28,9 +28,10 @@ public class MessageController : ControllerBase
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
-            SenderName =  dto.FirstName+" "+dto.LastName,
+            SenderLastName = dto.SenderLastName,
+            SenderFirstName = dto.SenderFirstName,
             SenderEmail = dto.SenderEmail,
-            Subject = dto.Subject,
+            PhoneNumber = dto.PhoneNumber,
             MessageText = dto.MessageText,
             IsRead = dto.IsRead
         };
@@ -38,9 +39,10 @@ public class MessageController : ControllerBase
         var messageDto = new MessageDto
         {
             Id = resEntity.Id,
-            SenderName = dto.FirstName+" "+dto.LastName,
+            SenderLastName = dto.SenderLastName,
+            SenderFirstName = dto.SenderFirstName,
             SenderEmail = dto.SenderEmail,
-            Subject = dto.Subject,
+            PhoneNumber = dto.PhoneNumber,
             MessageText = dto.MessageText,
             IsRead = false
         };
@@ -56,9 +58,11 @@ public class MessageController : ControllerBase
     {
         var res = await _messageRepository.GetByIdAsync(dto.Id);
         res.SenderEmail = dto.SenderEmail;
-        res.SenderName = dto.SenderEmail;
-        res.Subject = dto.Subject;
+        res.SenderFirstName = dto.SenderFirstName;
+        res.SenderLastName = dto.SenderLastName;
+        res.PhoneNumber = dto.PhoneNumber;
         res.IsRead = dto.IsRead;
+        res.MessageText = dto.MessageText;
         res.MessageText = dto.MessageText;
 
         res.UpdatedAt=DateTime.Now;
@@ -103,9 +107,10 @@ public class MessageController : ControllerBase
         MessageDto resDto = new MessageDto
         {
             Id = res.Id,
-            SenderName = res.SenderName,
+            SenderLastName = res.SenderLastName,
+            SenderFirstName = res.SenderFirstName,
             SenderEmail = res.SenderEmail,
-            Subject = res.Subject,
+            PhoneNumber = res.PhoneNumber,
             MessageText = res.MessageText,
             IsRead = res.IsRead
         };
@@ -123,9 +128,9 @@ public class MessageController : ControllerBase
             messageDtos.Add(new MessageDto
             {
                 Id = message.Id,
-                SenderName = message.SenderName,
-                SenderEmail = message.SenderEmail,
-                Subject = message.Subject,
+                SenderLastName = message.SenderLastName,
+                SenderFirstName = message.SenderFirstName,
+                PhoneNumber = message.PhoneNumber,
                 MessageText = message.MessageText,
                 IsRead = message.IsRead
             });

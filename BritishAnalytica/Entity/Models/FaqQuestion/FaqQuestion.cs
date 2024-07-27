@@ -5,6 +5,6 @@ namespace Entity.Models.FaqQuestion;
 [Table("faq_questions")]
 public class FaqQuestions : AuditableModelBase<long>
 {
-    [Column("title", TypeName = "jsonb")]public MultiLanguageField Title { get; set; }
-    [Column("body", TypeName = "jsonb")]public MultiLanguageField Body { get; set; }
+    [Column("question", TypeName = "jsonb")]public MultiLanguageField Question { get; set; }
+    [Column("answer", TypeName = "jsonb")]public MultiLanguageField Answer { get; set; }
 }

@@ -39,9 +39,9 @@ public class TelegramBotService : BackgroundService
     
     public async Task SendMessageToAdminGroupAsync(MessageDto dto)
     {
-        string message = @$"User: {dto.SenderName}
+        string message = @$"User: {dto.SenderFirstName+" "+ dto.SenderLastName} 
 Email: {dto.SenderEmail}
-Phone number: {dto.Subject}
+Phone number: {dto.PhoneNumber}
 Message text: {dto.MessageText}";
         try
         {

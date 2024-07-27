@@ -6,5 +6,4 @@ public class OurServicesCreationDto
 {
     public MultiLanguageField ServiceName { get; set; }
     public MultiLanguageField AboutService { get; set; }
-    public Guid ServiceIconId { get; set; }
 }
