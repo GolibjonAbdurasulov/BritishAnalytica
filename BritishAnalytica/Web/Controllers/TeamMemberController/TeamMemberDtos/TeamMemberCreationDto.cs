@@ -8,6 +8,6 @@ public class TeamMemberCreationDto
 {
     public string FullName { get; set; }
     public MultiLanguageField Role { get; set; }
-    public MultiLanguageField Skills { get; set; }
+    public List<Skill> Skills { get; set; }
     public Guid ImageId { get; set; }
 }

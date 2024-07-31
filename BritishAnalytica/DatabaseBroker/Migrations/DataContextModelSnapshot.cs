@@ -61,7 +61,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("about_business");
+                    b.ToTable("about_business", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.FaqQuestion.FaqQuestions", b =>
@@ -91,7 +91,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("faq_questions");
+                    b.ToTable("faq_questions", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.File.FileModel", b =>
@@ -123,7 +123,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("file_model");
+                    b.ToTable("file_model", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.FutureModel.Reason", b =>
@@ -146,7 +146,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasIndex("AboutBusinessModelId");
 
-                    b.ToTable("reasons");
+                    b.ToTable("reasons", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.HomeModel.HomeModel", b =>
@@ -176,7 +176,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("home_model");
+                    b.ToTable("home_model", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.MessageModel.Message", b =>
@@ -222,7 +222,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("messages");
+                    b.ToTable("messages", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.OurService.OurService", b =>
@@ -252,7 +252,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("our_services");
+                    b.ToTable("our_services", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.OurServices.OurValues", b =>
@@ -282,7 +282,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("our_values");
+                    b.ToTable("our_values", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.Skill.Skill", b =>
@@ -300,7 +300,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("skills");
+                    b.ToTable("skills", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.TeamMember.TeamMember", b =>
@@ -338,7 +338,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("team_members");
+                    b.ToTable("team_members", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.Translation.Translation", b =>
@@ -374,7 +374,7 @@ namespace DatabaseBroker.Migrations
                     b.HasIndex("Code")
                         .IsUnique();
 
-                    b.ToTable("translations");
+                    b.ToTable("translations", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.Users.User", b =>
@@ -416,7 +416,7 @@ namespace DatabaseBroker.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("users");
+                    b.ToTable("users", (string)null);
                 });
 
             modelBuilder.Entity("Entity.Models.FutureModel.Reason", b =>
