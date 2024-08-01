@@ -1,7 +1,7 @@
 using DatabaseBroker.Repositories.AboutBusinessModelRepository;
 using DatabaseBroker.Repositories.ReasonRepositories;
 using Entity.Models.AboutBusinessModel;
-using Entity.Models.FutureModel;
+using Entity.Models.ReasonModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Web.Common;

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
 
-namespace Entity.Models.FutureModel;
+namespace Entity.Models.ReasonModel;
 [Table("reasons")]
 public class Reason : ModelBase<long>
 {

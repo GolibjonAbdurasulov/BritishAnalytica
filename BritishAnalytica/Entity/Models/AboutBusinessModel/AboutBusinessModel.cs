@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
-using Entity.Models.FutureModel;
+using Entity.Models.ReasonModel;
 
 namespace Entity.Models.AboutBusinessModel;
 [Table("about_business")]

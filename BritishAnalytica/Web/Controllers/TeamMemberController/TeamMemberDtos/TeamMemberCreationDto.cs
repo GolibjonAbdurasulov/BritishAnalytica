@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Entity.Models.Common;
-using Entity.Models.Skill;
+using Entity.Models.Skills;
 
 namespace Web.Controllers.TeamMemberController.TeamMemberDtos;
 

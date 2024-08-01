@@ -1,6 +1,6 @@
 using DatabaseBroker.Repositories.Common;
 using Entity.Attributes;
-using Entity.Models.FutureModel;
+using Entity.Models.ReasonModel;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseBroker.Repositories.ReasonRepositories;

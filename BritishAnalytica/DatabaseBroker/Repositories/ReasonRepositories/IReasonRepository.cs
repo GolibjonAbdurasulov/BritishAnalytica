@@ -1,5 +1,5 @@
 using DatabaseBroker.Repositories.Common;
-using Entity.Models.FutureModel;
+using Entity.Models.ReasonModel;
 
 namespace DatabaseBroker.Repositories.ReasonRepositories;
 

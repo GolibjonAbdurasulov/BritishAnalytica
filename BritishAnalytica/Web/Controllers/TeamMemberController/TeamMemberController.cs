@@ -1,5 +1,4 @@
 using DatabaseBroker.Repositories.TeamMemberRepository;
-using Entity.Models.Skill;
 using Entity.Models.TeamMember;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

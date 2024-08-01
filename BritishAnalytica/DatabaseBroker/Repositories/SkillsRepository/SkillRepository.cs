@@ -1,6 +1,6 @@
 using DatabaseBroker.Repositories.Common;
 using Entity.Attributes;
-using Entity.Models.Skill;
+using Entity.Models.Skills;
 using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseBroker.Repositories.SkillsRepository;

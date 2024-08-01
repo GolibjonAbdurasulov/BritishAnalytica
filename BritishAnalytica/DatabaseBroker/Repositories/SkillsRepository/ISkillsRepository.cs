@@ -1,5 +1,5 @@
 using DatabaseBroker.Repositories.Common;
-using Entity.Models.Skill;
+using Entity.Models.Skills;
 
 namespace DatabaseBroker.Repositories.SkillsRepository;
 
