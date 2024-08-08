@@ -16,7 +16,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettings.json");
 builder.Configuration.AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true);
 
-
 builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
 {
     optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
