@@ -26,7 +26,7 @@ jobs:
   Deploy:
     name: Deploy
     needs: Publish
-    runs-on: britishAnalytica
+    runs-on: british-analytica-srv
     env:
       DOCKER_USERNAME: golibjonabdurasulov
       DOCKER_PASSWORD: dckr_pat_h45zNBIQWRW1tTM7CDESY0Q7-dU
