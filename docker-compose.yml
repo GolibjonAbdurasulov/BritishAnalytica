@@ -7,7 +7,7 @@ services:
       context: .
       dockerfile: BritishAnalytica/Web/Dockerfile
     ports:
-      - "45.10.162.54:8080:80"
+      - "45.138.158.150:8080:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always
