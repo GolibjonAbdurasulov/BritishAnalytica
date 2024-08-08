@@ -41,7 +41,6 @@ public class TokenService:ITokenService
             audience: audience,
             expires: DateTime.Now.AddMinutes(expiresInMinutes)
         );
-
         return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
     }
 }
