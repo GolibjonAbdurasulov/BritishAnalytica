@@ -95,6 +95,11 @@ public class DataContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Entity<Skill>()
+            .HasOne(s => s.TeamMember) 
+            .WithMany(t => t.Skills) 
+            .HasForeignKey(s => s.TeamMemberId);
+        
         #region Configurations related to MultiLanguageField
 
         //Configuring all MultiLanguage fields over entities

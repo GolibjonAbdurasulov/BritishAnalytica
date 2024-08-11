@@ -89,6 +89,7 @@ public class TeamMemberController : ControllerBase
             Role = res.Role,
             ImageId = res.ImageId,
             FullName = res.FullName,
+            Skills = res.Skills
         };
         
         return new ResponseModelBase(dto);
