@@ -40,7 +40,6 @@ public class TeamMemberController : ControllerBase
         {
             await SkillRepository.AddAsync(new Skill
             {
-                Id = skill.Id,
                 Text = skill.Text
             });
         }
