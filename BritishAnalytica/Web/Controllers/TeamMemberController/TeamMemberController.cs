@@ -77,6 +77,15 @@ public class TeamMemberController : ControllerBase
         res.FullName = dto.FullName;
         res.Role = dto.Role;
         res.ImageId = dto.ImageId;
+        List<Skill> skills = new List<Skill>();
+        foreach (SkillDto skillDto in dto.Skills)
+        {
+            skills.Add(new Skill
+            {
+                Text = skillDto.Text,
+            });
+        }
+        res.Skills = skills;
 
         res.UpdatedAt=DateTime.Now;
         await TeamMemberRepository.UpdateAsync(res);
@@ -129,7 +138,7 @@ public class TeamMemberController : ControllerBase
         {
             List<SkillDto> dtos = new List<SkillDto>();
         
-            foreach (SkillDto skill in dtos)
+            foreach (Skill skill in teamMember.Skills)
             {
                 dtos.Add(new SkillDto
                 {
@@ -145,7 +154,6 @@ public class TeamMemberController : ControllerBase
                 Skills = dtos,
                 ImageId = teamMember.ImageId
             });
-            dtos.Clear();
         }
         return new ResponseModelBase(members);
     }
