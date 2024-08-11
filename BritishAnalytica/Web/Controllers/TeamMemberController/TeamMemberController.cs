@@ -1,4 +1,6 @@
+using DatabaseBroker.Repositories.SkillsRepository;
 using DatabaseBroker.Repositories.TeamMemberRepository;
+using Entity.Models.Skills;
 using Entity.Models.TeamMember;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +14,12 @@ namespace Web.Controllers.TeamMemberController;
 public class TeamMemberController : ControllerBase
 {
     private ITeamMemberRepository TeamMemberRepository { get; set; }
+    private ISkillRepository SkillRepository { get; set; }
 
-    public TeamMemberController(ITeamMemberRepository teamMemberRepository)
+    public TeamMemberController(ITeamMemberRepository teamMemberRepository, ISkillRepository skillRepository)
     {
         TeamMemberRepository = teamMemberRepository;
+        SkillRepository = skillRepository;
     }
 
     [HttpPost]
@@ -32,6 +36,15 @@ public class TeamMemberController : ControllerBase
             ImageId = dto.ImageId
         };
         var resEntity=await TeamMemberRepository.AddAsync(entity);
+        foreach (Skill skill in entity.Skills)
+        {
+            await SkillRepository.AddAsync(new Skill
+            {
+                Id = skill.Id,
+                Text = skill.Text
+            });
+        }
+    
         var teamMemberDto = new TeamMemberDto
         {
             Id = resEntity.Id,
