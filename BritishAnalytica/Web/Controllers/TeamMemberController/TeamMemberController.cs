@@ -26,7 +26,7 @@ public class TeamMemberController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> CreateAsync(TeamMemberCreationDto dto)
     {
-
+        // Create Skills
         List<Skill> skills = new List<Skill>();
         foreach (SkillDto skillDto in dto.Skills)
         {
@@ -35,28 +35,30 @@ public class TeamMemberController : ControllerBase
                 Text = skillDto.Text
             });
         }
+
+        // Create TeamMember with Skills
         var entity = new TeamMember
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             FullName = dto.FullName,
             Role = dto.Role,
-            Skills = skills,
+            Skills = skills, // Skills are attached to the TeamMember
             ImageId = dto.ImageId
         };
-        var resEntity=await TeamMemberRepository.AddAsync(entity);
-     
-        
+    
+        var resEntity = await TeamMemberRepository.AddAsync(entity);
+    
+        // Prepare the response DTO
         List<SkillDto> dtos = new List<SkillDto>();
-        foreach (Skill skill in entity.Skills)
+        foreach (Skill skill in resEntity.Skills)
         {
-            await SkillRepository.AddAsync(new Skill
+            dtos.Add(new SkillDto
             {
                 Text = skill.Text
             });
         }
-        
-       
+    
         var teamMemberDto = new TeamMemberDto
         {
             Id = resEntity.Id,
@@ -68,6 +70,53 @@ public class TeamMemberController : ControllerBase
 
         return new ResponseModelBase(teamMemberDto);
     }
+
+    // [HttpPost]
+    // [Authorize]
+    // public async Task<ResponseModelBase> CreateAsync(TeamMemberCreationDto dto)
+    // {
+    //
+    //     List<Skill> skills = new List<Skill>();
+    //     foreach (SkillDto skillDto in dto.Skills)
+    //     {
+    //         skills.Add(new Skill
+    //         {
+    //             Text = skillDto.Text
+    //         });
+    //     }
+    //     var entity = new TeamMember
+    //     {
+    //         CreatedAt = DateTime.Now,
+    //         UpdatedAt = DateTime.Now,
+    //         FullName = dto.FullName,
+    //         Role = dto.Role,
+    //         Skills = skills,
+    //         ImageId = dto.ImageId
+    //     };
+    //     var resEntity=await TeamMemberRepository.AddAsync(entity);
+    //  
+    //     
+    //     List<SkillDto> dtos = new List<SkillDto>();
+    //     foreach (Skill skill in entity.Skills)
+    //     {
+    //         await SkillRepository.AddAsync(new Skill
+    //         {
+    //             Text = skill.Text
+    //         });
+    //     }
+    //     
+    //    
+    //     var teamMemberDto = new TeamMemberDto
+    //     {
+    //         Id = resEntity.Id,
+    //         FullName = resEntity.FullName,
+    //         Role = resEntity.Role,
+    //         Skills = dtos,
+    //         ImageId = resEntity.ImageId
+    //     };
+    //
+    //     return new ResponseModelBase(teamMemberDto);
+    // }
 
     [HttpPut]
     [Authorize]
