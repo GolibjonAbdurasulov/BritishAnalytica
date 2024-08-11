@@ -295,7 +295,8 @@ namespace DatabaseBroker.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<long>("TeamMemberId")
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("team_member_id");
 
                     b.Property<MultiLanguageField>("Text")
                         .HasColumnType("jsonb")
