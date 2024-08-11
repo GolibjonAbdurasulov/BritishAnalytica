@@ -55,6 +55,7 @@ public class TeamMemberController : ControllerBase
         {
             dtos.Add(new SkillDto
             {
+                Id = skill.Id,
                 Text = skill.Text
             });
         }
@@ -131,7 +132,7 @@ public class TeamMemberController : ControllerBase
         {
             skills.Add(new Skill
             {
-                Text = skillDto.Text,
+                Text = skillDto.Text
             });
         }
         res.Skills = skills;
@@ -159,6 +160,7 @@ public class TeamMemberController : ControllerBase
         {
             dtos.Add(new SkillDto
             {
+                Id = skill.Id,
                 Text = skill.Text
             });
         }
@@ -192,6 +194,7 @@ public class TeamMemberController : ControllerBase
             {
                 dtos.Add(new SkillDto
                 {
+                    Id = skill.Id,
                     Text = skill.Text
                 });
            
