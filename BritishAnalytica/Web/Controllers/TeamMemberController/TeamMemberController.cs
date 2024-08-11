@@ -26,16 +26,28 @@ public class TeamMemberController : ControllerBase
     [Authorize]
     public async Task<ResponseModelBase> CreateAsync(TeamMemberCreationDto dto)
     {
+
+        List<Skill> skills = new List<Skill>();
+        foreach (SkillDto skillDto in dto.Skills)
+        {
+            skills.Add(new Skill
+            {
+                Text = skillDto.Text
+            });
+        }
         var entity = new TeamMember
         {
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now,
             FullName = dto.FullName,
             Role = dto.Role,
-            Skills = dto.Skills,
+            Skills = skills,
             ImageId = dto.ImageId
         };
         var resEntity=await TeamMemberRepository.AddAsync(entity);
+     
+        
+        List<SkillDto> dtos = new List<SkillDto>();
         foreach (Skill skill in entity.Skills)
         {
             await SkillRepository.AddAsync(new Skill
@@ -43,13 +55,14 @@ public class TeamMemberController : ControllerBase
                 Text = skill.Text
             });
         }
-    
+        
+       
         var teamMemberDto = new TeamMemberDto
         {
             Id = resEntity.Id,
             FullName = resEntity.FullName,
             Role = resEntity.Role,
-            Skills = resEntity.Skills,
+            Skills = dtos,
             ImageId = resEntity.ImageId
         };
 
@@ -83,12 +96,20 @@ public class TeamMemberController : ControllerBase
     public async Task<ResponseModelBase> GetByIdAsync(long id)
     {
         var res =  await TeamMemberRepository.GetByIdAsync(id);
+        List<SkillDto> dtos = new List<SkillDto>();
+        foreach (Skill skill in res.Skills)
+        {
+            dtos.Add(new SkillDto
+            {
+                Text = skill.Text
+            });
+        }
         var dto = new TeamMemberDto
         {
             Role = res.Role,
             ImageId = res.ImageId,
             FullName = res.FullName,
-            Skills = res.Skills
+            Skills = dtos
         };
         
         return new ResponseModelBase(dto);
@@ -99,17 +120,32 @@ public class TeamMemberController : ControllerBase
     public async Task<ResponseModelBase> GetAllAsync()
     {
         var res = TeamMemberRepository.GetAllAsQueryable().ToList();
+        
         List<TeamMemberDto> members = new List<TeamMemberDto>();
+        
+        
+        
         foreach (var teamMember in res)
         {
+            List<SkillDto> dtos = new List<SkillDto>();
+        
+            foreach (SkillDto skill in dtos)
+            {
+                dtos.Add(new SkillDto
+                {
+                    Text = skill.Text
+                });
+           
+            }
             members.Add(new TeamMemberDto
             {
                 Id = teamMember.Id,
                 FullName = teamMember.FullName,
                 Role = teamMember.Role,
-                Skills = teamMember.Skills,
+                Skills = dtos,
                 ImageId = teamMember.ImageId
             });
+            dtos.Clear();
         }
         return new ResponseModelBase(members);
     }
