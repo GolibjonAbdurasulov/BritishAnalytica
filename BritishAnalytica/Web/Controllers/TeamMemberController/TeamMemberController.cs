@@ -164,6 +164,7 @@ public class TeamMemberController : ControllerBase
         }
         var dto = new TeamMemberDto
         {
+            Id= res.Id,
             Role = res.Role,
             ImageId = res.ImageId,
             FullName = res.FullName,
