@@ -11,8 +11,9 @@ public interface IFileService
     ValueTask<FileModel> DeleteAsync(Guid id);
     ValueTask<FileModel> UpdateFileAsync(Guid id, IFormFile file);
     ValueTask<string> MakeFilePath(string filePath);
-    public string DetectionFileType(string fileName);
-    public Task SaveFileAsync(byte[] bytes, string filePath);
-    public  ValueTask<FileModel> GetByIdAsync(Guid id);
-    public  Task<Stream> SendFileAsync(Guid id);
+    string DetectionFileType(string fileName);
+    Task SaveFileAsync(IFormFile file, string filePath);
+    Task SaveFileAsync(byte[] bytes, string filePath);
+    ValueTask<FileModel> GetByIdAsync(Guid id);
+    Task<Stream> SendFileAsync(Guid id);
 }
