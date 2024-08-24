@@ -32,8 +32,6 @@ builder.Services.AddHostedService(sp => sp.GetRequiredService<TelegramBotService
 
 builder.WebHost.ConfigureKestrel(x => x.ListenAnyIP(80));
 
-
-
 builder
     .Services
     .AddAuthentication(options =>
