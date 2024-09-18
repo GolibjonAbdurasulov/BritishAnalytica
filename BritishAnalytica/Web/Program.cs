@@ -20,7 +20,7 @@ builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
 {
     optionsBuilder.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnectionString"));
     optionsBuilder.UseLazyLoadingProxies();
-    //optionsBuilder.UseChangeTrackingProxies();
+    optionsBuilder.UseChangeTrackingProxies();
 });
 
 
