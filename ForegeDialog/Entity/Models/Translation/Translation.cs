@@ -13,4 +13,5 @@ public class Translation : ModelBase<long>
     [Column("uz"), JsonPropertyName("uz")] public string Uz { get; set; }
     [Column("en"), JsonPropertyName("en")] public string En { get; set; }
     [Column("ru"), JsonPropertyName("ru")] public string Ru { get; set; }
+    [Column("ger"), JsonPropertyName("ger")] public string Ger { get; set; }
 }

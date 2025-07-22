@@ -2,20 +2,13 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Entity.Models.AboutBusinessModel;
 using Entity.Models.Common;
 using Entity.Models.FaqQuestion;
 using Entity.Models.File;
-using Entity.Models.HomeModel;
-using Entity.Models.MessageModel;
-using Entity.Models.OurService;
-using Entity.Models.OurServices;
-using Entity.Models.ReasonModel;
-using Entity.Models.Skills;
-using Entity.Models.TeamMember;
 using Entity.Models.Translation;
-using Entity.Models.Users;
 using Microsoft.EntityFrameworkCore;
+using Telegram.Bot.Types;
+using User = Entity.Models.Users.User;
 
 namespace DatabaseBroker;
 
@@ -27,23 +20,13 @@ public class DataContext : DbContext
     }
 
     public  DbSet<FileModel> Files { get; set; }
-    public  DbSet<Skill> Skills { get; set; }
-    public  DbSet<Reason> Reasons { get; set; }
     
     public  DbSet<Translation> Translations { get; set; }
     
     public  DbSet<Message> Messages { get; set; }
 
-    public  DbSet<AboutBusinessModel> AboutBusinessModels { get; set; }
 
     public  DbSet<FaqQuestions> FaqQuestions { get; set; }
-
-    public  DbSet<HomeModel> HomeModels { get; set; }
-
-    public  DbSet<OurService> OurServices { get; set; }
-
-    public  DbSet<OurValues> OurValues { get; set; }
-    public  DbSet<TeamMember> TeamMembers { get; set; }
 
     public  DbSet<User> Users { get; set; }
 
@@ -95,10 +78,10 @@ public class DataContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<Skill>()
-            .HasOne(s => s.TeamMember) 
-            .WithMany(t => t.Skills) 
-            .HasForeignKey(s => s.TeamMemberId);
+        // modelBuilder.Entity<Skill>()
+        //     .HasOne(s => s.TeamMember) 
+        //     .WithMany(t => t.Skills) 
+        //     .HasForeignKey(s => s.TeamMemberId);
         
         #region Configurations related to MultiLanguageField
 

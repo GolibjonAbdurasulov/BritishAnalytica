@@ -8,7 +8,7 @@ namespace Entity.Models.Common
         //
         protected bool Equals(MultiLanguageField other)
         {
-            return uz == other.uz && ru == other.ru && en == other.en;
+            return uz == other.uz && ru == other.ru && en == other.en && ger==other.ger;
         }
 
         public override bool Equals(object? obj)
@@ -21,7 +21,7 @@ namespace Entity.Models.Common
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(uz, ru, en);
+            return HashCode.Combine(uz, ru, en, ger);
         }
 
         /// <summary>
@@ -38,22 +38,28 @@ namespace Entity.Models.Common
         /// Inglis tilida
         /// </summary>
         public string en { get; set; }
+        
+        /// <summary>
+        /// nemis tilida
+        /// </summary>
+        public string ger { get; set; }
 
         public static implicit operator MultiLanguageField(string data) => new MultiLanguageField()
         {
             ru = data,
             uz = data,
-            en = data
+            en = data,
+            ger = data,
         };
 
         public static bool operator ==(MultiLanguageField a, string b)
         {
-            return a.ru == b || a.en == b || a.uz == b;
+            return a.ru == b || a.en == b || a.uz == b || a.ger == b;
         }
 
         public static bool operator !=(MultiLanguageField a, string b)
         {
-            return a.ru != b && a.en != b && a.uz != b;
+            return a.ru != b && a.en != b && a.uz != b && a.ger != b;
         }
 
         public override string ToString()

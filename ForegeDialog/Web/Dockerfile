@@ -5,8 +5,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS publish
 #in container
 ARG VARIABLE
 WORKDIR /src 
-COPY ["BritishAnalytica/", "BritishAnalytica/"]
-RUN dotnet publish "BritishAnalytica/Web/Web.csproj" -c Release -o /publish /p:UseAppHost=false
+COPY ["ForegeDialog/", "ForegeDialog/"]
+RUN dotnet publish "ForegeDialog/Web/Web.csproj" -c Release -o /publish /p:UseAppHost=false
 
 # Final stage for the runtime
 FROM base AS final

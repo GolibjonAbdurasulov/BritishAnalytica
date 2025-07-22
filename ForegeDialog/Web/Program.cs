@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Npgsql;
 using Services.Services;
-using Web.BackgroundServices;
 using Web.Extension;
 using Web.Middlewares;
 
@@ -23,12 +22,6 @@ builder.Services.AddDbContextPool<DataContext>(optionsBuilder =>
     optionsBuilder.UseChangeTrackingProxies();
 });
 
-
-builder.Services.Configure<TelegramBotSetting>(builder.Configuration.GetSection("TelegramBotSetting"));
-
-
-builder.Services.AddSingleton<TelegramBotService>();
-builder.Services.AddHostedService(sp => sp.GetRequiredService<TelegramBotService>());
 
 builder.WebHost.ConfigureKestrel(x => x.ListenAnyIP(80));
 
@@ -63,7 +56,7 @@ builder
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "https://britishanalytica", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "https://foregedialog", Version = "v1" });
 
   
     options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme

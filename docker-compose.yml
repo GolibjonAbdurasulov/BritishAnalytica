@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   web:
-    image: ${DOCKER_USERNAME}/british_analytica
+    image: ${DOCKER_USERNAME}/forege_dialog
     build:
       context: .
-      dockerfile: BritishAnalytica/Web/Dockerfile
+      dockerfile: ForegeDialog/Web/Dockerfile
     ports:
       - "8080:80"
     environment:
