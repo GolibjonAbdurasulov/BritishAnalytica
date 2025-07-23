@@ -7,7 +7,6 @@ using Entity.Models.FaqQuestion;
 using Entity.Models.File;
 using Entity.Models.Translation;
 using Microsoft.EntityFrameworkCore;
-using Telegram.Bot.Types;
 using User = Entity.Models.Users.User;
 
 namespace DatabaseBroker;
@@ -23,9 +22,6 @@ public class DataContext : DbContext
     
     public  DbSet<Translation> Translations { get; set; }
     
-    public  DbSet<Message> Messages { get; set; }
-
-
     public  DbSet<FaqQuestions> FaqQuestions { get; set; }
 
     public  DbSet<User> Users { get; set; }
