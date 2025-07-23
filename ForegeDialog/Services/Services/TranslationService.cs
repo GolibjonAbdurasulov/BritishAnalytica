@@ -28,12 +28,14 @@ public class TranslationService : ITranslationService
         var en = tr.ToDictionary(x => x.Code, x => x.En);
         var uz = tr.ToDictionary(x => x.Code, x => x.Uz);
         var ru = tr.ToDictionary(x => x.Code, x => x.Ru);
+        var ger = tr.ToDictionary(x => x.Code, x => x.Ger);
 
         return new
         {
             en,
             ru,
-            uz
+            uz,
+            ger
         };
     }
 
@@ -44,7 +46,8 @@ public class TranslationService : ITranslationService
             Code = translationsDto.Code,
             Uz = translationsDto.Uz,
             Ru = translationsDto.Ru,
-            En = translationsDto.En
+            En = translationsDto.En,
+            Ger = translationsDto.Ger
         };
         return await _repository.AddAsync(resourceCode);
     }
@@ -64,6 +67,7 @@ public class TranslationService : ITranslationService
         resourceCode!.En = translationsDto.En;
         resourceCode.Uz = translationsDto.Uz;
         resourceCode.Ru = translationsDto.Ru;
+        resourceCode.Ger = translationsDto.Ger;
 
         return await _repository.UpdateAsync(resourceCode);
     }

@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Entity.Models;
 using Entity.Models.Common;
-using Entity.Models.FaqQuestion;
 using Entity.Models.File;
 using Entity.Models.Translation;
 using Microsoft.EntityFrameworkCore;
@@ -22,51 +22,53 @@ public class DataContext : DbContext
     
     public  DbSet<Translation> Translations { get; set; }
     
-    public  DbSet<FaqQuestions> FaqQuestions { get; set; }
 
     public  DbSet<User> Users { get; set; }
+    public  DbSet<OurService> OurServices { get; set; }
+    public  DbSet<OurResources> OurResources { get; set; }
+    public  DbSet<OurValuedClients> OurValuedClients { get; set; }
 
 
-    private void TrackActionsAt()
-    {
-        foreach (var entity in this.ChangeTracker.Entries()
-                     .Where(x => x.State == EntityState.Added && x.Entity is AuditableModelBase<int>))
-        {
-            var model = (AuditableModelBase<int>)entity.Entity;
-            model.CreatedAt = DateTime.Now;
-            model.UpdatedAt = model.CreatedAt;
-        }
-
-        foreach (var entity in this.ChangeTracker.Entries()
-                     .Where(x => x.State == EntityState.Modified && x.Entity is AuditableModelBase<int>))
-        {
-            var model = (AuditableModelBase<int>)entity.Entity;
-            model.UpdatedAt = DateTime.Now;
-        }
-    }
+    // private void TrackActionsAt()
+    // {
+    //     foreach (var entity in this.ChangeTracker.Entries()
+    //                  .Where(x => x.State == EntityState.Added && x.Entity is AuditableModelBase<int>))
+    //     {
+    //         var model = (AuditableModelBase<int>)entity.Entity;
+    //         model.CreatedAt = DateTime.Now;
+    //         model.UpdatedAt = model.CreatedAt;
+    //     }
+    //
+    //     foreach (var entity in this.ChangeTracker.Entries()
+    //                  .Where(x => x.State == EntityState.Modified && x.Entity is AuditableModelBase<int>))
+    //     {
+    //         var model = (AuditableModelBase<int>)entity.Entity;
+    //         model.UpdatedAt = DateTime.Now;
+    //     }
+    // }
 
     public override int SaveChanges()
     {
-        TrackActionsAt();
+        //TrackActionsAt();
         return base.SaveChanges();
     }
 
     public override int SaveChanges(bool acceptAllChangesOnSuccess)
     {
-        TrackActionsAt();
+       // TrackActionsAt();
         return base.SaveChanges(acceptAllChangesOnSuccess);
     }
 
     public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess,
         CancellationToken cancellationToken = new CancellationToken())
     {
-        TrackActionsAt();
+        //TrackActionsAt();
         return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
 
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
-        TrackActionsAt();
+        //TrackActionsAt();
         return base.SaveChangesAsync(cancellationToken);
     }
    

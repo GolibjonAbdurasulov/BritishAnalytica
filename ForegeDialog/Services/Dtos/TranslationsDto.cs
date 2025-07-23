@@ -6,4 +6,5 @@ public class TranslationsDto
     public string Uz { get; set; }
     public string Ru { get; set; }
     public string En { get; set; }
+    public string Ger { get; set; }
 }

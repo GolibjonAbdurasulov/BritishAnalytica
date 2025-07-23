@@ -58,7 +58,7 @@ public class UserService : IUserService
         if (dto.UserName is not null&&dto.UserName!="string")
             oldUser.UserName = dto.UserName; 
      
-        oldUser.UpdatedAt=DateTime.Now;
+        //oldUser.UpdatedAt=DateTime.Now;
         await _userRepository.UpdateAsync(oldUser);
         return dto;
     }
@@ -68,8 +68,6 @@ public class UserService : IUserService
     {
         var user = new User
         {
-            CreatedAt = DateTime.Now,
-            UpdatedAt = DateTime.Now,
             UserName=dto.UserName,
             Email = dto.Email,
             Password = dto.Password,

@@ -5,9 +5,9 @@ using Entity.Models.Common;
 namespace Entity.Models.File;
 
 [Table("file_model")]
-public class FileModel : AuditableModelBase<Guid>
+public class FileModel : ModelBase<Guid>
 {
-    [Column("file_name")] public string FileName { get; set; }
-    [Column("content_type")] public string ContentType { get; set; }
-    [Column("path")] public string Path { get; set; }
+    [Column("file_name")] public virtual string FileName { get; set; }
+    [Column("content_type")] public virtual string ContentType { get; set; }
+    [Column("path")] public virtual string Path { get; set; }
 }

@@ -1,8 +1,6 @@
 using DatabaseBroker.Extensions;
-using DatabaseBroker.Repositories.FaqQuestionsRepository;
 using DatabaseBroker.Repositories.FileRepository;
 using Entity.Models.Common;
-using Entity.Models.FaqQuestion;
 using Entity.Models.File;
 using Microsoft.AspNetCore.Mvc;
 using Services.Interfaces;
